@@ -1,3 +1,4 @@
 import { Header } from "./header";
+import { Baner } from "./baner";
 
-export {Header};
+export {Header, Baner};
