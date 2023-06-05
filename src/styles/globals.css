@@ -22,3 +22,6 @@ body {
 .violen{
  color: #64ffda;
 }
+.text-dir-lr{
+writing-mode: vertical-lr;
+}
