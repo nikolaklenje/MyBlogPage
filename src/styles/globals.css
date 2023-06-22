@@ -17,11 +17,23 @@
 }
 
 body {
- background-color: #0a192f;
+  background-color: #0a192f;
 }
-.violen{
- color: #64ffda;
+.violen {
+  color: #64ffda;
 }
-.text-dir-lr{
-writing-mode: vertical-lr;
+.text-dir-lr {
+  writing-mode: vertical-lr;
+}
+
+.svg-icon {
+  width: 2em;
+  height: 2em;
+  padding-top: 10px;
+}
+
+.svg-icon path,
+.svg-icon polygon,
+.svg-icon rect {
+  fill: #ccd6f6;
 }
