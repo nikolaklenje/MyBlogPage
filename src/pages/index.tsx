@@ -1,9 +1,10 @@
-import { Baner, Header } from '@/components/layout'
+import { Baner, Header, Conections } from '@/components/layout'
 
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col items-center  ">
   <Header/>
+  <Conections/>
   <Baner/>
     </main>
   )
