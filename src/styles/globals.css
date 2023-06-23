@@ -29,10 +29,11 @@ body {
 .svg-icon {
   width: 2em;
   height: 2em;
-  padding-top: 10px;
+  padding-bottom: 10px;
   fill: #ccd6f6;
 }
 
 .svg-icon:hover {
   fill: #64ffda;
+  padding-bottom: 1px;
 }
