@@ -4,41 +4,39 @@ import lex from "../../../../public/lex.jpeg";
 
 export const About: FC = () => {
   return (
-    <div className="flex flex-cols">
-      <div>About me</div>
-      <div className="flex flex-row">
-        <div>
-          <p>
-            {" "}
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been the industrys standard dummy text
-            ever since the 1500s, when an unknown printer took a galley of type
-            and scrambled it to make a type specimen book. It has survived not
-            only five centuries, but also the leap into electronic typesetting,
-            remaining essentially unchanged. It was popularised in the 1960s
-            with the release of Letraset sheets containing Lorem Ipsum passages,
-            and more recently with desktop publishing software like Aldus
-            PageMaker including versions of Lorem Ipsum. Why do we use it? It is
-            a long established fact that a reader will be distracted by the
-            readable content of a page when looking at its layout. The point of
-            using Lorem Ipsum is that it has a more-or-less normal distribution
-            of letters, as opposed to using Content here, content here, making
-            it look like readable English. Many desktop publishing packages and
-            web page editors now use Lorem Ipsum as their default model text,
-            and a search for lorem ipsum will uncover many web sites still in
-            their infancy. Various versions have evolved over the years,
-            sometimes by accident, sometimes on purpose (injected humour and the
-            like). Where does it come from? Contrary to popular belief, Lorem
-            Ipsum is not simply random text. It has roots in a piece of
-            classical Latin literature from 45 BC, making it over 2000 years
-            old. Richard McClintock, a Latin professor at Hampden-Sydney College
-            in Virginia, looked up one of the more obscure Latin words,
-            consectetur, from a Lorem Ipsum passage, and going through the cites
-            of the word in classical literature, discovered the undoubtable
-          </p>
+    <div className="flex flex-col w-2/3 items-center">
+      <div className="flex flex-col">
+        <div className="flex flex-row ">
+          <h1 className="text-3xl font-semibold text-white ">
+            <span className="text-[#64ffda] mr-4">01.</span>About me
+          </h1>
+          <div className="h-[2px] mt-5 ml-2 w-48 bg-[#ccd6f6]"></div>
         </div>
-        <div>
-          <Image src={lex} alt={""}></Image>
+        <div className="flex flex-row  ">
+          <div className="flex w-1/2">
+            <p className="text-[#ccd6f6] mt-6 text-lg">
+              Front End developer with industry experience building websites and
+              web applications. <br></br>I specialize in JavaScript and have
+              professional experience working with C++, Typescript and Python. I
+              also have experience working with Next and React.<br></br> Here
+              are a few technologies I’ve been working with recently:
+              <div className="flex flex-row mt-8 text-[#64ffda]">
+                <ul>
+                  <li>JavaScript (ES6+) </li>
+                  <li>TypeScript</li>
+                  <li>Phyton</li>
+                </ul>
+                <ul className="ml-auto mr-auto">
+                  <li>React</li>
+                  <li>React Native</li>
+                  <li>Node.js</li>
+                </ul>
+              </div>
+            </p>
+          </div>
+          <div className="hover:ml-4 hover:mb-4">
+            <Image width={400} src={lex} alt={""}></Image>
+          </div>
         </div>
       </div>
     </div>
