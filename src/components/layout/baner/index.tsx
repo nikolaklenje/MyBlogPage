@@ -3,7 +3,7 @@ import { FC } from "react";
 
 export const Baner: FC = () => {
   return (
-    <div className="text-white flex flex-col  animate__animated animate__fadeIn animate__delay-1s p-48 pr-96 items-left">
+    <div className="text-white flex flex-col  animate__animated animate__fadeIn animate__delay-1s sm: p-12 md: p-48 lg:p-36 items-left">
       <div className="text-[#64ffda]">
         <h1>Hi, my name is</h1>
       </div>
@@ -17,19 +17,13 @@ export const Baner: FC = () => {
       </div>
       <div>
         <p className="text-[#ccd6f6] leading-normal mt-6">
-          Front End developer with industry experience building websites and web
-          applications. I specialize in JavaScript and have professional
-          experience working with C++, Typescript and Python. I also have
-          experience working with Next and React. Currently, I’m focused on OTT
-          Apps at
-          <Link
-            className="text-[#64ffda]"
-            href={"https://www.prototypenext.com/"}
-            target="_blank"
-          >
-            Prototypenext
-          </Link>
-          .
+          Creative and Talented Software Developer with 5+ years of experience
+          in designing user-centric, intuitive user interfaces and robust
+          software solutions. Extensive expertise in React development,
+          including advanced knowledge of design best practices and emerging UI
+          development techniques. Proficient in connecting exceptional assets
+          with users through creative UI frameworks and meticulous user
+          experience optimization.
         </p>
       </div>
       <div className="border-2 block text-[#64ffda] w-48 pl-6 mt-6 p-4  rounded-md border-[#64ffda]">

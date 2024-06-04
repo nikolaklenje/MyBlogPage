@@ -4,7 +4,7 @@ import Link from "next/link";
 export const Conections: FC = () => {
   return (
     <div>
-      <div className="fixed z-50 bottom-0 left-16">
+      <div className="fixed z-50 bottom-0 sm: left-2">
         <div className="flex-col w-full h-full relative ">
           <ul className="animate__animated animate__fadeIn animate__delay-1s">
             <Link href={"https://twitter.com/nikolaelite"} target="_blank">
@@ -61,10 +61,12 @@ export const Conections: FC = () => {
           <div className="w-[2px] mt-4 ml-3 h-32 bg-[#ccd6f6]"></div>
         </div>
       </div>
-      <div className="fixed z-50 bottom-0 right-16">
+      <div className="fixed z-50 bottom-0 sm: right-2">
         <div className="flex-col relative text-[#ccd6f6] hover:text-[#64ffda]">
           <div className="text-dir-lr animate__animated animate__fadeIn animate__delay-1s">
-            <Link href="www.google.com">nikola@prototypenext.com</Link>
+            <Link href="mailto:nikolaelite88@gmail.com">
+              nikolaelite88@gmail.com
+            </Link>
           </div>
           <div className="w-[2px] mt-4 ml-2 h-32 bg-[#ccd6f6]"></div>
         </div>
