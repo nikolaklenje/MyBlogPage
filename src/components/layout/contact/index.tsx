@@ -27,7 +27,7 @@ export const Contact: FC = () => {
           <p className="text-[#ccd6f6] leading-normal mt-6 w-2/3">
             Although I’m not currently looking for any new opportunities, my
             inbox is always open. Whether you have a question or just want to
-            say hi, I’ll try my best to get back to you!
+            say hi, I’ll try my best to get back to you!!!
           </p>
           <div className="container my-24 mx-auto md:px-6">
             <section className="mb-32 text-center">
