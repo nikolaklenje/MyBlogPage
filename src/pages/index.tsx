@@ -1,12 +1,13 @@
-import { Baner, Header, Conections, About } from "@/components/layout";
+import { Baner, Header, Conections, About, Contact } from "@/components/layout";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center  ">
+    <main className="flex min-h-screen flex-col items-center w-fit ">
       <Header />
       <Conections />
       <Baner />
       <About />
+      <Contact />
     </main>
   );
 }
