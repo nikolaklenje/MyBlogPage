@@ -1,5 +1,10 @@
 import emailjs from "emailjs-com";
 import { SyntheticEvent } from "react";
+import {
+  emailjsUserId,
+  emailjsTemplateId,
+  emailjsServiceId,
+} from "@/library/config";
 
 const submitForm = (
   e: SyntheticEvent,
@@ -8,11 +13,11 @@ const submitForm = (
   e.preventDefault();
   emailjs
     .sendForm(
-      "service_96a1ob9",
-      "template_rkxspjl",
+      emailjsUserId,
+      emailjsTemplateId,
       e.target as HTMLFormElement,
-      "5yswU2LcUAE_fprqr"
-    ) //move this to ENV file
+      emailjsServiceId
+    )
     .then(
       () => {
         console.log("success");
