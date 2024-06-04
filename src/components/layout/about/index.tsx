@@ -20,7 +20,7 @@ export const About: FC = () => {
               VOD and live streaming players, and enhancing playback features.
               Successfully migrated video players to improve performance,
               designed and implemented ad managers, and collaborated with
-              cross-functional
+              cross-functional platforms.
             </p>
             <div className="flex flex-row mt-8 text-[#64ffda]">
               <ul>
