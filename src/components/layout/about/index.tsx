@@ -4,7 +4,7 @@ import lex from "../../../../public/lex.jpeg";
 
 export const About: FC = () => {
   return (
-    <div className="flex flex-col w-2/3 items-center animate__animated animate__fadeIn animate__delay-1s ">
+    <div className="w-2/3 items-center animate__animated animate__fadeIn animate__delay-1s p-48 ">
       <div className="flex flex-col">
         <div className="flex flex-row ">
           <h1 className="text-3xl font-semibold text-white ">
