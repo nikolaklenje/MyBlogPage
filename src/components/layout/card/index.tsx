@@ -6,9 +6,10 @@ interface CardProps {
   src: string;
   title: string;
   description: string;
+  path: string;
 }
 
-export const Card: FC<CardProps> = ({ src, title, description }) => {
+export const Card: FC<CardProps> = ({ src, title, description, path }) => {
   return (
     <div className="max-w-sm m-16 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <Image
@@ -28,7 +29,7 @@ export const Card: FC<CardProps> = ({ src, title, description }) => {
           {description}
         </p>
         <Link
-          href="#"
+          href={path}
           className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Read more
