@@ -4,8 +4,6 @@ import { getAllBlogs } from "@/library/blogs";
 
 export async function getStaticProps() {
   const blogs: any = getAllBlogs();
-  console.log("THIS ARE BLOGs", blogs);
-  console.log("This are blogs");
   return {
     props: {
       blogs,
