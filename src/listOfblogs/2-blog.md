@@ -1,9 +1,10 @@
 ---
 id: "2"
-title: "Test Title"
+title: "Test Title Blog 2"
 category: "React"
 date: "2024-06-07"
 image: "someImage"
+description: "This is going to be description of the second blog that I will ever write"
 ---
 
 This is the content of the second blog.

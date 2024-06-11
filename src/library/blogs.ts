@@ -3,9 +3,8 @@ import path from "path";
 import matter from "gray-matter";
 
 const blogsDirectory = path.join(process.cwd(), "src/listOfBlogs");
-
+const fileNames = fs.readdirSync(blogsDirectory);
 export function getAllBlogs() {
-  const fileNames = fs.readdirSync(blogsDirectory);
   const allBlogs = fileNames.map((fileName) => {
     const filePath = path.join(blogsDirectory, fileName);
     const fileContents = fs.readFileSync(filePath, "utf8");
@@ -17,6 +16,7 @@ export function getAllBlogs() {
       category: data.category,
       date: data.date,
       image: data.image,
+      description: data.description,
       content: content,
     };
   });
@@ -24,10 +24,9 @@ export function getAllBlogs() {
 }
 
 export function getBlogById(id: string) {
-  const fileNames = fs.readdirSync(blogsDirectory);
   const fileName = fileNames.find((name) => name.includes(id));
   if (!fileName) {
-    throw new Error("Blog not foiund");
+    throw new Error("Blog not found");
   }
   const filePath = path.join(blogsDirectory, fileName);
   const fileContents = fs.readFileSync(filePath, "utf8");
@@ -39,6 +38,7 @@ export function getBlogById(id: string) {
     category: data.category,
     date: data.date,
     image: data.image,
+    description: data.description,
     content: content,
   };
 }
