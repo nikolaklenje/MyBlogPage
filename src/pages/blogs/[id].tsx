@@ -3,6 +3,15 @@ import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 
+interface BlogDetailsType {
+  params: {
+    id: string;
+  };
+  blog: {
+    title: string;
+    description: string;
+  };
+}
 export async function getStaticPaths() {
   const blogs = getAllBlogs();
   const paths = blogs.map((blog) => ({
@@ -15,7 +24,7 @@ export async function getStaticPaths() {
     fallback: false,
   };
 }
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params }: BlogDetailsType) {
   const blog = getBlogById(params.id);
   return {
     props: {
@@ -24,7 +33,7 @@ export async function getStaticProps({ params }) {
   };
 }
 
-export const BlogDetails = ({ blog }) => {
+export const BlogDetails = ({ blog }: BlogDetailsType) => {
   return (
     <div>
       <h1>{blog.title}</h1>
