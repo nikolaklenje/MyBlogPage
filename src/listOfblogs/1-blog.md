@@ -7,15 +7,20 @@ image: "someImage"
 description: "This is going to be description of the first blog that I will ever write"
 ---
 
-This is content of the first blog
+content:
 
-```javascript
+# My Blog Post Title
 
-function (a,b){
-    let c = 0;
-    c = a+b
-    return c
-}
+This is an example blog post.
+
+## Section 1
+
+Here is some text for the first section.
+
+```js
+// This is a JavaScript code block
+const greet = () => {
+  console.log("Hello, world!");
+};
+greet();
 ```
-
-This is the end of the first blog
