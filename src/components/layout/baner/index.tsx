@@ -3,7 +3,7 @@ import { FC } from "react";
 
 export const Baner: FC = () => {
   return (
-    <div className="text-white flex flex-col  animate__animated animate__fadeIn animate__delay-1s sm: p-12 md: p-48 lg:p-36 items-left">
+    <div className="text-white flex flex-col  animate__animated animate__fadeIn animate__delay-1s sm: p-12 lg:p-36 items-left">
       <div className="text-[#64ffda]">
         <h1>Hi, my name is</h1>
       </div>

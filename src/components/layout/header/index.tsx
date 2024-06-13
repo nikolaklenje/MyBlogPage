@@ -15,17 +15,15 @@ export const Header: FC = () => {
         <div className="flex-row flex ">
           <ul className="flex flex-row center  mt-4 space-x-4">
             <li className="animate__animated animate__fadeInDownBig">
-              01.
-              <Link href="/" className="text-white hover:text-[#64ffda]">
-                {" "}
-                Home
+              <Link href="/">
+                01.
+                <span className="text-white hover:text-[#64ffda]">Home</span>
               </Link>{" "}
             </li>
             <li className="animate__animated animate__fadeInDownBig">
-              02.
-              <Link href="/blogs" className="text-white hover:text-[#64ffda]">
-                {" "}
-                Blogs
+              <Link href="/blogs">
+                02.{" "}
+                <span className="text-white hover:text-[#64ffda]">Blogs</span>
               </Link>{" "}
             </li>
             {/* <li className="animate__animated animate__fadeInDownBig ">

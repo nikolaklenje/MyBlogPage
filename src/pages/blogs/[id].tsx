@@ -1,7 +1,7 @@
 import { getAllBlogs, getBlogById } from "@/library/blogs";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { atomDark } from "react-syntax-highlighter/dist/esm/styles/prism";
+import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
 
 interface BlogDetailsType {
   params: {
@@ -10,6 +10,8 @@ interface BlogDetailsType {
   blog: {
     title: string;
     description: string;
+    date: string;
+    content: string;
   };
 }
 export async function getStaticPaths() {
@@ -35,9 +37,33 @@ export async function getStaticProps({ params }: BlogDetailsType) {
 
 export const BlogDetails = ({ blog }: BlogDetailsType) => {
   return (
-    <div>
-      <h1>{blog.title}</h1>
-      <p>{blog.description}</p>
+    <div className="text-white flex flex-col  animate__animated animate__fadeIn animate__delay-1s sm: p-12 lg:p-36 items-left">
+      <h1 className="text-6xl font-semibold mt-6">{blog.title}</h1>
+      <p>Creator</p>
+      <p>{blog.date}</p>
+      <ReactMarkdown
+        components={{
+          code({ node, className, children, ...props }) {
+            const match = /language-(\w+)/.exec(className || "");
+            return match ? (
+              <SyntaxHighlighter
+                style={atomDark}
+                language={match[1]}
+                PreTag="div"
+                {...props}
+              >
+                {String(children).replace(/\n$/, "")}
+              </SyntaxHighlighter>
+            ) : (
+              <code className={className} {...props}>
+                {children}
+              </code>
+            );
+          },
+        }}
+      >
+        {blog.content}
+      </ReactMarkdown>
     </div>
   );
 };
