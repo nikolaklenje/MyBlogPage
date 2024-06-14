@@ -38,9 +38,13 @@ export async function getStaticProps({ params }: BlogDetailsType) {
 export const BlogDetails = ({ blog }: BlogDetailsType) => {
   return (
     <div className="text-white flex flex-col  animate__animated animate__fadeIn animate__delay-1s sm: p-12 lg:p-36 items-left">
-      <h1 className="text-6xl font-semibold mt-6">{blog.title}</h1>
-      <p>Creator</p>
-      <p>{blog.date}</p>
+      <h1 className="text-6xl font-semibold my-6 flex justify-center ">
+        {blog.title}
+      </h1>
+      <div className="flex justify-between flex-row mt-6">
+        <p>Creator</p>
+        <p>{blog.date}</p>
+      </div>
       <ReactMarkdown
         components={{
           code({ node, className, children, ...props }) {
