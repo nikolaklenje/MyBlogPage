@@ -3,7 +3,7 @@ id: "1"
 title: "Test Title Blog 1"
 category: "React"
 date: "2024-06-07"
-image: "someImage"
+image: "/reactjs.png"
 description: "This is going to be description of the first blog that I will ever write"
 ---
 
