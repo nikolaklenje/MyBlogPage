@@ -37,7 +37,7 @@ export async function getStaticProps({ params }: BlogDetailsType) {
 
 export const BlogDetails = ({ blog }: BlogDetailsType) => {
   return (
-    <div className="text-white flex flex-col  animate__animated animate__fadeIn animate__delay-1s sm: p-12 lg:p-36 items-left">
+    <div className="text-white flex flex-col  animate__animated animate__fadeIn animate__delay-.5s sm: p-12 lg:p-36 items-left">
       <h1 className="text-6xl font-semibold my-6 flex justify-center ">
         {blog.title}
       </h1>

@@ -26,13 +26,13 @@ export const Header: FC = () => {
                 <span className="text-white hover:text-[#64ffda]">Blogs</span>
               </Link>{" "}
             </li>
-            {/* <li className="animate__animated animate__fadeInDownBig ">
+            <li className="animate__animated animate__fadeInDownBig ">
               03.
               <span className="text-white hover:text-[#64ffda]">
                 {" "}
-                Contact
+                Sign In
               </span>{" "}
-            </li> */}
+            </li>
           </ul>
           <div className="border-2 block animate__animated animate__fadeInUpBig  text-[#64ffda] ml-4 mt-0 p-4 rounded-md border-[#64ffda]">
             <a
