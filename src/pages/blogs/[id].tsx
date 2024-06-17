@@ -12,6 +12,7 @@ interface BlogDetailsType {
     description: string;
     date: string;
     content: string;
+    creator: string;
   };
 }
 export async function getStaticPaths() {
@@ -42,7 +43,7 @@ export const BlogDetails = ({ blog }: BlogDetailsType) => {
         {blog.title}
       </h1>
       <div className="flex justify-between flex-row mt-6">
-        <p>Creator</p>
+        <p>{blog.creator}</p>
         <p>{blog.date}</p>
       </div>
       <ReactMarkdown
