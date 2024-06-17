@@ -17,6 +17,7 @@ export function getAllBlogs() {
       date: data.date,
       image: data.image,
       description: data.description,
+      creator: data.creator,
       content: content,
     };
   });
@@ -39,6 +40,7 @@ export function getBlogById(id: string) {
     date: data.date,
     image: data.image,
     description: data.description,
+    creator: data.creator,
     content: content,
   };
 }
