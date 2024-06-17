@@ -2,6 +2,7 @@ import { getAllBlogs, getBlogById } from "@/library/blogs";
 import ReactMarkdown from "react-markdown";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { atomDark } from "react-syntax-highlighter/dist/cjs/styles/prism";
+import styles from "./blog.module.css";
 
 interface BlogDetailsType {
   params: {
@@ -38,15 +39,16 @@ export async function getStaticProps({ params }: BlogDetailsType) {
 
 export const BlogDetails = ({ blog }: BlogDetailsType) => {
   return (
-    <div className="text-white flex flex-col  animate__animated animate__fadeIn animate__delay-.5s sm: p-12 lg:p-36 items-left">
-      <h1 className="text-6xl font-semibold my-6 flex justify-center ">
+    <div className="text-white flex flex-col animate__animated animate__fadeIn animate__delay-.5s sm: p-12 lg:p-36 items-left">
+      <h1 className="text-6xl font-semibold my-12 flex justify-center ">
         {blog.title}
       </h1>
-      <div className="flex justify-between flex-row mt-6">
-        <p>{blog.creator}</p>
-        <p>{blog.date}</p>
+      <div className="flex justify-between flex-row mt-6 mb-48">
+        <p className="text-xl">{blog.creator}</p>
+        <p className="text-xl">{blog.date}</p>
       </div>
       <ReactMarkdown
+        className={`font-medium text-xl ${styles.blog}`}
         components={{
           code({ node, className, children, ...props }) {
             const match = /language-(\w+)/.exec(className || "");
@@ -60,9 +62,7 @@ export const BlogDetails = ({ blog }: BlogDetailsType) => {
                 {String(children).replace(/\n$/, "")}
               </SyntaxHighlighter>
             ) : (
-              <code className={className} {...props}>
-                {children}
-              </code>
+              <code>{children}</code>
             );
           },
         }}
