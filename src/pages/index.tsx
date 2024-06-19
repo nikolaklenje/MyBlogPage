@@ -1,6 +1,6 @@
 import { Baner, About, Contact, SignIn } from "@/components/layout";
 
-export default function Home() {
+export default function HomePage() {
   return (
     <>
       <Baner />
