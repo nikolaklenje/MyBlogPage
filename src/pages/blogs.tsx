@@ -10,7 +10,7 @@ export async function getStaticProps() {
   };
 }
 
-export default function Blogs({ blogs }: { blogs: any }) {
+export default function BlogsPage({ blogs }: { blogs: any }) {
   return (
     <div className="flex flex-col lg:flex-row">
       {blogs.map(
