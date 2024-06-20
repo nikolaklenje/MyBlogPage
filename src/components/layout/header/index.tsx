@@ -14,29 +14,43 @@ export const Header: FC = () => {
         </Link>
         <div className="flex-row flex ">
           <ul className="flex flex-row center  mt-4 space-x-4">
-            <li className="animate__animated animate__fadeInDownBig">
-              <Link href="/">
-                01.
-                <span className="text-white hover:text-[#64ffda]">Home</span>
-              </Link>{" "}
+            <li className="lg:hidden">
+              <button className="flex items-center text-[#64ffda] p-3">
+                <svg
+                  className="block h-8 w-8 fill-current"
+                  viewBox="0 0 20 20"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>Mobile menu</title>
+                  <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
+                </svg>
+              </button>
             </li>
-            <li className="animate__animated animate__fadeInDownBig">
-              <Link href="/blogs">
-                02.{" "}
-                <span className="text-white hover:text-[#64ffda]">Blogs</span>
-              </Link>{" "}
-            </li>
-            <li className="animate__animated animate__fadeInDownBig ">
-              03.
-              <Link href={"/signin"}>
-                <span className="text-white hover:text-[#64ffda]">
-                  {" "}
-                  Sign In
-                </span>
-              </Link>{" "}
-            </li>
+            <span className="hidden lg:flex">
+              <li className="animate__animated animate__fadeInDownBig">
+                <Link href="/">
+                  01.
+                  <span className="text-white hover:text-[#64ffda]">Home</span>
+                </Link>{" "}
+              </li>
+              <li className="animate__animated animate__fadeInDownBig">
+                <Link href="/blogs">
+                  02.{" "}
+                  <span className="text-white hover:text-[#64ffda]">Blogs</span>
+                </Link>{" "}
+              </li>
+              <li className="animate__animated animate__fadeInDownBig ">
+                03.
+                <Link href={"/signin"}>
+                  <span className="text-white hover:text-[#64ffda]">
+                    {" "}
+                    Sign In
+                  </span>
+                </Link>{" "}
+              </li>
+            </span>
           </ul>
-          <div className="border-2 block animate__animated animate__fadeInUpBig  text-[#64ffda] ml-4 mt-0 p-4 rounded-md border-[#64ffda]">
+          <div className="h-fit border-2 block animate__animated animate__fadeInUpBig  text-[#64ffda] ml-4 mt-0 p-4 rounded-md border-[#64ffda]">
             <a
               href="Nikola_Stankovic_Resume.pdf"
               download="NikolaStankovicResume"
