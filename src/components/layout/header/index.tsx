@@ -21,7 +21,7 @@ export const Header: FC = () => {
             NICODE
           </div>
         </Link>
-        <div className="flex-row flex ">
+        <div className="flex-row flex">
           <ul className="flex flex-row center space-x-4">
             <li className="lg:hidden mt-1 ">
               <button
@@ -38,27 +38,26 @@ export const Header: FC = () => {
                 </svg>
               </button>
             </li>
-            <span className="hidden lg:flex mt-3 pt-1 ">
-              <li className="animate__animated animate__fadeInDownBig ">
-                <Link href="/">
-                  01.
-                  <span className="text-white hover:text-[#64ffda]">Home</span>
-                </Link>{" "}
-              </li>
+            <span className="hidden lg:flex mt-3 pt-1">
               <li className="animate__animated animate__fadeInDownBig">
+                <Link href="/">
+                  01.{" "}
+                  <span className="text-white hover:text-[#64ffda]">Home</span>
+                </Link>
+              </li>
+              <li className="animate__animated animate__fadeInDownBig ml-2">
                 <Link href="/blogs">
                   02.{" "}
                   <span className="text-white hover:text-[#64ffda]">Blogs</span>
                 </Link>{" "}
               </li>
-              <li className="animate__animated animate__fadeInDownBig ">
+              <li className="animate__animated animate__fadeInDownBig ml-2">
                 <Link href={"/signin"}>
-                  03.
+                  03.{" "}
                   <span className="text-white hover:text-[#64ffda]">
-                    {" "}
                     Sign In
                   </span>
-                </Link>{" "}
+                </Link>
               </li>
             </span>
           </ul>
