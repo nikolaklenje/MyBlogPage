@@ -6,6 +6,7 @@ export const SignIn: FC = () => {
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const router = useRouter();
+
   const signInFlow = async () => {
     try {
       const signInAttempt = await supabase.auth.signInWithPassword({
@@ -61,7 +62,10 @@ export const SignIn: FC = () => {
                     Dont have an account?
                   </p>
                   <button
-                    onClick={signInFlow}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      signInFlow();
+                    }}
                     type="submit"
                     defaultValue="Sign In"
                     className="inline-block w-full rounded border-[#64ffda] bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal
