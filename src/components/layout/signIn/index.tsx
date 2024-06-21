@@ -79,7 +79,7 @@ export const SignIn: FC = () => {
                       name="name"
                     />
                   </div>
-                  <div className="relative mb-6">
+                  <div className="relative mb-4">
                     <input
                       type="password"
                       className="text-white block min-h-[auto] w-full rounded border-[#64ffda] border-2 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100  data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200"
