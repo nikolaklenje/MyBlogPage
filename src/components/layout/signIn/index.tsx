@@ -30,7 +30,7 @@ export const SignIn: FC = () => {
                     />
                   </div>
                   <p
-                    className="text-white mb-4"
+                    className="text-white mb-4 cursor-pointer"
                     onClick={() => setIsSignUp(false)}
                   >
                     Dont have an account?
@@ -88,7 +88,7 @@ export const SignIn: FC = () => {
                     />
                   </div>
                   <p
-                    className="text-white mb-4"
+                    className="text-white mb-6 cursor-pointer"
                     onClick={() => setIsSignUp(true)}
                   >
                     Already have account? Sign In
