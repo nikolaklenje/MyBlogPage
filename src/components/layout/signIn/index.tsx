@@ -54,7 +54,10 @@ export const SignIn: FC = () => {
           <div className=" my-20 mx-auto md:px-6">
             <section className="mb-32 text-center">
               <div className="flex flex-wrap justify-center">
-                <form className="w-full shrink-0 grow-0 basis-auto ">
+                <form
+                  className="w-full shrink-0 grow-0 basis-auto"
+                  method="post"
+                >
                   <div className="relative mb-6">
                     <input
                       onChange={(e) => {
@@ -108,7 +111,10 @@ export const SignIn: FC = () => {
           <div className=" my-20 mx-auto md:px-6">
             <section className="mb-32 text-center">
               <div className="flex flex-wrap justify-center">
-                <form className="w-full shrink-0 grow-0 basis-auto ">
+                <form
+                  method="post"
+                  className="w-full shrink-0 grow-0 basis-auto "
+                >
                   <div className="relative mb-6">
                     <input
                       onChange={(e) => {
@@ -173,5 +179,4 @@ export const SignIn: FC = () => {
 //Error component
 //hide passwords from url
 //Sign up confirmation template
-//Confirm passswords
 //reset passwords
