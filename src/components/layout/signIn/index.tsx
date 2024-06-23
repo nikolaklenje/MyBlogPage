@@ -7,6 +7,7 @@ export const SignIn: FC = () => {
   const [newUserEmail, setNewUserEmail] = useState("");
   const [newUserPassword, setNewUserPassword] = useState("");
   const [confirmNewUserPassword, setConfirmNewUserPassword] = useState("");
+  const [matchPasswordError, setMatchPasswordMessage] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const router = useRouter();
 
@@ -27,17 +28,21 @@ export const SignIn: FC = () => {
     }
   };
   const signUpFlow = async () => {
-    try {
-      const signUpAttempt = await supabase.auth.signUp({
-        email: newUserEmail,
-        password: newUserPassword,
-      });
-      const { error } = signUpAttempt;
-      if (error) {
-        console.log("Ovo je greska", error);
+    if (newUserPassword !== confirmNewUserPassword) {
+      setMatchPasswordMessage("Password not matching");
+    } else {
+      try {
+        const signUpAttempt = await supabase.auth.signUp({
+          email: newUserEmail,
+          password: newUserPassword,
+        });
+        const { error } = signUpAttempt;
+        if (error) {
+          console.log("Ovo je greska", error);
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   };
   return (
@@ -125,7 +130,7 @@ export const SignIn: FC = () => {
                     />
                   </div>
                   <div className="relative mb-4">
-                    {/* <input
+                    <input
                       onChange={(e) =>
                         setConfirmNewUserPassword(e.target.value)
                       }
@@ -133,8 +138,9 @@ export const SignIn: FC = () => {
                       className="text-white block min-h-[auto] w-full rounded border-[#64ffda] border-2 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100  data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200"
                       placeholder="Confirm Password"
                       name="password"
-                    /> */}
+                    />
                   </div>
+                  <p className="text-red-600">{matchPasswordError}</p>
                   <p
                     className="text-white mb-6 cursor-pointer"
                     onClick={() => setIsSignUp(true)}
@@ -165,6 +171,7 @@ export const SignIn: FC = () => {
 };
 
 //Error component
+//hide passwords from url
 //Sign up confirmation template
 //Confirm passswords
 //reset passwords
