@@ -7,7 +7,7 @@ export const SignIn: FC = () => {
   const [newUserEmail, setNewUserEmail] = useState("");
   const [newUserPassword, setNewUserPassword] = useState("");
   const [confirmNewUserPassword, setConfirmNewUserPassword] = useState("");
-  const [matchPasswordError, setMatchPasswordMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const router = useRouter();
 
@@ -19,6 +19,7 @@ export const SignIn: FC = () => {
       });
       const { error } = signInAttempt;
       if (error) {
+        setErrorMessage(error.message);
         console.log("SignIn failed", error);
       } else {
         router.push("/");
@@ -29,7 +30,7 @@ export const SignIn: FC = () => {
   };
   const signUpFlow = async () => {
     if (newUserPassword !== confirmNewUserPassword) {
-      setMatchPasswordMessage("Password not matching");
+      setErrorMessage("Password not matching");
     } else {
       try {
         const signUpAttempt = await supabase.auth.signUp({
@@ -38,7 +39,8 @@ export const SignIn: FC = () => {
         });
         const { error } = signUpAttempt;
         if (error) {
-          console.log("Ovo je greska", error);
+          setErrorMessage(error.message);
+          console.log(error);
         }
       } catch (error) {
         console.log(error);
@@ -146,7 +148,7 @@ export const SignIn: FC = () => {
                       name="password"
                     />
                   </div>
-                  <p className="text-red-600">{matchPasswordError}</p>
+                  <p className="text-red-600">{errorMessage}</p>
                   <p
                     className="text-white mb-6 cursor-pointer"
                     onClick={() => setIsSignUp(true)}
