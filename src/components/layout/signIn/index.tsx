@@ -1,6 +1,24 @@
-import { FC, useState } from "react";
+import { FC, useState, useReducer } from "react";
 import { supabase } from "@/library/supabaseApi";
 import { useRouter } from "next/router";
+
+function reducer(state, action) {
+  if (action.type === "signIn") {
+    return {
+      message: "Sign In",
+    };
+  } else if (action.type === "signUp") {
+    return {
+      message: "Sign Up",
+    };
+  } else if (action.type === "resetPassword") {
+    return {
+      message: "Reset Password",
+    };
+  }
+  throw Error("Unknown action");
+}
+
 export const SignIn: FC = () => {
   const [isSignUp, setIsSignUp] = useState(true);
   const [userEmail, setUserEmail] = useState("");
@@ -10,7 +28,7 @@ export const SignIn: FC = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [userPassword, setUserPassword] = useState("");
   const router = useRouter();
-
+  const [state, dispatch] = useReducer(reducer, { message: "Sign In" });
   const signInFlow = async () => {
     try {
       const signInAttempt = await supabase.auth.signInWithPassword({
@@ -49,12 +67,10 @@ export const SignIn: FC = () => {
   };
   return (
     <>
-      {isSignUp ? (
-        <div className="flex flex-col items-center mt-48">
-          {" "}
-          <h1 className="text-6xl font-semibold text-white ">Sign In</h1>
-          <h1 className="text-6xl font-semibold text-white ">Reset password</h1>
-          <h1 className="text-6xl font-semibold text-white ">Sign Up</h1>
+      <div className="flex flex-col items-center mt-48">
+        <h1 className="text-6xl font-semibold text-white ">{state.message}</h1>
+
+        {isSignUp ? (
           <div className=" my-20 mx-auto md:px-6">
             <section className="mb-32 text-center">
               <div className="flex flex-wrap justify-center">
@@ -86,7 +102,10 @@ export const SignIn: FC = () => {
                   </div>
                   <p
                     className="text-white mb-4 cursor-pointer"
-                    onClick={() => setIsSignUp(false)}
+                    onClick={() => {
+                      setIsSignUp(false);
+                      dispatch({ type: "signUp" });
+                    }}
                   >
                     Don't have an account?
                   </p>
@@ -103,7 +122,10 @@ export const SignIn: FC = () => {
                   >
                     Sign In
                   </button>
-                  <p className="text-white my-4 cursor-pointer">
+                  <p
+                    className="text-white my-4 cursor-pointer"
+                    onClick={() => dispatch({ type: "resetPassword" })}
+                  >
                     Forgot password?
                   </p>
                 </form>
@@ -149,10 +171,7 @@ export const SignIn: FC = () => {
               </div>
             </section>
           </div>
-        </div>
-      ) : (
-        <div className="flex flex-col  items-center mt-48">
-          {" "}
+        ) : (
           <div className=" my-20 mx-auto md:px-6">
             <section className="mb-32 text-center">
               <div className="flex flex-wrap justify-center">
@@ -194,7 +213,10 @@ export const SignIn: FC = () => {
                   <p className="text-red-600">{errorMessage}</p>
                   <p
                     className="text-white mb-6 cursor-pointer"
-                    onClick={() => setIsSignUp(true)}
+                    onClick={() => {
+                      setIsSignUp(true);
+                      dispatch({ type: "signIn" });
+                    }}
                   >
                     Already have account? Sign In
                   </p>
@@ -215,8 +237,8 @@ export const SignIn: FC = () => {
               </div>
             </section>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 };
