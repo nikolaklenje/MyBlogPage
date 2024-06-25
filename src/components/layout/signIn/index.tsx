@@ -2,7 +2,7 @@ import { FC, useState, useReducer } from "react";
 import { supabase } from "@/library/supabaseApi";
 import { useRouter } from "next/router";
 
-function reducer(state, action) {
+function reducer(state: any, action: { type: string }) {
   if (action.type === "signIn") {
     return {
       message: "Sign In",
