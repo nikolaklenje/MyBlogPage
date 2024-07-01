@@ -55,7 +55,7 @@ export const SignIn: FC = () => {
       const resetPasswordSent = await supabase.auth.resetPasswordForEmail(
         userEmail,
         {
-          redirectTo: "http://example.com/account/update-password",
+          redirectTo: "http://localhost:3000/resetPassword",
         }
       );
       const { error } = resetPasswordSent;
