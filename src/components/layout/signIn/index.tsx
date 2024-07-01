@@ -49,6 +49,24 @@ export const SignIn: FC = () => {
       }
     }
   };
+
+  const resetPassword = async () => {
+    try {
+      const resetPasswordSent = await supabase.auth.resetPasswordForEmail(
+        userEmail,
+        {
+          redirectTo: "http://example.com/account/update-password",
+        }
+      );
+      const { error } = resetPasswordSent;
+      if (error) {
+        setErrorMessage(error.message);
+        console.log(error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <div className="flex flex-col items-center mt-48">
@@ -208,6 +226,7 @@ export const SignIn: FC = () => {
                   <button
                     onClick={(e) => {
                       e.preventDefault();
+                      resetPassword();
                     }}
                     type="submit"
                     defaultValue="Reset Password"
