@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import "animate.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { signOut } from "@/library/auth";
 export const Header: FC = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
