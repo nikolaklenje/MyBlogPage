@@ -21,3 +21,11 @@ export const signInFlow = async (
     console.log(error);
   }
 };
+
+export const signOut = async () => {
+  try {
+    await supabase.auth.signOut();
+  } catch (error) {
+    console.log(error);
+  }
+};
