@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
   --foreground-rgb: 0, 0, 0;
@@ -19,9 +17,11 @@
 body {
   background-color: #0a192f;
 }
+
 .violen {
   color: #64ffda;
 }
+
 .text-dir-lr {
   writing-mode: vertical-lr;
 }

@@ -1,7 +1,7 @@
 import { FC } from "react";
 import Link from "next/link";
 
-export const Conections: FC = () => {
+export const Connections: FC = () => {
   return (
     <div>
       <div className="fixed z-50 bottom-0 sm: left-2">
