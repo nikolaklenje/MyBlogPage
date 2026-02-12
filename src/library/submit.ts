@@ -1,4 +1,4 @@
-import emailjs from "emailjs-com";
+import emailjs from "@emailjs/browser";
 import { SyntheticEvent } from "react";
 import {
   emailjsUserId,
@@ -8,7 +8,7 @@ import {
 
 const submitForm = (
   e: SyntheticEvent,
-  setIsSuccess: React.Dispatch<React.SetStateAction<boolean>>
+  setIsSuccess: React.Dispatch<React.SetStateAction<boolean>>,
 ): void => {
   e.preventDefault();
   emailjs
@@ -16,7 +16,7 @@ const submitForm = (
       emailjsUserId,
       emailjsTemplateId,
       e.target as HTMLFormElement,
-      emailjsServiceId
+      emailjsServiceId,
     )
     .then(
       () => {
@@ -26,7 +26,7 @@ const submitForm = (
       (error) => {
         console.log("Error: ", error.text);
         setIsSuccess(false);
-      }
+      },
     );
 };
 export default submitForm;
