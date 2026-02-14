@@ -47,28 +47,29 @@ export const BlogDetails = ({ blog }: BlogDetailsType) => {
         <p className="text-xl">{blog.creator}</p>
         <p className="text-xl">{blog.date}</p>
       </div>
-      <ReactMarkdown
-        className={`font-medium text-xl ${styles.blog}`}
-        components={{
-          code({ node, className, children, ...props }) {
-            const match = /language-(\w+)/.exec(className || "");
-            return match ? (
-              <SyntaxHighlighter
-                style={atomDark}
-                language={match[1]}
-                PreTag="div"
-                {...props}
-              >
-                {String(children).replace(/\n$/, "")}
-              </SyntaxHighlighter>
-            ) : (
-              <code>{children}</code>
-            );
-          },
-        }}
-      >
-        {blog.content}
-      </ReactMarkdown>
+      <div className={`font-medium text-xl ${styles.blog}`}>
+        <ReactMarkdown
+          components={{
+            code({ node, className, children, ...props }) {
+              const match = /language-(\w+)/.exec(className || "");
+              return match ? (
+                <SyntaxHighlighter
+                  style={atomDark}
+                  language={match[1]}
+                  PreTag="div"
+                  {...props}
+                >
+                  {String(children).replace(/\n$/, "")}
+                </SyntaxHighlighter>
+              ) : (
+                <code>{children}</code>
+              );
+            },
+          }}
+        >
+          {blog.content}
+        </ReactMarkdown>
+      </div>
     </div>
   );
 };
