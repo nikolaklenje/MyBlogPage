@@ -56,7 +56,7 @@ export const SignIn: FC = () => {
         userEmail,
         {
           redirectTo: "http://localhost:3000/resetPassword",
-        }
+        },
       );
       const { error } = resetPasswordSent;
       if (error) {

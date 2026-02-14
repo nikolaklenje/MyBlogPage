@@ -27,7 +27,7 @@ export default function BlogsPage({ blogs }: { blogs: any }) {
             description={blog.description}
             path={`/blogs/${blog.id}`}
           />
-        )
+        ),
       )}
     </div>
   );

@@ -17,7 +17,7 @@ export const Baner: FC = () => {
       </div>
       <div>
         <p className="text-[#ccd6f6] leading-normal mt-6">
-          Creative and Talented Software Developer with 5+ years of experience
+          Creative and Talented Software Developer with 6+ years of experience
           in designing user-centric, intuitive user interfaces and robust
           software solutions. Extensive expertise in React development,
           including advanced knowledge of design best practices and emerging UI
@@ -25,9 +25,6 @@ export const Baner: FC = () => {
           with users through creative UI frameworks and meticulous user
           experience optimization.
         </p>
-      </div>
-      <div className="border-2 block text-[#64ffda] w-48 pl-6 mt-6 p-4  rounded-md border-[#64ffda]">
-        <Link href={""}>Checkout my work</Link>
       </div>
     </div>
   );

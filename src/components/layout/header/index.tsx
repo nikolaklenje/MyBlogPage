@@ -1,8 +1,6 @@
 import { FC, useEffect, useState } from "react";
-import "animate.css";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { signOut } from "@/library/auth";
 export const Header: FC = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -18,8 +16,8 @@ export const Header: FC = () => {
       <div className="flex flex-row center justify-between p-4 pl-16 pr-16">
         <Link href="/">
           {" "}
-          <div className="font-black mt-5 animate__animated animate__fadeInDown">
-            NICODE
+          <div className="font-black mt-5 animate__animated animate__fadeInDown uppercase">
+            nicode
           </div>
         </Link>
         <div className="flex-row flex">
