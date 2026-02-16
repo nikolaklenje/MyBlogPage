@@ -1,11 +1,11 @@
 ---
-id: "1"
-title: "What is React?"
-category: "React"
-date: "2024-06-07"
-image: "/reactjs.png"
-description: "This is going to be description of the first blog that I will ever write"
-creator: "Nikola Stankovic"
+id: '1'
+title: 'What is React?'
+category: 'React'
+date: '2024-06-07'
+image: '/reactjs.png'
+description: 'This is going to be description of the first blog that I will ever write'
+creator: 'Nikola Stankovic'
 ---
 
 # **What is React?**
