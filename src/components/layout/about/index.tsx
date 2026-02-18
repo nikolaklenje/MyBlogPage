@@ -1,34 +1,33 @@
-import { FC } from "react";
-import Image from "next/image";
-import lex from "../../../../public/lex.jpeg";
+import { FC } from 'react';
+import Image from 'next/image';
+import lex from '../../../../public/lex.jpeg';
 
 export const About: FC = () => {
   return (
-    <div className="w-2/3 items-center animate__animated animate__fadeIn animate__delay-1s ">
+    <div className="animate__animated animate__fadeIn animate__delay-1s w-2/3 items-center">
       <div className="flex flex-col">
-        <div className="flex flex-row ">
-          <h1 className="text-3xl font-semibold text-white ">
-            <span className="text-[#64ffda] mr-4">01.</span>About me
+        <div className="flex flex-row">
+          <h1 className="text-3xl font-semibold text-white">
+            <span className="mr-4 text-[#64ffda]">01.</span>About me
           </h1>
-          <div className="h-[2px] mt-5 ml-2 w-48 bg-[#ccd6f6]"></div>
+          <div className="mt-5 ml-2 h-[2px] w-48 bg-[#ccd6f6]"></div>
         </div>
-        <div className="flex flex-row md: flex-col-reverse lg:flex-row ">
-          <div className="flex lg:w-1/2 flex-col">
-            <p className="text-[#ccd6f6] mt-6 text-lg">
-              Specialized in video-streaming app design and development, with a
-              strong background in implementing DRM configurations, developing
-              VOD and live streaming players, and enhancing playback features.
-              Successfully migrated video players to improve performance,
-              designed and implemented ad managers, and collaborated with
+        <div className="md: flex flex-col-reverse flex-row lg:flex-row">
+          <div className="flex flex-col lg:w-1/2">
+            <p className="mt-6 text-lg text-[#ccd6f6]">
+              Specialized in video-streaming app design and development, with a strong background in
+              implementing DRM configurations, developing VOD and live streaming players, and
+              enhancing playback features. Successfully migrated video players to improve
+              performance, designed and implemented ad managers, and collaborated with
               cross-functional platforms.
             </p>
-            <div className="flex flex-row mt-8 text-[#64ffda]">
+            <div className="mt-8 flex flex-row text-[#64ffda]">
               <ul>
                 <li>JavaScript (ES6+) </li>
                 <li>TypeScript</li>
                 <li>Phyton</li>
               </ul>
-              <ul className="ml-auto mr-auto">
+              <ul className="mr-auto ml-auto">
                 <li>React</li>
                 <li>Nextjs</li>
                 <li>Node.js</li>
@@ -36,7 +35,7 @@ export const About: FC = () => {
             </div>
           </div>
           <div>
-            <Image width={400} src={lex} alt={""}></Image>
+            <Image width={400} src={lex} alt={''}></Image>
           </div>
         </div>
       </div>

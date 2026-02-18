@@ -1,13 +1,13 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
 
-const blogsDirectory = path.join(process.cwd(), "src/listOfBlogs");
+const blogsDirectory = path.join(process.cwd(), 'src/listOfBlogs');
 const fileNames = fs.readdirSync(blogsDirectory);
 export function getAllBlogs() {
   const allBlogs = fileNames.map((fileName) => {
     const filePath = path.join(blogsDirectory, fileName);
-    const fileContents = fs.readFileSync(filePath, "utf8");
+    const fileContents = fs.readFileSync(filePath, 'utf8');
 
     const { data, content } = matter(fileContents);
     return {
@@ -27,10 +27,10 @@ export function getAllBlogs() {
 export function getBlogById(id: string) {
   const fileName = fileNames.find((name) => name.includes(id));
   if (!fileName) {
-    throw new Error("Blog not found");
+    throw new Error('Blog not found');
   }
   const filePath = path.join(blogsDirectory, fileName);
-  const fileContents = fs.readFileSync(filePath, "utf8");
+  const fileContents = fs.readFileSync(filePath, 'utf8');
 
   const { data, content } = matter(fileContents);
   return {

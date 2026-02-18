@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from "react";
-import Link from "next/link";
-import { useRouter } from "next/router";
+import { FC, useEffect, useState } from 'react';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 export const Header: FC = () => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -12,21 +12,18 @@ export const Header: FC = () => {
   useEffect(() => setIsOpen(false), [router]);
 
   return (
-    <div className="header-container relative w-full h-16 text-[#64ffda]">
-      <div className="flex flex-row center justify-between p-4 pl-16 pr-16">
+    <div className="header-container relative h-16 w-full text-[#64ffda]">
+      <div className="center flex flex-row justify-between p-4 pr-16 pl-16">
         <Link href="/">
-          {" "}
-          <div className="font-black mt-5 animate__animated animate__fadeInDown uppercase">
+          {' '}
+          <div className="animate__animated animate__fadeInDown mt-5 font-black uppercase">
             nicode
           </div>
         </Link>
-        <div className="flex-row flex">
-          <ul className="flex flex-row center space-x-4">
-            <li className="lg:hidden mt-1 ">
-              <button
-                onClick={toggleMenu}
-                className="flex items-center text-[#64ffda] p-3"
-              >
+        <div className="flex flex-row">
+          <ul className="center flex flex-row space-x-4">
+            <li className="mt-1 lg:hidden">
+              <button onClick={toggleMenu} className="flex items-center p-3 text-[#64ffda]">
                 <svg
                   className="block h-8 w-8 fill-current"
                   viewBox="0 0 20 20"
@@ -37,51 +34,41 @@ export const Header: FC = () => {
                 </svg>
               </button>
             </li>
-            <span className="hidden lg:flex mt-3 pt-1">
+            <span className="mt-3 hidden pt-1 lg:flex">
               <li className="animate__animated animate__fadeInDownBig">
                 <Link href="/">
-                  01.{" "}
-                  <span className="text-white hover:text-[#64ffda]">Home</span>
+                  01. <span className="text-white hover:text-[#64ffda]">Home</span>
                 </Link>
               </li>
               <li className="animate__animated animate__fadeInDownBig ml-2">
                 <Link href="/blogs">
-                  02.{" "}
-                  <span className="text-white hover:text-[#64ffda]">Blogs</span>
-                </Link>{" "}
+                  02. <span className="text-white hover:text-[#64ffda]">Blogs</span>
+                </Link>{' '}
               </li>
               <li className="animate__animated animate__fadeInDownBig ml-2">
-                <Link href={"/signin"}>
-                  03.{" "}
-                  <span className="text-white hover:text-[#64ffda]">
-                    Sign In
-                  </span>
+                <Link href={'/signin'}>
+                  03. <span className="text-white hover:text-[#64ffda]">Sign In</span>
                 </Link>
               </li>
             </span>
           </ul>
-          <div className="hidden lg:flex h-fit border-2 block animate__animated animate__fadeInUpBig  text-[#64ffda] ml-4 mt-0 p-4 rounded-md border-[#64ffda]">
-            <a
-              href="Nikola_Stankovic_Resume.pdf"
-              download="NikolaStankovicResume"
-            >
+          <div className="animate__animated animate__fadeInUpBig mt-0 ml-4 block hidden h-fit rounded-md border-2 border-[#64ffda] p-4 text-[#64ffda] lg:flex">
+            <a href="Nikola_Stankovic_Resume.pdf" download="NikolaStankovicResume">
               Resume
             </a>
           </div>
           {isOpen ? (
             <div className="relative z-50 flex">
               <div className="fixed inset-0 bg-gray-800 opacity-25"></div>
-              <nav className="fixed top-0 left-0 bottom-0 flex flex-col w-full py-6 px-6 bg-[#0a192f] border-r overflow-y-auto">
-                <div className="flex items-center mb-8">
+              <nav className="fixed top-0 bottom-0 left-0 flex w-full flex-col overflow-y-auto border-r bg-[#0a192f] px-6 py-6">
+                <div className="mb-8 flex items-center">
                   <Link href="/">
-                    {" "}
-                    <div className="font-black animate__animated animate__fadeInDown">
-                      NICODE
-                    </div>
+                    {' '}
+                    <div className="animate__animated animate__fadeInDown font-black">NICODE</div>
                   </Link>
                   <button onClick={toggleMenu} className="fixed right-12">
                     <svg
-                      className="h-6 w-6 text-gray-400 cursor-pointer hover:text-gray-500"
+                      className="h-6 w-6 cursor-pointer text-gray-400 hover:text-gray-500"
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
                       viewBox="0 0 24 24"
@@ -99,45 +86,33 @@ export const Header: FC = () => {
 
                 <div>
                   <ul>
-                    <li className="animate__animated animate__fadeInDownBig mb-1 hover:bg-[#0f2546] hover:text-[#64ffda] rounded">
+                    <li className="animate__animated animate__fadeInDownBig mb-1 rounded hover:bg-[#0f2546] hover:text-[#64ffda]">
                       01.
-                      <Link
-                        href="/"
-                        className="p-4 text-sm font-semibold text-gray-400 "
-                      >
-                        <span className="text-white ">Home</span>
-                      </Link>{" "}
+                      <Link href="/" className="p-4 text-sm font-semibold text-gray-400">
+                        <span className="text-white">Home</span>
+                      </Link>{' '}
                     </li>
-                    <li className="animate__animated animate__fadeInDownBig mb-1 hover:bg-[#0f2546] hover:text-[#64ffda] rounded">
+                    <li className="animate__animated animate__fadeInDownBig mb-1 rounded hover:bg-[#0f2546] hover:text-[#64ffda]">
                       02.
-                      <Link
-                        href="/blogs"
-                        className="p-4 text-sm font-semibold text-gray-400 "
-                      >
-                        <span className="text-white ">Blogs</span>
-                      </Link>{" "}
+                      <Link href="/blogs" className="p-4 text-sm font-semibold text-gray-400">
+                        <span className="text-white">Blogs</span>
+                      </Link>{' '}
                     </li>
-                    <li className="animate__animated animate__fadeInDownBig mb-1 hover:bg-[#0f2546] hover:text-[#64ffda] rounded">
+                    <li className="animate__animated animate__fadeInDownBig mb-1 rounded hover:bg-[#0f2546] hover:text-[#64ffda]">
                       03.
-                      <Link
-                        href={"/signin"}
-                        className="p-4 text-sm font-semibold text-gray-400 "
-                      >
-                        <span className="text-white ">Sign In</span>
-                      </Link>{" "}
+                      <Link href={'/signin'} className="p-4 text-sm font-semibold text-gray-400">
+                        <span className="text-white">Sign In</span>
+                      </Link>{' '}
                     </li>
                   </ul>
-                  <div className="h-fit border-2 block animate__animated animate__fadeInUpBig text-center  text-[#64ffda] mt-8 p-4 rounded-md border-[#64ffda]">
-                    <a
-                      href="Nikola_Stankovic_Resume.pdf"
-                      download="NikolaStankovicResume"
-                    >
+                  <div className="animate__animated animate__fadeInUpBig mt-8 block h-fit rounded-md border-2 border-[#64ffda] p-4 text-center text-[#64ffda]">
+                    <a href="Nikola_Stankovic_Resume.pdf" download="NikolaStankovicResume">
                       Resume
                     </a>
                   </div>
                 </div>
                 <div className="mt-auto">
-                  <p className="my-4 text-xs text-center text-gray-400">
+                  <p className="my-4 text-center text-xs text-gray-400">
                     <span>Copyright © 2024</span>
                   </p>
                 </div>

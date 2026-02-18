@@ -1,11 +1,11 @@
 ---
-id: "2"
-title: "The DNA of a Pragmatic Programmer: Beyond Just Writing Code"
-category: "Software Engineering"
-date: "2024-02-14"
-image: "/reactjs.png"
-description: "What separates a good programmer from a great one?"
-creator: "Nikola Stankovic"
+id: '2'
+title: 'The DNA of a Pragmatic Programmer: Beyond Just Writing Code'
+category: 'Software Engineering'
+date: '2024-02-14'
+image: '/reactjs.png'
+description: 'What separates a good programmer from a great one?'
+creator: 'Nikola Stankovic'
 ---
 
 # **The DNA of a Pragmatic Programmer: Beyond Just Writing Code**
