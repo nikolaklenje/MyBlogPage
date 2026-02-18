@@ -32,6 +32,9 @@
     "tailwindcss": "^4.1.18",
     "typescript": "5.9.3"
   },
+  "browser": {
+    "fs": false
+  },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
     "@types/react-syntax-highlighter": "^15.5.13",
@@ -50,8 +53,5 @@
     "*.{json,css,md}": [
       "prettier --write"
     ]
-  },
-  "browser": {
-    "fs": false
   }
 }
