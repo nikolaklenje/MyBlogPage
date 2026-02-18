@@ -1,10 +1,6 @@
-import { supabase } from "@/library/supabaseApi";
+import { supabase } from '@/library/supabaseApi';
 
-export const signInFlow = async (
-  userEmail: string,
-  userPassword: string,
-  router: any
-) => {
+export const signInFlow = async (userEmail: string, userPassword: string, router: any) => {
   try {
     const signInAttempt = await supabase.auth.signInWithPassword({
       email: userEmail,
@@ -13,9 +9,9 @@ export const signInFlow = async (
     const { error } = signInAttempt;
     if (error) {
       //   setErrorMessage(error.message);
-      console.log("SignIn failed", error);
+      console.log('SignIn failed', error);
     } else {
-      router.push("/");
+      router.push('/');
     }
   } catch (error) {
     console.log(error);

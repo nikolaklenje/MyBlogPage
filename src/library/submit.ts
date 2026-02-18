@@ -1,10 +1,6 @@
-import emailjs from "@emailjs/browser";
-import { SyntheticEvent } from "react";
-import {
-  emailjsUserId,
-  emailjsTemplateId,
-  emailjsServiceId,
-} from "@/library/config";
+import emailjs from '@emailjs/browser';
+import { SyntheticEvent } from 'react';
+import { emailjsUserId, emailjsTemplateId, emailjsServiceId } from '@/library/config';
 
 const submitForm = (
   e: SyntheticEvent,
@@ -12,19 +8,14 @@ const submitForm = (
 ): void => {
   e.preventDefault();
   emailjs
-    .sendForm(
-      emailjsUserId,
-      emailjsTemplateId,
-      e.target as HTMLFormElement,
-      emailjsServiceId,
-    )
+    .sendForm(emailjsUserId, emailjsTemplateId, e.target as HTMLFormElement, emailjsServiceId)
     .then(
       () => {
-        console.log("success");
+        console.log('success');
         setIsSuccess(true);
       },
       (error) => {
-        console.log("Error: ", error.text);
+        console.log('Error: ', error.text);
         setIsSuccess(false);
       },
     );

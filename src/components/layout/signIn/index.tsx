@@ -1,38 +1,38 @@
-import { FC, useState, useReducer } from "react";
-import { supabase } from "@/library/supabaseApi";
-import { useRouter } from "next/router";
-import { signInFlow } from "@/library/auth";
+import { FC, useState, useReducer } from 'react';
+import { supabase } from '@/library/supabaseApi';
+import { useRouter } from 'next/router';
+import { signInFlow } from '@/library/auth';
 
 function reducer(state: any, action: { type: string }) {
-  if (action.type === "signIn") {
+  if (action.type === 'signIn') {
     return {
-      message: "Sign In",
+      message: 'Sign In',
     };
-  } else if (action.type === "signUp") {
+  } else if (action.type === 'signUp') {
     return {
-      message: "Sign Up",
+      message: 'Sign Up',
     };
-  } else if (action.type === "resetPassword") {
+  } else if (action.type === 'resetPassword') {
     return {
-      message: "Reset Password",
+      message: 'Reset Password',
     };
   }
-  throw Error("Unknown action");
+  throw Error('Unknown action');
 }
 
 export const SignIn: FC = () => {
-  const [userEmail, setUserEmail] = useState("");
-  const [newUserEmail, setNewUserEmail] = useState("");
-  const [newUserPassword, setNewUserPassword] = useState("");
-  const [confirmNewUserPassword, setConfirmNewUserPassword] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
-  const [userPassword, setUserPassword] = useState("");
+  const [userEmail, setUserEmail] = useState('');
+  const [newUserEmail, setNewUserEmail] = useState('');
+  const [newUserPassword, setNewUserPassword] = useState('');
+  const [confirmNewUserPassword, setConfirmNewUserPassword] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [userPassword, setUserPassword] = useState('');
   const router = useRouter();
-  const [state, dispatch] = useReducer(reducer, { message: "Sign In" });
+  const [state, dispatch] = useReducer(reducer, { message: 'Sign In' });
 
   const signUpFlow = async () => {
     if (newUserPassword !== confirmNewUserPassword) {
-      setErrorMessage("Password not matching");
+      setErrorMessage('Password not matching');
     } else {
       try {
         const signUpAttempt = await supabase.auth.signUp({
@@ -52,12 +52,9 @@ export const SignIn: FC = () => {
 
   const resetPassword = async () => {
     try {
-      const resetPasswordSent = await supabase.auth.resetPasswordForEmail(
-        userEmail,
-        {
-          redirectTo: "http://localhost:3000/resetPassword",
-        },
-      );
+      const resetPasswordSent = await supabase.auth.resetPasswordForEmail(userEmail, {
+        redirectTo: 'http://localhost:3000/resetPassword',
+      });
       const { error } = resetPasswordSent;
       if (error) {
         setErrorMessage(error.message);
@@ -69,24 +66,21 @@ export const SignIn: FC = () => {
   };
   return (
     <>
-      <div className="flex flex-col items-center mt-48">
-        <h1 className="text-6xl font-semibold text-white ">{state.message}</h1>
+      <div className="mt-48 flex flex-col items-center">
+        <h1 className="text-6xl font-semibold text-white">{state.message}</h1>
 
-        {state.message === "Sign In" ? (
-          <div className=" my-20 mx-auto md:px-6">
+        {state.message === 'Sign In' ? (
+          <div className="mx-auto my-20 md:px-6">
             <section className="mb-32 text-center">
               <div className="flex flex-wrap justify-center">
-                <form
-                  className="w-full shrink-0 grow-0 basis-auto"
-                  method="post"
-                >
+                <form className="w-full shrink-0 grow-0 basis-auto" method="post">
                   <div className="relative mb-6">
                     <input
                       onChange={(e) => {
                         setUserEmail(e.target.value);
                       }}
                       type="email"
-                      className="text-white block min-h-[auto] w-full rounded border-[#64ffda] border-2 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100  data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200"
+                      className="block min-h-[auto] w-full rounded border-2 border-[#64ffda] bg-transparent px-3 py-[0.32rem] leading-[1.6] text-white transition-all duration-200 ease-linear outline-none focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200"
                       placeholder="email"
                       name="email"
                     />
@@ -97,15 +91,15 @@ export const SignIn: FC = () => {
                         setUserPassword(e.target.value);
                       }}
                       type="password"
-                      className="text-white block min-h-[auto] w-full rounded border-2 border-[#64ffda] bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100  data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200"
+                      className="block min-h-[auto] w-full rounded border-2 border-[#64ffda] bg-transparent px-3 py-[0.32rem] leading-[1.6] text-white transition-all duration-200 ease-linear outline-none focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200"
                       placeholder="password"
                       name="password"
                     />
                   </div>
                   <p
-                    className="text-white mb-4 cursor-pointer"
+                    className="mb-4 cursor-pointer text-white"
                     onClick={() => {
-                      dispatch({ type: "signUp" });
+                      dispatch({ type: 'signUp' });
                     }}
                   >
                     Do not have an account?
@@ -117,15 +111,13 @@ export const SignIn: FC = () => {
                     }}
                     type="submit"
                     defaultValue="Sign In"
-                    className="inline-block w-full rounded border-[#64ffda] bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal
-                   text-[#64ffda]  shadow-[0_4px_9px_-4px_#64ffda] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-                    focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                    className="bg-primary hover:bg-primary-600 focus:bg-primary-600 active:bg-primary-700 inline-block w-full rounded border-[#64ffda] px-6 pt-2.5 pb-2 text-xs leading-normal font-medium text-[#64ffda] uppercase shadow-[0_4px_9px_-4px_#64ffda] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:ring-0 focus:outline-none active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
                   >
                     Sign In
                   </button>
                   <p
-                    className="text-white my-4 cursor-pointer"
-                    onClick={() => dispatch({ type: "resetPassword" })}
+                    className="my-4 cursor-pointer text-white"
+                    onClick={() => dispatch({ type: 'resetPassword' })}
                   >
                     Forgot password?
                   </p>
@@ -133,21 +125,18 @@ export const SignIn: FC = () => {
               </div>
             </section>
           </div>
-        ) : state.message === "Sign Up" ? (
-          <div className=" my-20 mx-auto md:px-6">
+        ) : state.message === 'Sign Up' ? (
+          <div className="mx-auto my-20 md:px-6">
             <section className="mb-32 text-center">
               <div className="flex flex-wrap justify-center">
-                <form
-                  method="post"
-                  className="w-full shrink-0 grow-0 basis-auto "
-                >
+                <form method="post" className="w-full shrink-0 grow-0 basis-auto">
                   <div className="relative mb-6">
                     <input
                       onChange={(e) => {
                         setNewUserEmail(e.target.value);
                       }}
                       type="email"
-                      className="text-white block min-h-[auto] w-full rounded border-2 border-[#64ffda] bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100  data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200"
+                      className="block min-h-[auto] w-full rounded border-2 border-[#64ffda] bg-transparent px-3 py-[0.32rem] leading-[1.6] text-white transition-all duration-200 ease-linear outline-none focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200"
                       placeholder="Email address"
                       name="email"
                     />
@@ -156,27 +145,25 @@ export const SignIn: FC = () => {
                     <input
                       onChange={(e) => setNewUserPassword(e.target.value)}
                       type="password"
-                      className="text-white block min-h-[auto] w-full rounded border-[#64ffda] border-2 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100  data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200"
+                      className="block min-h-[auto] w-full rounded border-2 border-[#64ffda] bg-transparent px-3 py-[0.32rem] leading-[1.6] text-white transition-all duration-200 ease-linear outline-none focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200"
                       placeholder="Password"
                       name="name"
                     />
                   </div>
                   <div className="relative mb-4">
                     <input
-                      onChange={(e) =>
-                        setConfirmNewUserPassword(e.target.value)
-                      }
+                      onChange={(e) => setConfirmNewUserPassword(e.target.value)}
                       type="password"
-                      className="text-white block min-h-[auto] w-full rounded border-[#64ffda] border-2 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100  data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200"
+                      className="block min-h-[auto] w-full rounded border-2 border-[#64ffda] bg-transparent px-3 py-[0.32rem] leading-[1.6] text-white transition-all duration-200 ease-linear outline-none focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200"
                       placeholder="Confirm Password"
                       name="password"
                     />
                   </div>
                   <p className="text-red-600">{errorMessage}</p>
                   <p
-                    className="text-white mb-6 cursor-pointer"
+                    className="mb-6 cursor-pointer text-white"
                     onClick={() => {
-                      dispatch({ type: "signIn" });
+                      dispatch({ type: 'signIn' });
                     }}
                   >
                     Already have account? Sign In
@@ -188,9 +175,7 @@ export const SignIn: FC = () => {
                     }}
                     type="submit"
                     defaultValue="Sign Up"
-                    className="inline-block w-full rounded border-[#64ffda] bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal
-                   text-[#64ffda]  shadow-[0_4px_9px_-4px_#64ffda] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-                    focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                    className="bg-primary hover:bg-primary-600 focus:bg-primary-600 active:bg-primary-700 inline-block w-full rounded border-[#64ffda] px-6 pt-2.5 pb-2 text-xs leading-normal font-medium text-[#64ffda] uppercase shadow-[0_4px_9px_-4px_#64ffda] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:ring-0 focus:outline-none active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
                   >
                     Sign Up
                   </button>
@@ -198,28 +183,25 @@ export const SignIn: FC = () => {
               </div>
             </section>
           </div>
-        ) : state.message === "Reset Password" ? (
-          <div className=" my-20 mx-auto md:px-6">
+        ) : state.message === 'Reset Password' ? (
+          <div className="mx-auto my-20 md:px-6">
             <section className="mb-32 text-center">
               <div className="flex flex-wrap justify-center">
-                <form
-                  className="w-full shrink-0 grow-0 basis-auto"
-                  method="post"
-                >
+                <form className="w-full shrink-0 grow-0 basis-auto" method="post">
                   <div className="relative mb-6">
                     <input
                       onChange={(e) => {
                         setUserEmail(e.target.value);
                       }}
                       type="email"
-                      className="text-white block min-h-[auto] w-full rounded border-[#64ffda] border-2 bg-transparent py-[0.32rem] px-3 leading-[1.6] outline-none transition-all duration-200 ease-linear focus:placeholder:opacity-100  data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200"
+                      className="block min-h-[auto] w-full rounded border-2 border-[#64ffda] bg-transparent px-3 py-[0.32rem] leading-[1.6] text-white transition-all duration-200 ease-linear outline-none focus:placeholder:opacity-100 data-[te-input-state-active]:placeholder:opacity-100 motion-reduce:transition-none dark:text-neutral-200"
                       placeholder="enter your email"
                       name="email"
                     />
                   </div>
                   <p
-                    className="text-white mb-4 cursor-pointer"
-                    onClick={() => dispatch({ type: "signUp" })}
+                    className="mb-4 cursor-pointer text-white"
+                    onClick={() => dispatch({ type: 'signUp' })}
                   >
                     Do not have an account?
                   </p>
@@ -230,9 +212,7 @@ export const SignIn: FC = () => {
                     }}
                     type="submit"
                     defaultValue="Reset Password"
-                    className="inline-block w-full rounded border-[#64ffda] bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal
-                   text-[#64ffda]  shadow-[0_4px_9px_-4px_#64ffda] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]
-                    focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
+                    className="bg-primary hover:bg-primary-600 focus:bg-primary-600 active:bg-primary-700 inline-block w-full rounded border-[#64ffda] px-6 pt-2.5 pb-2 text-xs leading-normal font-medium text-[#64ffda] uppercase shadow-[0_4px_9px_-4px_#64ffda] transition duration-150 ease-in-out hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:ring-0 focus:outline-none active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
                   >
                     Reset Password
                   </button>
