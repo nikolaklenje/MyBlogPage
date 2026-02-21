@@ -1,6 +1,5 @@
 import { FC } from 'react';
 import Image from 'next/image';
-import lex from '../../../../public/lex.jpeg';
 
 export const About: FC = () => {
   return (
@@ -12,7 +11,7 @@ export const About: FC = () => {
           </h1>
           <div className="mt-5 ml-2 h-[2px] w-48 bg-[#ccd6f6]"></div>
         </div>
-        <div className="md: flex flex-col-reverse flex-row lg:flex-row">
+        <div className="md: flex flex-col-reverse flex-row justify-between lg:flex-row">
           <div className="flex flex-col lg:w-1/2">
             <p className="mt-6 text-lg text-[#ccd6f6]">
               Specialized in video-streaming app design and development, with a strong background in
@@ -35,7 +34,7 @@ export const About: FC = () => {
             </div>
           </div>
           <div>
-            <Image width={400} src={lex} alt={''}></Image>
+            <Image width={400} src="/nicode-ai-logo-square.png" height={400} alt="Nicode logo" />
           </div>
         </div>
       </div>
