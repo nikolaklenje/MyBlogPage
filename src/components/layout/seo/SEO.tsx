@@ -1,11 +1,18 @@
 import Head from 'next/head';
 
+interface SEOProps {
+  title?: string;
+  description?: string;
+  url?: string;
+  image?: string;
+}
+
 export default function SEO({
   title = 'Nicode',
   description = 'Welcome to Nicode, your go-to platform for the latest in technology, programming, and more.',
   url = 'https://www.nicode.ai/',
   image = 'https://nicode.ai/nicode-ai-logo-og.png',
-}) {
+}: SEOProps) {
   const fullTitle = title ? `${title} ` : 'Nicode';
 
   return (

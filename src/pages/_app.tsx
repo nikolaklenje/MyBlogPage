@@ -13,8 +13,6 @@ export default function App({ Component, pageProps }: AppProps) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         {/* Tells search engines to index your site */}
         <meta name="robots" content="index, follow" />
-        {/* Sets the title of the page */}
-        <title>Nicode</title>
       </Head>
       <main className="flex min-h-screen w-full flex-col items-center">
         <Header />
