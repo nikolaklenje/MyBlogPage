@@ -5,9 +5,6 @@ module.exports = {
   sitemapSize: 7000, // splits into multiple files if you exceed this
   changefreq: 'weekly',
   priority: 0.7,
-  robotsTxtOptions: {
-    additionalSitemaps: ['https://nicode.ai/sitemap.xml'],
-  },
 
   // Pages you want excluded from the sitemap
   exclude: ['/404', '/500', '/admin/*', '/api/*'],
@@ -22,7 +19,7 @@ module.exports = {
         lastmod: new Date().toISOString(),
       };
     }
-    if (path.startsWith('/blog/')) {
+    if (path.startsWith('/blogs/')) {
       return {
         loc: path,
         priority: 0.9,
