@@ -12,6 +12,7 @@ const cspHeader = `
     base-uri 'self';
     form-action 'self';
     frame-ancestors 'none';
+    connect-src 'self' https://*.supabase.co;
     upgrade-insecure-requests;
 `;
 const nextConfig = {
