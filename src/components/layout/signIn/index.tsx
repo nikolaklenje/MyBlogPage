@@ -1,7 +1,6 @@
 import { FC, useState, useReducer } from 'react';
-import { supabase } from '@/library/supabaseApi';
 import { useRouter } from 'next/router';
-import { signInFlow } from '@/library/auth';
+import { signInFlow, resetPasswordFlow, signUpFlow } from '@/library/auth';
 
 function reducer(state: any, action: { type: string }) {
   if (action.type === 'signIn') {
@@ -30,40 +29,6 @@ export const SignIn: FC = () => {
   const router = useRouter();
   const [state, dispatch] = useReducer(reducer, { message: 'Sign In' });
 
-  const signUpFlow = async () => {
-    if (newUserPassword !== confirmNewUserPassword) {
-      setErrorMessage('Password not matching');
-    } else {
-      try {
-        const signUpAttempt = await supabase.auth.signUp({
-          email: newUserEmail,
-          password: newUserPassword,
-        });
-        const { error } = signUpAttempt;
-        if (error) {
-          setErrorMessage(error.message);
-          console.log(error);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    }
-  };
-
-  const resetPassword = async () => {
-    try {
-      const resetPasswordSent = await supabase.auth.resetPasswordForEmail(userEmail, {
-        redirectTo: 'http://localhost:3000/resetPassword',
-      });
-      const { error } = resetPasswordSent;
-      if (error) {
-        setErrorMessage(error.message);
-        console.log(error);
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
   return (
     <>
       <div className="mt-48 flex flex-col items-center">
@@ -105,9 +70,18 @@ export const SignIn: FC = () => {
                     Do not have an account?
                   </p>
                   <button
-                    onClick={(e) => {
+                    onClick={async (e) => {
                       e.preventDefault();
-                      signInFlow(userEmail, userPassword, router);
+                      try {
+                        await signInFlow(userEmail, userPassword, router);
+                        setErrorMessage('');
+                      } catch (error) {
+                        setErrorMessage(
+                          error instanceof Error
+                            ? error.message
+                            : 'An error occurred during sign-in.',
+                        );
+                      }
                     }}
                     type="submit"
                     defaultValue="Sign In"
@@ -115,6 +89,7 @@ export const SignIn: FC = () => {
                   >
                     Sign In
                   </button>
+                  <p className="text-red-600">{errorMessage}</p>
                   <p
                     className="my-4 cursor-pointer text-white"
                     onClick={() => dispatch({ type: 'resetPassword' })}
@@ -169,9 +144,22 @@ export const SignIn: FC = () => {
                     Already have account? Sign In
                   </p>
                   <button
-                    onClick={(e) => {
+                    onClick={async (e) => {
                       e.preventDefault();
-                      signUpFlow();
+                      if (newUserPassword !== confirmNewUserPassword) {
+                        setErrorMessage('Password not matching');
+                      } else {
+                        try {
+                          await signUpFlow(newUserEmail, newUserPassword);
+                          setErrorMessage('');
+                        } catch (error) {
+                          setErrorMessage(
+                            error instanceof Error
+                              ? error.message
+                              : 'An error occurred! Try again.',
+                          );
+                        }
+                      }
                     }}
                     type="submit"
                     defaultValue="Sign Up"
@@ -206,9 +194,16 @@ export const SignIn: FC = () => {
                     Do not have an account?
                   </p>
                   <button
-                    onClick={(e) => {
+                    onClick={async (e) => {
                       e.preventDefault();
-                      resetPassword();
+                      try {
+                        await resetPasswordFlow(userEmail);
+                        setErrorMessage('');
+                      } catch (error) {
+                        setErrorMessage(
+                          error instanceof Error ? error.message : 'An error occurred! Try again.',
+                        );
+                      }
                     }}
                     type="submit"
                     defaultValue="Reset Password"
@@ -216,12 +211,13 @@ export const SignIn: FC = () => {
                   >
                     Reset Password
                   </button>
+                  <p className="text-red-600">{errorMessage}</p>
                 </form>
               </div>
             </section>
           </div>
         ) : (
-          <div className="text-white">THIS WENT Wrong</div>
+          <div className="text-white">THIS WENT WRONG</div>
         )}
       </div>
     </>
