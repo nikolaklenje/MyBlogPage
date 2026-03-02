@@ -74,6 +74,7 @@ export const SignIn: FC = () => {
                       e.preventDefault();
                       try {
                         await signInFlow(userEmail, userPassword, router);
+                        setErrorMessage('');
                       } catch (error) {
                         setErrorMessage(
                           error instanceof Error
@@ -150,6 +151,7 @@ export const SignIn: FC = () => {
                       } else {
                         try {
                           await signUpFlow(newUserEmail, newUserPassword);
+                          setErrorMessage('');
                         } catch (error) {
                           setErrorMessage(
                             error instanceof Error
@@ -196,6 +198,7 @@ export const SignIn: FC = () => {
                       e.preventDefault();
                       try {
                         await resetPasswordFlow(userEmail);
+                        setErrorMessage('');
                       } catch (error) {
                         setErrorMessage(
                           error instanceof Error ? error.message : 'An error occurred! Try again.',
@@ -208,6 +211,7 @@ export const SignIn: FC = () => {
                   >
                     Reset Password
                   </button>
+                  <p className="text-red-600">{errorMessage}</p>
                 </form>
               </div>
             </section>

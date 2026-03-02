@@ -1,42 +1,32 @@
 import { supabase } from '@/library/supabaseApi';
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 export const signInFlow = async (userEmail: string, userPassword: string, router: any) => {
-  try {
-    await supabase.auth.signInWithPassword({
-      email: userEmail,
-      password: userPassword,
-    });
-    router.push('/');
-  } catch (error: any) {
-    throw new Error(error.message || 'An error occurred during sign-in. ');
-  }
+  const { error } = await supabase.auth.signInWithPassword({
+    email: userEmail,
+    password: userPassword,
+  });
+
+  if (error) throw new Error(error.message || 'An error occurred during sign-in.');
+  router.push('/');
 };
 
 export const signUpFlow = async (newUserEmail: string, newUserPassword: string) => {
-  try {
-    await supabase.auth.signUp({
-      email: newUserEmail,
-      password: newUserPassword,
-    });
-  } catch (error: any) {
-    throw new Error(error.message || 'An error occurred! Try again.');
-  }
+  const { error } = await supabase.auth.signUp({
+    email: newUserEmail,
+    password: newUserPassword,
+  });
+  if (error) throw new Error(error.message || 'An error occurred! Try again.');
 };
 
 export const resetPasswordFlow = async (userEmail: string) => {
-  try {
-    await supabase.auth.resetPasswordForEmail(userEmail, {
-      redirectTo: 'http://localhost:3000/reset-password',
-    });
-  } catch (error: any) {
-    throw new Error(error.message || 'An error occurred! Try again.');
-  }
+  const { error } = await supabase.auth.resetPasswordForEmail(userEmail, {
+    redirectTo: `${SITE_URL}/reset-password`,
+  });
+  if (error) throw new Error(error.message || 'An error occurred! Try again.');
 };
 
 export const signOut = async () => {
-  try {
-    await supabase.auth.signOut();
-  } catch (error) {
-    console.log(error);
-  }
+  const { error } = await supabase.auth.signOut();
+  if (error) throw new Error(error.message || 'An error occurred! Try again.');
 };
