@@ -1,7 +1,8 @@
 import { supabase } from '@/library/supabaseApi';
+import { NextRouter } from 'next/router';
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
-export const signInFlow = async (userEmail: string, userPassword: string, router: any) => {
+export const signInFlow = async (userEmail: string, userPassword: string, router: NextRouter) => {
   const { error } = await supabase.auth.signInWithPassword({
     email: userEmail,
     password: userPassword,
