@@ -1,7 +1,13 @@
 import { FC, useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
-export const Header: FC = () => {
+import { User } from '@supabase/supabase-js';
+import { signOut } from '@/library/auth';
+
+interface HeaderProps {
+  user: User | null;
+}
+export const Header: FC<HeaderProps> = ({ user }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -43,12 +49,27 @@ export const Header: FC = () => {
               <li className="animate__animated animate__fadeInDownBig ml-2">
                 <Link href="/blogs">
                   02. <span className="text-white hover:text-[#64ffda]">Blogs</span>
-                </Link>{' '}
+                </Link>
               </li>
               <li className="animate__animated animate__fadeInDownBig ml-2">
-                <Link href={'/signin'}>
-                  03. <span className="text-white hover:text-[#64ffda]">Sign In</span>
-                </Link>
+                {user ? (
+                  <button
+                    onClick={async (e) => {
+                      e.preventDefault();
+                      try {
+                        await signOut(router);
+                      } catch (error) {
+                        error instanceof Error && console.error(error);
+                      }
+                    }}
+                  >
+                    03. <span className="text-white hover:text-[#64ffda]">Sign Out</span>
+                  </button>
+                ) : (
+                  <Link href={'/signin'}>
+                    03. <span className="text-white hover:text-[#64ffda]">Sign In</span>
+                  </Link>
+                )}
               </li>
             </span>
           </ul>
@@ -99,10 +120,24 @@ export const Header: FC = () => {
                       </Link>{' '}
                     </li>
                     <li className="animate__animated animate__fadeInDownBig mb-1 rounded hover:bg-[#0f2546] hover:text-[#64ffda]">
-                      03.
-                      <Link href={'/signin'} className="p-4 text-sm font-semibold text-gray-400">
-                        <span className="text-white">Sign In</span>
-                      </Link>{' '}
+                      {user ? (
+                        <button
+                          onClick={async (e) => {
+                            e.preventDefault();
+                            try {
+                              await signOut(router);
+                            } catch (error) {
+                              error instanceof Error && console.error(error);
+                            }
+                          }}
+                        >
+                          03. <span className="text-white hover:text-[#64ffda]">Sign Out</span>
+                        </button>
+                      ) : (
+                        <Link href={'/signin'}>
+                          03. <span className="text-white hover:text-[#64ffda]">Sign In</span>
+                        </Link>
+                      )}
                     </li>
                   </ul>
                   <div className="animate__animated animate__fadeInUpBig mt-8 block h-fit rounded-md border-2 border-[#64ffda] p-4 text-center text-[#64ffda]">
@@ -113,7 +148,7 @@ export const Header: FC = () => {
                 </div>
                 <div className="mt-auto">
                   <p className="my-4 text-center text-xs text-gray-400">
-                    <span>Copyright © 2024</span>
+                    <span>Copyright © 2026</span>
                   </p>
                 </div>
               </nav>
