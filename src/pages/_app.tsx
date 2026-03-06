@@ -11,9 +11,8 @@ import type { AppProps } from 'next/app';
 
 export default function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<User | null>(null);
-  const router = useRouter();
 
-  useEffect(() => {
+  (useEffect(() => {
     //initial session
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
@@ -26,7 +25,8 @@ export default function App({ Component, pageProps }: AppProps) {
       setUser(session?.user ?? null);
     });
     return () => subscription.unsubscribe();
-  });
+  }),
+    []);
   return (
     <>
       <Head>
