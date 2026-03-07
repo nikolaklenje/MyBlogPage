@@ -51,32 +51,35 @@ export const Header: FC<HeaderProps> = ({ user }) => {
                   02. <span className="text-white hover:text-[#64ffda]">Blogs</span>
                 </Link>
               </li>
-              <li className="animate__animated animate__fadeInDownBig ml-2">
-                {user ? (
-                  <button
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      try {
-                        await signOut(router);
-                      } catch (error) {
-                        error instanceof Error && console.error(error);
-                      }
-                    }}
-                  >
-                    03. <span className="text-white hover:text-[#64ffda]">Sign Out</span>
-                  </button>
-                ) : (
-                  <Link href={'/signin'}>
-                    03. <span className="text-white hover:text-[#64ffda]">Sign In</span>
-                  </Link>
-                )}
+              <li className="animate__animated animate__fadeInDownBig hover:text-[#64ffda]">
+                <span
+                  className="text-md cursor-not-allowed p-4 font-semibold text-gray-400 opacity-40"
+                  title="Coming Soon"
+                >
+                  03. AI Hub
+                </span>
               </li>
             </span>
           </ul>
           <div className="animate__animated animate__fadeInUpBig mt-0 ml-4 block hidden h-fit rounded-md border-2 border-[#64ffda] p-4 text-[#64ffda] lg:flex">
-            <a href="Nikola_Stankovic_Resume.pdf" download="NikolaStankovicResume">
-              Resume
-            </a>
+            {user ? (
+              <button
+                onClick={async (e) => {
+                  e.preventDefault();
+                  try {
+                    await signOut(router);
+                  } catch (error) {
+                    error instanceof Error && console.error(error);
+                  }
+                }}
+              >
+                <span className="text-white hover:text-[#64ffda]">Sign Out</span>
+              </button>
+            ) : (
+              <Link href={'/signin'}>
+                <span className="text-white hover:text-[#64ffda]">Sign In</span>
+              </Link>
+            )}
           </div>
           {isOpen ? (
             <div className="relative z-50 flex">
@@ -109,41 +112,45 @@ export const Header: FC<HeaderProps> = ({ user }) => {
                   <ul>
                     <li className="animate__animated animate__fadeInDownBig mb-1 rounded hover:bg-[#0f2546] hover:text-[#64ffda]">
                       01.
-                      <Link href="/" className="p-4 text-sm font-semibold text-gray-400">
+                      <Link href="/" className="text-md p-4 font-semibold text-gray-400">
                         <span className="text-white">Home</span>
                       </Link>{' '}
                     </li>
                     <li className="animate__animated animate__fadeInDownBig mb-1 rounded hover:bg-[#0f2546] hover:text-[#64ffda]">
                       02.
-                      <Link href="/blogs" className="p-4 text-sm font-semibold text-gray-400">
+                      <Link href="/blogs" className="text-md p-4 font-semibold text-gray-400">
                         <span className="text-white">Blogs</span>
                       </Link>{' '}
                     </li>
-                    <li className="animate__animated animate__fadeInDownBig mb-1 rounded hover:bg-[#0f2546] hover:text-[#64ffda]">
-                      {user ? (
-                        <button
-                          onClick={async (e) => {
-                            e.preventDefault();
-                            try {
-                              await signOut(router);
-                            } catch (error) {
-                              error instanceof Error && console.error(error);
-                            }
-                          }}
-                        >
-                          03. <span className="text-white hover:text-[#64ffda]">Sign Out</span>
-                        </button>
-                      ) : (
-                        <Link href={'/signin'}>
-                          03. <span className="text-white hover:text-[#64ffda]">Sign In</span>
-                        </Link>
-                      )}
+                    <li className="animate__animated animate__fadeInDownBig hover:text-[#64ffda]">
+                      03.
+                      <span
+                        className="text-md cursor-not-allowed pl-4 font-semibold text-gray-400 opacity-40"
+                        title="Coming Soon"
+                      >
+                        AI Hub
+                      </span>
                     </li>
                   </ul>
                   <div className="animate__animated animate__fadeInUpBig mt-8 block h-fit rounded-md border-2 border-[#64ffda] p-4 text-center text-[#64ffda]">
-                    <a href="Nikola_Stankovic_Resume.pdf" download="NikolaStankovicResume">
-                      Resume
-                    </a>
+                    {user ? (
+                      <button
+                        onClick={async (e) => {
+                          e.preventDefault();
+                          try {
+                            await signOut(router);
+                          } catch (error) {
+                            error instanceof Error && console.error(error);
+                          }
+                        }}
+                      >
+                        <span className="text-white hover:text-[#64ffda]">Sign Out</span>
+                      </button>
+                    ) : (
+                      <Link href={'/signin'}>
+                        <span className="text-white hover:text-[#64ffda]">Sign In</span>
+                      </Link>
+                    )}
                   </div>
                 </div>
                 <div className="mt-auto">
