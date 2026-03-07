@@ -27,7 +27,8 @@ export const resetPasswordFlow = async (userEmail: string) => {
   if (error) throw new Error(error.message || 'An error occurred! Try again.');
 };
 
-export const signOut = async () => {
+export const signOut = async (router: NextRouter) => {
   const { error } = await supabase.auth.signOut();
   if (error) throw new Error(error.message || 'An error occurred! Try again.');
+  router.push('/');
 };
