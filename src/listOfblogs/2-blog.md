@@ -1,6 +1,6 @@
 ---
 id: '2'
-title: 'The DNA of a Pragmatic Programmer: Beyond Just Writing Code'
+title: 'Beyond Just Writing Code'
 category: 'Software Engineering'
 date: '2024-02-14'
 image: '/reactjs.png'
