@@ -3,7 +3,6 @@ import { supabase } from '@/library/supabaseApi';
 import 'animate.css';
 import '@/styles/globals.css';
 import { Connections, Header } from '@/components/layout';
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import { User } from '@supabase/supabase-js';
 
