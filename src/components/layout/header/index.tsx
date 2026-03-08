@@ -3,10 +3,12 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { User } from '@supabase/supabase-js';
 import { signOut } from '@/library/auth';
+import { MobileMenu } from './mobileMenu';
 
-interface HeaderProps {
+export interface HeaderProps {
   user: User | null;
 }
+
 export const Header: FC<HeaderProps> = ({ user }) => {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +37,7 @@ export const Header: FC<HeaderProps> = ({ user }) => {
                   viewBox="0 0 20 20"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <title>Mobile menu</title>
+                  <title>Header</title>
                   <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"></path>
                 </svg>
               </button>
@@ -51,109 +53,37 @@ export const Header: FC<HeaderProps> = ({ user }) => {
                   02. <span className="text-white hover:text-[#64ffda]">Blogs</span>
                 </Link>
               </li>
-              <li className="animate__animated animate__fadeInDownBig ml-2">
-                {user ? (
-                  <button
-                    onClick={async (e) => {
-                      e.preventDefault();
-                      try {
-                        await signOut(router);
-                      } catch (error) {
-                        error instanceof Error && console.error(error);
-                      }
-                    }}
-                  >
-                    03. <span className="text-white hover:text-[#64ffda]">Sign Out</span>
-                  </button>
-                ) : (
-                  <Link href={'/signin'}>
-                    03. <span className="text-white hover:text-[#64ffda]">Sign In</span>
-                  </Link>
-                )}
+              <li className="animate__animated animate__fadeInDownBig hover:text-[#64ffda]">
+                <span
+                  className="text-md cursor-not-allowed p-4 font-semibold text-gray-400 opacity-40"
+                  title="Coming Soon"
+                >
+                  03. AI Hub
+                </span>
               </li>
             </span>
           </ul>
           <div className="animate__animated animate__fadeInUpBig mt-0 ml-4 block hidden h-fit rounded-md border-2 border-[#64ffda] p-4 text-[#64ffda] lg:flex">
-            <a href="Nikola_Stankovic_Resume.pdf" download="NikolaStankovicResume">
-              Resume
-            </a>
+            {user ? (
+              <button
+                onClick={async (e) => {
+                  e.preventDefault();
+                  try {
+                    await signOut(router);
+                  } catch (error) {
+                    error instanceof Error && console.error(error);
+                  }
+                }}
+              >
+                <span className="text-white hover:text-[#64ffda]">Sign Out</span>
+              </button>
+            ) : (
+              <Link href={'/signin'}>
+                <span className="text-white hover:text-[#64ffda]">Sign In</span>
+              </Link>
+            )}
           </div>
-          {isOpen ? (
-            <div className="relative z-50 flex">
-              <div className="fixed inset-0 bg-gray-800 opacity-25"></div>
-              <nav className="fixed top-0 bottom-0 left-0 flex w-full flex-col overflow-y-auto border-r bg-[#0a192f] px-6 py-6">
-                <div className="mb-8 flex items-center">
-                  <Link href="/">
-                    {' '}
-                    <div className="animate__animated animate__fadeInDown font-black">NICODE</div>
-                  </Link>
-                  <button onClick={toggleMenu} className="fixed right-12">
-                    <svg
-                      className="h-6 w-6 cursor-pointer text-gray-400 hover:text-gray-500"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      stroke="currentColor"
-                    >
-                      <path
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M6 18L18 6M6 6l12 12"
-                      ></path>
-                    </svg>
-                  </button>
-                </div>
-
-                <div>
-                  <ul>
-                    <li className="animate__animated animate__fadeInDownBig mb-1 rounded hover:bg-[#0f2546] hover:text-[#64ffda]">
-                      01.
-                      <Link href="/" className="p-4 text-sm font-semibold text-gray-400">
-                        <span className="text-white">Home</span>
-                      </Link>{' '}
-                    </li>
-                    <li className="animate__animated animate__fadeInDownBig mb-1 rounded hover:bg-[#0f2546] hover:text-[#64ffda]">
-                      02.
-                      <Link href="/blogs" className="p-4 text-sm font-semibold text-gray-400">
-                        <span className="text-white">Blogs</span>
-                      </Link>{' '}
-                    </li>
-                    <li className="animate__animated animate__fadeInDownBig mb-1 rounded hover:bg-[#0f2546] hover:text-[#64ffda]">
-                      {user ? (
-                        <button
-                          onClick={async (e) => {
-                            e.preventDefault();
-                            try {
-                              await signOut(router);
-                            } catch (error) {
-                              error instanceof Error && console.error(error);
-                            }
-                          }}
-                        >
-                          03. <span className="text-white hover:text-[#64ffda]">Sign Out</span>
-                        </button>
-                      ) : (
-                        <Link href={'/signin'}>
-                          03. <span className="text-white hover:text-[#64ffda]">Sign In</span>
-                        </Link>
-                      )}
-                    </li>
-                  </ul>
-                  <div className="animate__animated animate__fadeInUpBig mt-8 block h-fit rounded-md border-2 border-[#64ffda] p-4 text-center text-[#64ffda]">
-                    <a href="Nikola_Stankovic_Resume.pdf" download="NikolaStankovicResume">
-                      Resume
-                    </a>
-                  </div>
-                </div>
-                <div className="mt-auto">
-                  <p className="my-4 text-center text-xs text-gray-400">
-                    <span>Copyright © 2026</span>
-                  </p>
-                </div>
-              </nav>
-            </div>
-          ) : null}
+          {isOpen ? <MobileMenu user={user} router={router} toggleMenu={toggleMenu} /> : null}
         </div>
       </div>
     </div>
