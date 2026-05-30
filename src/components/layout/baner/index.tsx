@@ -3,14 +3,14 @@ import { FC } from 'react';
 export const Baner: FC = () => {
   return (
     <div className="animate__animated animate__fadeIn animate__delay-1s sm: items-left flex flex-col p-12 text-white lg:p-36">
-      <div className="text-[#64ffda]">
+      <div className="text-2xl text-[#64ffda]">
         <h1>Welcome to</h1>
       </div>
       <div>
-        <h2 className="mt-6 text-6xl font-semibold">NiCode.</h2>
+        <h2 className="mt-4 text-6xl font-semibold">NiCode.</h2>
       </div>
       <div>
-        <h3 className="mt-6 text-6xl font-semibold text-[#ccd6f6]">Your hub for everything AI.</h3>
+        <h3 className="mt-4 text-6xl font-semibold text-[#ccd6f6]">Your hub for everything AI.</h3>
       </div>
       <div>
         <p className="mt-6 leading-normal text-[#ccd6f6]">
