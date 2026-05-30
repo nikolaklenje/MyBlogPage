@@ -12,9 +12,10 @@ export const Contact: FC = () => {
     <div className="mt-48 flex w-2/3 flex-col items-center">
       {isSuccess ? (
         <div className="animate__animated animate__bounceIn container mx-auto my-24 text-center md:px-6">
-          <h1 className="mt-6 text-6xl font-semibold text-white">Success!!!</h1>
+          <h1 className="mt-6 text-6xl font-semibold text-white">Message Sent!</h1>
           <p className="mt-6 w-auto leading-normal text-[#ccd6f6]">
-            I will be reaching out to you soon. You can find me on Social networks too.
+            Thanks for reaching out! We'll get back to you soon. You can also find us on social
+            networks.
           </p>
         </div>
       ) : (
@@ -22,9 +23,9 @@ export const Contact: FC = () => {
           {' '}
           <h1 className="mt-6 text-6xl font-semibold text-white">Get In Touch</h1>
           <p className="mt-6 w-2/3 leading-normal text-[#ccd6f6]">
-            Although I’m not currently looking for any new opportunities, my inbox is always open.
-            Whether you have a question or just want to say hi, I’ll try my best to get back to
-            you!!!
+            Have a question, a story tip, or want to collaborate? Whether you'd like to contribute a
+            blog post, suggest an AI tool to feature, or just say hello — our inbox is always open
+            and we'll do our best to get back to you!
           </p>
           <div className="container mx-auto my-24 md:px-6">
             <section className="mb-32 text-center">

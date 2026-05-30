@@ -53,13 +53,10 @@ export const Header: FC<HeaderProps> = ({ user }) => {
                   02. <span className="text-white hover:text-[#64ffda]">Blogs</span>
                 </Link>
               </li>
-              <li className="animate__animated animate__fadeInDownBig hover:text-[#64ffda]">
-                <span
-                  className="text-md cursor-not-allowed p-4 font-semibold text-gray-400 opacity-40"
-                  title="Coming Soon"
-                >
-                  03. AI Hub
-                </span>
+              <li className="animate__animated animate__fadeInDownBig ml-2">
+                <Link href="/ai-news">
+                  03. <span className="text-white hover:text-[#64ffda]">AI News</span>
+                </Link>
               </li>
             </span>
           </ul>

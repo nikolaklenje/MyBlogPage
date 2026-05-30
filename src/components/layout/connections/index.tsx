@@ -52,7 +52,7 @@ export const Connections: FC = () => {
       <div className="sm: fixed right-2 bottom-0 z-50">
         <div className="relative flex-col text-[#ccd6f6] hover:text-[#64ffda]">
           <div className="text-dir-lr animate__animated animate__fadeIn animate__delay-1s">
-            <Link href="mailto:nikolaelite88@gmail.com">nikolaelite88@gmail.com</Link>
+            <Link href="mailto:contact@nicode.ai">contact@nicode.ai</Link>
           </div>
           <div className="mt-4 ml-2 h-32 w-[2px] bg-[#ccd6f6]"></div>
         </div>
