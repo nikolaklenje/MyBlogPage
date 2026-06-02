@@ -44,14 +44,11 @@ export const MobileMenu: FC<MobileMenu> = ({ toggleMenu, router, user }) => {
                 <span className="text-white">Blogs</span>
               </Link>{' '}
             </li>
-            <li className="animate__animated animate__fadeInDownBig hover:text-[#64ffda]">
+            <li className="animate__animated animate__fadeInDownBig mb-1 rounded hover:bg-[#0f2546] hover:text-[#64ffda]">
               03.
-              <span
-                className="text-md cursor-not-allowed pl-4 font-semibold text-gray-400 opacity-40"
-                title="Coming Soon"
-              >
-                AI Hub
-              </span>
+              <Link href="/ai-news" className="text-md p-4 font-semibold text-gray-400">
+                <span className="text-white">AI News</span>
+              </Link>{' '}
             </li>
           </ul>
           <div className="animate__animated animate__fadeInUpBig mt-8 block h-fit rounded-md border-2 border-[#64ffda] p-4 text-center text-[#64ffda]">

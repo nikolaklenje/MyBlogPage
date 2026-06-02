@@ -6,7 +6,7 @@ const cspHeader = `
     default-src 'self';
     script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ''};
     style-src 'self' 'unsafe-inline';
-    img-src 'self' blob: data:;
+  img-src 'self' blob: data: https:;
     font-src 'self';
     object-src 'none';
     base-uri 'self';
@@ -56,6 +56,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'images.unsplash.com',
+      },
+      {
+        protocol: 'https',
+        hostname: '**', // allows all external image hosts
       },
     ],
   },
