@@ -1,5 +1,6 @@
 import Head from 'next/head';
-import Script from 'next/script'; // add this
+import Script from 'next/script';
+import { useRouter } from 'next/router';
 import { supabase } from '@/library/supabaseApi';
 import 'animate.css';
 import '@/styles/globals.css';
@@ -8,8 +9,15 @@ import { useEffect, useState } from 'react';
 import { User } from '@supabase/supabase-js';
 import type { AppProps } from 'next/app';
 
+declare global {
+  interface Window {
+    gtag: (...args: any[]) => void;
+  }
+}
+
 export default function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<User | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -23,6 +31,15 @@ export default function App({ Component, pageProps }: AppProps) {
     });
     return () => subscription.unsubscribe();
   }, []);
+
+  useEffect(() => {
+    const handleRouteChange = (url: string) => {
+      window.gtag('config', 'G-W493VYG8FR', { page_path: url });
+    };
+
+    router.events.on('routeChangeComplete', handleRouteChange);
+    return () => router.events.off('routeChangeComplete', handleRouteChange);
+  }, [router.events]);
 
   return (
     <>
