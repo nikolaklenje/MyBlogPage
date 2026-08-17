@@ -63,17 +63,14 @@ export default function ModelChat() {
   };
 
   return (
-    <div className="flex h-full flex-col bg-gray-900">
-      {/* ── Top bar ─────────────────────────────────────────── */}
+    <div className="flex min-h-0 w-full flex-1 flex-col bg-gray-900">
       <header className="flex shrink-0 items-center justify-between border-b border-gray-700/60 bg-gray-900 px-6 py-3">
-        <span className="text-sm font-bold tracking-tight text-[#64ffda]">Nicode AI Chat</span>
-
         <div className="relative">
           <select
             value={model}
             onChange={(e) => setModel(e.target.value)}
             disabled={isStreaming}
-            className="cursor-pointer appearance-none rounded-lg border border-gray-700 bg-gray-800 py-1.5 pr-8 pl-3 text-xs text-gray-200 transition-colors outline-none focus:border-[#64ffda] disabled:cursor-not-allowed disabled:opacity-50"
+            className="text-s cursor-pointer appearance-none rounded-lg border border-gray-700 bg-gray-800 py-1.5 pr-8 pl-3 text-gray-200 transition-colors outline-none focus:border-[#64ffda] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {MODEL_OPTIONS.map((m) => (
               <option key={m.id} value={m.id} className="bg-gray-800">
