@@ -50,6 +50,12 @@ export const MobileMenu: FC<MobileMenu> = ({ toggleMenu, router, user }) => {
                 <span className="text-white">AI News</span>
               </Link>{' '}
             </li>
+            <li className="animate__animated animate__fadeInDownBig mb-1 rounded hover:bg-[#0f2546] hover:text-[#64ffda]">
+              04.
+              <Link href="/chat" className="text-md p-4 font-semibold text-gray-400">
+                <span className="text-white">Chat</span>
+              </Link>{' '}
+            </li>
           </ul>
           <div className="animate__animated animate__fadeInUpBig mt-8 block h-fit rounded-md border-2 border-[#64ffda] p-4 text-center text-[#64ffda]">
             {user ? (
