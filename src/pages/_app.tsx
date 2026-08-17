@@ -18,7 +18,7 @@ declare global {
 export default function App({ Component, pageProps }: AppProps) {
   const [user, setUser] = useState<User | null>(null);
   const router = useRouter();
-
+  const isChatPage = router.pathname === '/chat';
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
       setUser(session?.user ?? null);
@@ -61,12 +61,17 @@ export default function App({ Component, pageProps }: AppProps) {
           gtag('config', 'G-W493VYG8FR');
         `}
       </Script>
-
-      <main className="flex min-h-screen w-full flex-col items-center">
-        <Header user={user} />
-        <Connections />
-        <Component {...pageProps} />
-      </main>
+      {isChatPage ? (
+        <div className="h-dvh w-full">
+          <Component {...pageProps} />
+        </div>
+      ) : (
+        <main className="flex min-h-screen w-full flex-col items-center">
+          <Header user={user} />
+          <Connections />
+          <Component {...pageProps} />
+        </main>
+      )}
     </>
   );
 }

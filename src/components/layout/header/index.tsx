@@ -58,6 +58,11 @@ export const Header: FC<HeaderProps> = ({ user }) => {
                   03. <span className="text-white hover:text-[#64ffda]">AI News</span>
                 </Link>
               </li>
+              <li className="animate__animated animate__fadeInDownBig ml-2">
+                <Link href="/chat">
+                  04. <span className="text-white hover:text-[#64ffda]">Chat</span>
+                </Link>
+              </li>
             </span>
           </ul>
           <div className="animate__animated animate__fadeInUpBig mt-0 ml-4 block hidden h-fit rounded-md border-2 border-[#64ffda] p-4 text-[#64ffda] lg:flex">
