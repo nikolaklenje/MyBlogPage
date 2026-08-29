@@ -1,7 +1,62 @@
 {
-  "generatedAt": "2026-08-28T16:11:40.668462+00:00",
-  "count": 146,
+  "generatedAt": "2026-08-29T12:15:22.556770+00:00",
+  "count": 144,
   "jobs": [
+    {
+      "id": "ab:openai:4ef5bf23-cf0e-4b97-a639-11f963c99b88",
+      "title": "Software Engineer, Financial Engineering",
+      "company": "openai",
+      "location": "Remote - San Francisco",
+      "url": "https://jobs.ashbyhq.com/openai/4ef5bf23-cf0e-4b97-a639-11f963c99b88",
+      "posted": "2026-08-28T17:41:41.133+00:00",
+      "ageDays": 1,
+      "remote": "maybe",
+      "isNew": true
+    },
+    {
+      "id": "gh:toast:8159140",
+      "title": "Principal Software Engineer",
+      "company": "toast",
+      "location": "Remote, US",
+      "url": "https://careers.toasttab.com/jobs?gh_jid=8159140",
+      "posted": "2026-08-28T16:33:42-04:00",
+      "ageDays": 1,
+      "remote": "yes",
+      "isNew": true
+    },
+    {
+      "id": "gh:coinbase:8165015",
+      "title": "Senior Software Engineer, Frontend (Platform - Identity)",
+      "company": "coinbase",
+      "location": "Remote - USA",
+      "url": "https://www.coinbase.com/careers/positions/8165015?gh_jid=8165015",
+      "posted": "2026-08-28T15:54:28-04:00",
+      "ageDays": 1,
+      "remote": "yes",
+      "isNew": true
+    },
+    {
+      "id": "gh:coinbase:8164730",
+      "title": "Software Engineer, CDP - Payment Acceptance ",
+      "company": "coinbase",
+      "location": "Remote - USA",
+      "url": "https://www.coinbase.com/careers/positions/8164730?gh_jid=8164730",
+      "posted": "2026-08-28T15:49:07-04:00",
+      "ageDays": 1,
+      "remote": "yes",
+      "isNew": true
+    },
+    {
+      "id": "gh:flexport:8164901",
+      "title": "Senior Systems Engineer (Identity and Access)",
+      "company": "flexport",
+      "location": "U.S. Remote",
+      "url": "https://job-boards.greenhouse.io/flexport/jobs/8164901",
+      "posted": "2026-08-28T14:55:34-04:00",
+      "ageDays": 1,
+      "remote": "yes",
+      "isNew": true
+    },
     {
       "id": "ab:vanta:9014f88f-e9b5-41f9-8bf5-a140725d8779",
       "title": "Senior Financial Systems Engineer",
@@ -9,9 +64,9 @@
       "location": "Remote U.S.",
       "url": "https://jobs.ashbyhq.com/vanta/9014f88f-e9b5-41f9-8bf5-a140725d8779",
       "posted": "2026-08-27T23:32:08.983+00:00",
-      "ageDays": 1,
+      "ageDays": 2,
       "remote": "yes",
-      "isNew": true
+      "isNew": false
     },
     {
       "id": "ab:vanta:b01ad813-3dd3-4603-ab81-75b14772b43b",
@@ -20,9 +75,9 @@
       "location": "Remote U.S.",
       "url": "https://jobs.ashbyhq.com/vanta/b01ad813-3dd3-4603-ab81-75b14772b43b",
       "posted": "2026-08-27T19:09:30.247+00:00",
-      "ageDays": 1,
+      "ageDays": 2,
       "remote": "yes",
-      "isNew": true
+      "isNew": false
     },
     {
       "id": "gh:wikimedia:8158048",
@@ -31,9 +86,9 @@
       "location": "Remote",
       "url": "https://job-boards.greenhouse.io/wikimedia/jobs/8158048",
       "posted": "2026-08-27T16:23:06-04:00",
-      "ageDays": 1,
+      "ageDays": 2,
       "remote": "maybe",
-      "isNew": true
+      "isNew": false
     },
     {
       "id": "gh:coinbase:8160557",
@@ -53,7 +108,7 @@
       "location": "Remote U.S.",
       "url": "https://jobs.ashbyhq.com/vanta/ed632c31-2a66-4c91-8d29-f450bbd4de67",
       "posted": "2026-08-26T20:28:52.130+00:00",
-      "ageDays": 2,
+      "ageDays": 3,
       "remote": "yes",
       "isNew": false
     },
@@ -64,18 +119,7 @@
       "location": "Remote U.S.",
       "url": "https://jobs.ashbyhq.com/vanta/0ccbb65f-f675-410a-ae54-1d34575f228a",
       "posted": "2026-08-26T19:04:45.475+00:00",
-      "ageDays": 2,
-      "remote": "yes",
-      "isNew": false
-    },
-    {
-      "id": "gh:temporaltechnologies:5223128007",
-      "title": "Staff Software Engineer - Test Systems & Tooling",
-      "company": "temporaltechnologies",
-      "location": "United States - Remote Opportunity",
-      "url": "https://job-boards.greenhouse.io/temporaltechnologies/jobs/5223128007",
-      "posted": "2026-08-26T18:10:45-04:00",
-      "ageDays": 2,
+      "ageDays": 3,
       "remote": "yes",
       "isNew": false
     },
@@ -86,7 +130,7 @@
       "location": "Remote - United States",
       "url": "https://job-boards.greenhouse.io/reddit/jobs/8148431",
       "posted": "2026-08-26T13:56:44-04:00",
-      "ageDays": 2,
+      "ageDays": 3,
       "remote": "yes",
       "isNew": false
     },
@@ -97,7 +141,7 @@
       "location": "Remote - United States",
       "url": "https://job-boards.greenhouse.io/reddit/jobs/8155661",
       "posted": "2026-08-26T13:29:03-04:00",
-      "ageDays": 2,
+      "ageDays": 3,
       "remote": "yes",
       "isNew": false
     },
@@ -108,7 +152,7 @@
       "location": "United States - Remote",
       "url": "https://instacart.careers/job/?gh_jid=8155585",
       "posted": "2026-08-25T14:09:57-04:00",
-      "ageDays": 3,
+      "ageDays": 4,
       "remote": "yes",
       "isNew": false
     },
@@ -119,7 +163,7 @@
       "location": "Remote U.S.",
       "url": "https://jobs.ashbyhq.com/vanta/87d75493-1d6e-490e-b5ac-d807f5fb5621",
       "posted": "2026-08-24T20:47:38.879+00:00",
-      "ageDays": 4,
+      "ageDays": 5,
       "remote": "yes",
       "isNew": false
     },
@@ -130,7 +174,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/9248eab6-74e0-4940-98eb-ca09b17da532",
       "posted": "2026-08-24T18:51:59.391+00:00",
-      "ageDays": 4,
+      "ageDays": 5,
       "remote": "maybe",
       "isNew": false
     },
@@ -141,7 +185,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/d1121575-a1a7-47c9-97e6-56c70f441143",
       "posted": "2026-08-24T18:48:55.627+00:00",
-      "ageDays": 4,
+      "ageDays": 5,
       "remote": "maybe",
       "isNew": false
     },
@@ -152,7 +196,7 @@
       "location": "Remote - US",
       "url": "https://www.samsara.com/company/careers/roles/8153269?gh_jid=8153269",
       "posted": "2026-08-24T18:37:03-04:00",
-      "ageDays": 4,
+      "ageDays": 5,
       "remote": "yes",
       "isNew": false
     },
@@ -163,7 +207,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/ec317080-e2d2-4a73-93e6-e0a9ae6fdf96",
       "posted": "2026-08-24T16:34:31.338+00:00",
-      "ageDays": 4,
+      "ageDays": 5,
       "remote": "maybe",
       "isNew": false
     },
@@ -174,7 +218,7 @@
       "location": "Remote - USA",
       "url": "https://www.coinbase.com/careers/positions/8154983?gh_jid=8154983",
       "posted": "2026-08-24T15:58:52-04:00",
-      "ageDays": 4,
+      "ageDays": 5,
       "remote": "yes",
       "isNew": false
     },
@@ -185,7 +229,7 @@
       "location": "U.S. Remote",
       "url": "https://job-boards.greenhouse.io/webflow/jobs/8148362",
       "posted": "2026-08-24T11:00:45-04:00",
-      "ageDays": 4,
+      "ageDays": 5,
       "remote": "yes",
       "isNew": false
     },
@@ -196,7 +240,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/3fa44620-142a-47fe-b098-92923064d2f5",
       "posted": "2026-08-21T22:16:42.577+00:00",
-      "ageDays": 7,
+      "ageDays": 8,
       "remote": "maybe",
       "isNew": false
     },
@@ -207,7 +251,7 @@
       "location": "Remote U.S.",
       "url": "https://jobs.ashbyhq.com/vanta/b5c4b58a-0b6b-40a2-b0de-328e4f943060",
       "posted": "2026-08-21T21:04:13.948+00:00",
-      "ageDays": 7,
+      "ageDays": 8,
       "remote": "yes",
       "isNew": false
     },
@@ -218,7 +262,7 @@
       "location": "Remote U.S.",
       "url": "https://jobs.ashbyhq.com/vanta/c752a8a1-5832-4d2a-a8c5-8b8308d6a7e2",
       "posted": "2026-08-21T18:41:39.163+00:00",
-      "ageDays": 7,
+      "ageDays": 8,
       "remote": "yes",
       "isNew": false
     },
@@ -229,7 +273,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/990397de-c00c-4577-b093-d8c82b4e9145",
       "posted": "2026-08-21T17:12:26.509+00:00",
-      "ageDays": 7,
+      "ageDays": 8,
       "remote": "maybe",
       "isNew": false
     },
@@ -240,7 +284,7 @@
       "location": "Remote - USA",
       "url": "https://www.coinbase.com/careers/positions/8146039?gh_jid=8146039",
       "posted": "2026-08-21T17:05:50-04:00",
-      "ageDays": 7,
+      "ageDays": 8,
       "remote": "yes",
       "isNew": false
     },
@@ -251,7 +295,7 @@
       "location": "San Francisco, CA, New York, NY, Portland, OR, or Remote within Canada or United States",
       "url": "https://job-boards.greenhouse.io/mercury/jobs/6150432004",
       "posted": "2026-08-21T14:32:47-04:00",
-      "ageDays": 7,
+      "ageDays": 8,
       "remote": "yes",
       "isNew": false
     },
@@ -262,7 +306,7 @@
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7819445003",
       "posted": "2026-08-21T13:28:15-04:00",
-      "ageDays": 7,
+      "ageDays": 8,
       "remote": "yes",
       "isNew": false
     },
@@ -273,18 +317,7 @@
       "location": "United States - Remote",
       "url": "https://instacart.careers/job/?gh_jid=8147298",
       "posted": "2026-08-21T13:13:57-04:00",
-      "ageDays": 7,
-      "remote": "yes",
-      "isNew": false
-    },
-    {
-      "id": "gh:temporaltechnologies:5218240007",
-      "title": "Senior Software Engineer, Cloud Growth",
-      "company": "temporaltechnologies",
-      "location": "United States  - Remote Opportunity",
-      "url": "https://job-boards.greenhouse.io/temporaltechnologies/jobs/5218240007",
-      "posted": "2026-08-21T01:52:14-04:00",
-      "ageDays": 7,
+      "ageDays": 8,
       "remote": "yes",
       "isNew": false
     },
@@ -295,7 +328,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/0f887fe6-39f4-44f6-8ee5-230c3002f0d7",
       "posted": "2026-08-20T22:28:11.915+00:00",
-      "ageDays": 8,
+      "ageDays": 9,
       "remote": "maybe",
       "isNew": false
     },
@@ -317,7 +350,7 @@
       "location": "Remote, Canada; Remote, United States",
       "url": "https://job-boards.greenhouse.io/gitlab/jobs/8698314002",
       "posted": "2026-08-20T17:35:39-04:00",
-      "ageDays": 8,
+      "ageDays": 9,
       "remote": "yes",
       "isNew": false
     },
@@ -328,7 +361,7 @@
       "location": "Remote - USA",
       "url": "https://www.coinbase.com/careers/positions/8144769?gh_jid=8144769",
       "posted": "2026-08-20T16:42:47-04:00",
-      "ageDays": 8,
+      "ageDays": 9,
       "remote": "yes",
       "isNew": false
     },
@@ -339,7 +372,7 @@
       "location": "United States (remote)",
       "url": "https://job-boards.greenhouse.io/clickhouse/jobs/6130197004",
       "posted": "2026-08-20T15:56:15-04:00",
-      "ageDays": 8,
+      "ageDays": 9,
       "remote": "yes",
       "isNew": false
     },
@@ -350,7 +383,7 @@
       "location": "U.S. Remote",
       "url": "https://job-boards.greenhouse.io/webflow/jobs/8136483",
       "posted": "2026-08-20T12:33:09-04:00",
-      "ageDays": 8,
+      "ageDays": 9,
       "remote": "yes",
       "isNew": false
     },
@@ -361,7 +394,7 @@
       "location": "Remote - USA",
       "url": "https://www.coinbase.com/careers/positions/8105437?gh_jid=8105437",
       "posted": "2026-08-20T12:21:28-04:00",
-      "ageDays": 8,
+      "ageDays": 9,
       "remote": "yes",
       "isNew": false
     },
@@ -372,7 +405,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/2bf44c13-a463-4ec7-b152-b8367075246c",
       "posted": "2026-08-19T23:09:36.243+00:00",
-      "ageDays": 9,
+      "ageDays": 10,
       "remote": "maybe",
       "isNew": false
     },
@@ -383,7 +416,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/71838fdf-4476-490c-81b6-4bf0746f6774",
       "posted": "2026-08-18T19:12:23.311+00:00",
-      "ageDays": 10,
+      "ageDays": 11,
       "remote": "maybe",
       "isNew": false
     },
@@ -394,18 +427,7 @@
       "location": "Remote - United States",
       "url": "https://job-boards.greenhouse.io/reddit/jobs/8093006",
       "posted": "2026-08-18T17:57:34-04:00",
-      "ageDays": 10,
-      "remote": "yes",
-      "isNew": false
-    },
-    {
-      "id": "gh:temporaltechnologies:5214260007",
-      "title": "Staff Software Engineer, Traffic",
-      "company": "temporaltechnologies",
-      "location": "United States, Remote Opportunity",
-      "url": "https://job-boards.greenhouse.io/temporaltechnologies/jobs/5214260007",
-      "posted": "2026-08-18T16:20:41-04:00",
-      "ageDays": 10,
+      "ageDays": 11,
       "remote": "yes",
       "isNew": false
     },
@@ -416,7 +438,7 @@
       "location": "Remote - United States",
       "url": "https://job-boards.greenhouse.io/reddit/jobs/8139781",
       "posted": "2026-08-18T15:43:32-04:00",
-      "ageDays": 10,
+      "ageDays": 11,
       "remote": "yes",
       "isNew": false
     },
@@ -427,7 +449,7 @@
       "location": "Remote - USA",
       "url": "https://www.coinbase.com/careers/positions/8103569?gh_jid=8103569",
       "posted": "2026-08-18T09:06:07-04:00",
-      "ageDays": 10,
+      "ageDays": 11,
       "remote": "yes",
       "isNew": false
     },
@@ -438,7 +460,7 @@
       "location": "Remote, United States",
       "url": "https://job-boards.greenhouse.io/gitlab/jobs/8705017002",
       "posted": "2026-08-17T18:23:26-04:00",
-      "ageDays": 11,
+      "ageDays": 12,
       "remote": "yes",
       "isNew": false
     },
@@ -449,7 +471,7 @@
       "location": "Remote U.S.",
       "url": "https://jobs.ashbyhq.com/vanta/77aff9b6-4b9b-4ed6-b1fc-3b647227b16b",
       "posted": "2026-08-17T13:27:38.068+00:00",
-      "ageDays": 11,
+      "ageDays": 12,
       "remote": "yes",
       "isNew": false
     },
@@ -482,7 +504,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/ca300a6d-a2a7-4580-aad7-323fbdfee7b1",
       "posted": "2026-08-14T23:27:55.134+00:00",
-      "ageDays": 14,
+      "ageDays": 15,
       "remote": "maybe",
       "isNew": false
     },
@@ -493,7 +515,7 @@
       "location": "Remote U.S.",
       "url": "https://jobs.ashbyhq.com/vanta/e76ea2d6-a514-458c-87fd-0792e50ae6bf",
       "posted": "2026-08-14T22:41:07.282+00:00",
-      "ageDays": 14,
+      "ageDays": 15,
       "remote": "yes",
       "isNew": false
     },
@@ -504,7 +526,7 @@
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7829427003",
       "posted": "2026-08-14T19:00:47-04:00",
-      "ageDays": 14,
+      "ageDays": 15,
       "remote": "yes",
       "isNew": false
     },
@@ -515,7 +537,7 @@
       "location": "Remote - United States",
       "url": "https://job-boards.greenhouse.io/reddit/jobs/8131228",
       "posted": "2026-08-14T17:51:29-04:00",
-      "ageDays": 14,
+      "ageDays": 15,
       "remote": "yes",
       "isNew": false
     },
@@ -526,7 +548,7 @@
       "location": "Remote, Canada; Remote, United States",
       "url": "https://job-boards.greenhouse.io/gitlab/jobs/8715968002",
       "posted": "2026-08-14T14:16:33-04:00",
-      "ageDays": 14,
+      "ageDays": 15,
       "remote": "yes",
       "isNew": false
     },
@@ -537,7 +559,7 @@
       "location": "United States - Remote",
       "url": "https://instacart.careers/job/?gh_jid=8130034",
       "posted": "2026-08-14T10:19:35-04:00",
-      "ageDays": 14,
+      "ageDays": 15,
       "remote": "yes",
       "isNew": false
     },
@@ -548,7 +570,7 @@
       "location": "United States - Remote",
       "url": "https://instacart.careers/job/?gh_jid=8121910",
       "posted": "2026-08-14T08:19:33-04:00",
-      "ageDays": 14,
+      "ageDays": 15,
       "remote": "yes",
       "isNew": false
     },
@@ -570,7 +592,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/099dd6af-b017-4a60-85d5-4c79da3a9ead",
       "posted": "2026-08-13T16:31:47.234+00:00",
-      "ageDays": 15,
+      "ageDays": 16,
       "remote": "maybe",
       "isNew": false
     },
@@ -581,17 +603,6 @@
       "location": "United States(Remote)",
       "url": "https://job-boards.greenhouse.io/clickhouse/jobs/6142784004",
       "posted": "2026-08-13T02:40:24-04:00",
-      "ageDays": 15,
-      "remote": "yes",
-      "isNew": false
-    },
-    {
-      "id": "gh:temporaltechnologies:5210998007",
-      "title": "Senior Software Engineer, Infrastructure Foundations",
-      "company": "temporaltechnologies",
-      "location": "United States, Remote Opportunity",
-      "url": "https://job-boards.greenhouse.io/temporaltechnologies/jobs/5210998007",
-      "posted": "2026-08-12T19:28:55-04:00",
       "ageDays": 16,
       "remote": "yes",
       "isNew": false
@@ -603,7 +614,7 @@
       "location": "CA Remote (BC & ON only); U.S. Remote",
       "url": "https://job-boards.greenhouse.io/webflow/jobs/8122601",
       "posted": "2026-08-12T16:08:05-04:00",
-      "ageDays": 16,
+      "ageDays": 17,
       "remote": "yes",
       "isNew": false
     },
@@ -614,7 +625,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/a23bd45a-e192-460d-bd34-a0f6c4bc6865",
       "posted": "2026-08-11T19:23:49.234+00:00",
-      "ageDays": 17,
+      "ageDays": 18,
       "remote": "maybe",
       "isNew": false
     },
@@ -625,7 +636,7 @@
       "location": "Remote U.S.",
       "url": "https://jobs.ashbyhq.com/vanta/021cca9c-f937-4d97-8be7-bc83af8307be",
       "posted": "2026-08-11T19:17:30.850+00:00",
-      "ageDays": 17,
+      "ageDays": 18,
       "remote": "yes",
       "isNew": false
     },
@@ -636,7 +647,7 @@
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7833950003",
       "posted": "2026-08-10T18:39:50-04:00",
-      "ageDays": 18,
+      "ageDays": 19,
       "remote": "yes",
       "isNew": false
     },
@@ -647,7 +658,7 @@
       "location": "Remote, Canada; Remote, United States",
       "url": "https://job-boards.greenhouse.io/gitlab/jobs/8682707002",
       "posted": "2026-08-10T11:15:21-04:00",
-      "ageDays": 18,
+      "ageDays": 19,
       "remote": "yes",
       "isNew": false
     },
@@ -658,7 +669,7 @@
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7819704003",
       "posted": "2026-08-10T10:31:17-04:00",
-      "ageDays": 18,
+      "ageDays": 19,
       "remote": "yes",
       "isNew": false
     },
@@ -669,7 +680,7 @@
       "location": "United States - Remote",
       "url": "https://instacart.careers/job/?gh_jid=8110286",
       "posted": "2026-08-10T10:28:12-04:00",
-      "ageDays": 18,
+      "ageDays": 19,
       "remote": "yes",
       "isNew": false
     },
@@ -691,7 +702,7 @@
       "location": "Remote - US",
       "url": "https://www.samsara.com/company/careers/roles/8064742?gh_jid=8064742",
       "posted": "2026-08-07T17:28:57-04:00",
-      "ageDays": 21,
+      "ageDays": 22,
       "remote": "yes",
       "isNew": false
     },
@@ -702,7 +713,7 @@
       "location": "Remote - USA",
       "url": "https://www.coinbase.com/careers/positions/8114877?gh_jid=8114877",
       "posted": "2026-08-07T16:42:46-04:00",
-      "ageDays": 21,
+      "ageDays": 22,
       "remote": "yes",
       "isNew": false
     },
@@ -713,7 +724,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/e961c9df-caa0-4b29-b37c-a3e02c564615",
       "posted": "2026-08-06T23:42:09.138+00:00",
-      "ageDays": 22,
+      "ageDays": 23,
       "remote": "maybe",
       "isNew": false
     },
@@ -724,7 +735,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/7facc4fa-70f0-4f2b-8b0c-8bb79c3296c1",
       "posted": "2026-08-06T17:52:18.473+00:00",
-      "ageDays": 22,
+      "ageDays": 23,
       "remote": "maybe",
       "isNew": false
     },
@@ -735,7 +746,7 @@
       "location": "Remote - USA",
       "url": "https://www.coinbase.com/careers/positions/8104873?gh_jid=8104873",
       "posted": "2026-08-06T17:49:43-04:00",
-      "ageDays": 22,
+      "ageDays": 23,
       "remote": "yes",
       "isNew": false
     },
@@ -746,7 +757,7 @@
       "location": "Remote, US ",
       "url": "https://careers.toasttab.com/jobs?gh_jid=8103307",
       "posted": "2026-08-06T12:46:52-04:00",
-      "ageDays": 22,
+      "ageDays": 23,
       "remote": "yes",
       "isNew": false
     },
@@ -757,7 +768,7 @@
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7813107003",
       "posted": "2026-08-06T11:37:54-04:00",
-      "ageDays": 22,
+      "ageDays": 23,
       "remote": "yes",
       "isNew": false
     },
@@ -790,19 +801,8 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/0432731c-f229-476e-92b6-d53491e79096",
       "posted": "2026-08-05T17:34:35.335+00:00",
-      "ageDays": 23,
+      "ageDays": 24,
       "remote": "maybe",
-      "isNew": false
-    },
-    {
-      "id": "gh:temporaltechnologies:5204483007",
-      "title": "Staff Software Engineer, AI Foundations (AI Agent Optimization)",
-      "company": "temporaltechnologies",
-      "location": "United States or Canada, Remote Opportunity",
-      "url": "https://job-boards.greenhouse.io/temporaltechnologies/jobs/5204483007",
-      "posted": "2026-08-05T12:05:00-04:00",
-      "ageDays": 23,
-      "remote": "yes",
       "isNew": false
     },
     {
@@ -812,7 +812,7 @@
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7785812003",
       "posted": "2026-08-05T11:44:47-04:00",
-      "ageDays": 23,
+      "ageDays": 24,
       "remote": "yes",
       "isNew": false
     },
@@ -834,7 +834,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/ef828b89-41ed-4cde-96a9-94ffe5770d4c",
       "posted": "2026-08-04T17:13:29.899+00:00",
-      "ageDays": 24,
+      "ageDays": 25,
       "remote": "maybe",
       "isNew": false
     },
@@ -845,7 +845,7 @@
       "location": "Remote - Mountain View",
       "url": "https://jobs.ashbyhq.com/openai/d2aad13c-6ed0-4905-ae12-8ea2397b190c",
       "posted": "2026-08-04T16:40:08.911+00:00",
-      "ageDays": 24,
+      "ageDays": 25,
       "remote": "maybe",
       "isNew": false
     },
@@ -856,7 +856,7 @@
       "location": "Remote - US",
       "url": "https://job-boards.greenhouse.io/twilio/jobs/8026207",
       "posted": "2026-08-04T16:00:02-04:00",
-      "ageDays": 24,
+      "ageDays": 25,
       "remote": "yes",
       "isNew": false
     },
@@ -867,7 +867,7 @@
       "location": "Remote - US",
       "url": "https://job-boards.greenhouse.io/twilio/jobs/8026203",
       "posted": "2026-08-04T15:52:01-04:00",
-      "ageDays": 24,
+      "ageDays": 25,
       "remote": "yes",
       "isNew": false
     },
@@ -878,7 +878,7 @@
       "location": "Remote - United States",
       "url": "https://job-boards.greenhouse.io/reddit/jobs/8106246",
       "posted": "2026-08-04T14:46:03-04:00",
-      "ageDays": 24,
+      "ageDays": 25,
       "remote": "yes",
       "isNew": false
     },
@@ -889,7 +889,7 @@
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7820306003",
       "posted": "2026-08-04T12:37:06-04:00",
-      "ageDays": 24,
+      "ageDays": 25,
       "remote": "yes",
       "isNew": false
     },
@@ -900,7 +900,7 @@
       "location": "Remote - US",
       "url": "https://job-boards.greenhouse.io/twilio/jobs/8103253",
       "posted": "2026-08-03T17:50:41-04:00",
-      "ageDays": 25,
+      "ageDays": 26,
       "remote": "yes",
       "isNew": false
     },
@@ -911,7 +911,7 @@
       "location": "Remote - US",
       "url": "https://job-boards.greenhouse.io/twilio/jobs/8098945",
       "posted": "2026-08-03T17:50:40-04:00",
-      "ageDays": 25,
+      "ageDays": 26,
       "remote": "yes",
       "isNew": false
     },
@@ -922,7 +922,7 @@
       "location": "Remote, USA",
       "url": "https://boards.greenhouse.io/chime/jobs/8578967002?gh_jid=8578967002",
       "posted": "2026-08-03T14:54:58-04:00",
-      "ageDays": 25,
+      "ageDays": 26,
       "remote": "yes",
       "isNew": false
     },
@@ -933,7 +933,7 @@
       "location": "Remote, Canada; Remote, United States",
       "url": "https://job-boards.greenhouse.io/gitlab/jobs/8644572002",
       "posted": "2026-08-03T11:54:04-04:00",
-      "ageDays": 25,
+      "ageDays": 26,
       "remote": "yes",
       "isNew": false
     },
@@ -944,8 +944,19 @@
       "location": "Remote, Canada; Remote, United States",
       "url": "https://job-boards.greenhouse.io/gitlab/jobs/8644569002",
       "posted": "2026-08-03T10:38:08-04:00",
-      "ageDays": 25,
+      "ageDays": 26,
       "remote": "yes",
+      "isNew": false
+    },
+    {
+      "id": "ab:supabase:3b5d54ca-741b-45ac-bd3f-31605a0d3541",
+      "title": "AI Platform Engineer",
+      "company": "supabase",
+      "location": "Remote, Global",
+      "url": "https://jobs.ashbyhq.com/supabase/3b5d54ca-741b-45ac-bd3f-31605a0d3541",
+      "posted": "2026-07-31T18:56:39.246+00:00",
+      "ageDays": 29,
+      "remote": "maybe",
       "isNew": false
     },
     {
@@ -955,7 +966,7 @@
       "location": "Remote - US",
       "url": "https://job-boards.greenhouse.io/twilio/jobs/8100236",
       "posted": "2026-07-31T16:58:59-04:00",
-      "ageDays": 28,
+      "ageDays": 29,
       "remote": "yes",
       "isNew": false
     },
@@ -966,7 +977,7 @@
       "location": "United States (Remote)",
       "url": "https://job-boards.greenhouse.io/grafanalabs/jobs/6130907004",
       "posted": "2026-07-31T07:26:29-04:00",
-      "ageDays": 28,
+      "ageDays": 29,
       "remote": "yes",
       "isNew": false
     },
@@ -977,7 +988,7 @@
       "location": "Remote",
       "url": "https://job-boards.greenhouse.io/mozilla/jobs/8089088",
       "posted": "2026-07-30T09:42:42-04:00",
-      "ageDays": 29,
+      "ageDays": 30,
       "remote": "maybe",
       "isNew": false
     },
@@ -988,7 +999,7 @@
       "location": "Remote - USA",
       "url": "https://www.coinbase.com/careers/positions/8095252?gh_jid=8095252",
       "posted": "2026-07-30T09:25:46-04:00",
-      "ageDays": 29,
+      "ageDays": 30,
       "remote": "yes",
       "isNew": false
     },
@@ -999,7 +1010,7 @@
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7819654003",
       "posted": "2026-07-29T17:51:15-04:00",
-      "ageDays": 30,
+      "ageDays": 31,
       "remote": "yes",
       "isNew": false
     },
@@ -1010,7 +1021,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/3229b152-015f-49ad-9921-9c9de95570c8",
       "posted": "2026-07-29T16:55:22.704+00:00",
-      "ageDays": 30,
+      "ageDays": 31,
       "remote": "maybe",
       "isNew": false
     },
@@ -1021,7 +1032,7 @@
       "location": "Remote, Global",
       "url": "https://jobs.ashbyhq.com/supabase/f048dd68-63f8-4f98-9860-3d5a43c09a01",
       "posted": "2026-07-29T15:45:25.773+00:00",
-      "ageDays": 30,
+      "ageDays": 31,
       "remote": "maybe",
       "isNew": false
     },
@@ -1032,7 +1043,7 @@
       "location": "Remote",
       "url": "https://job-boards.greenhouse.io/wikimedia/jobs/8090103",
       "posted": "2026-07-29T11:59:21-04:00",
-      "ageDays": 30,
+      "ageDays": 31,
       "remote": "maybe",
       "isNew": false
     },
@@ -1043,7 +1054,7 @@
       "location": "Remote",
       "url": "https://careers.toasttab.com/jobs?gh_jid=8077263",
       "posted": "2026-07-28T16:18:43-04:00",
-      "ageDays": 31,
+      "ageDays": 32,
       "remote": "maybe",
       "isNew": false
     },
@@ -1054,7 +1065,7 @@
       "location": "Remote - USA",
       "url": "https://www.coinbase.com/careers/positions/8088201?gh_jid=8088201",
       "posted": "2026-07-28T13:00:31-04:00",
-      "ageDays": 31,
+      "ageDays": 32,
       "remote": "yes",
       "isNew": false
     },
@@ -1065,7 +1076,7 @@
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7812982003",
       "posted": "2026-07-27T17:04:11-04:00",
-      "ageDays": 32,
+      "ageDays": 33,
       "remote": "yes",
       "isNew": false
     },
@@ -1076,7 +1087,7 @@
       "location": "Remote - US",
       "url": "https://job-boards.greenhouse.io/twilio/jobs/8081530",
       "posted": "2026-07-27T10:42:37-04:00",
-      "ageDays": 32,
+      "ageDays": 33,
       "remote": "yes",
       "isNew": false
     },
@@ -1087,7 +1098,7 @@
       "location": "Remote - US",
       "url": "https://www.samsara.com/company/careers/roles/8055217?gh_jid=8055217",
       "posted": "2026-07-24T17:48:23-04:00",
-      "ageDays": 35,
+      "ageDays": 36,
       "remote": "yes",
       "isNew": false
     },
@@ -1098,7 +1109,7 @@
       "location": "Remote - USA",
       "url": "https://www.coinbase.com/careers/positions/8082199?gh_jid=8082199",
       "posted": "2026-07-24T15:33:43-04:00",
-      "ageDays": 35,
+      "ageDays": 36,
       "remote": "yes",
       "isNew": false
     },
@@ -1109,7 +1120,7 @@
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7808384003",
       "posted": "2026-07-24T09:31:47-04:00",
-      "ageDays": 35,
+      "ageDays": 36,
       "remote": "yes",
       "isNew": false
     },
@@ -1131,7 +1142,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/a0ccedf1-2bb7-4f10-8be8-db50f9ae02c3",
       "posted": "2026-07-23T18:43:09.820+00:00",
-      "ageDays": 36,
+      "ageDays": 37,
       "remote": "maybe",
       "isNew": false
     },
@@ -1142,7 +1153,7 @@
       "location": "Remote - US",
       "url": "https://job-boards.greenhouse.io/twilio/jobs/7689461",
       "posted": "2026-07-23T16:53:32-04:00",
-      "ageDays": 36,
+      "ageDays": 37,
       "remote": "yes",
       "isNew": false
     },
@@ -1153,7 +1164,7 @@
       "location": "Remote - USA",
       "url": "https://www.coinbase.com/careers/positions/8064873?gh_jid=8064873",
       "posted": "2026-07-23T13:18:57-04:00",
-      "ageDays": 36,
+      "ageDays": 37,
       "remote": "yes",
       "isNew": false
     },
@@ -1164,7 +1175,7 @@
       "location": "Remote - USA",
       "url": "https://www.coinbase.com/careers/positions/8064916?gh_jid=8064916",
       "posted": "2026-07-23T01:13:37-04:00",
-      "ageDays": 36,
+      "ageDays": 37,
       "remote": "yes",
       "isNew": false
     },
@@ -1175,7 +1186,7 @@
       "location": "United States - Remote",
       "url": "https://instacart.careers/job/?gh_jid=8080310",
       "posted": "2026-07-22T16:44:32-04:00",
-      "ageDays": 37,
+      "ageDays": 38,
       "remote": "yes",
       "isNew": false
     },
@@ -1186,7 +1197,7 @@
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7803078003",
       "posted": "2026-07-22T15:05:21-04:00",
-      "ageDays": 37,
+      "ageDays": 38,
       "remote": "yes",
       "isNew": false
     },
@@ -1197,7 +1208,7 @@
       "location": "Remote, US",
       "url": "https://careers.toasttab.com/jobs?gh_jid=8065545",
       "posted": "2026-07-22T13:04:42-04:00",
-      "ageDays": 37,
+      "ageDays": 38,
       "remote": "yes",
       "isNew": false
     },
@@ -1230,7 +1241,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/aeeabb7a-f6e0-4e8d-a9ad-ae3464288125",
       "posted": "2026-07-21T21:37:09.484+00:00",
-      "ageDays": 38,
+      "ageDays": 39,
       "remote": "maybe",
       "isNew": false
     },
@@ -1241,7 +1252,7 @@
       "location": "Remote, United States",
       "url": "https://jobs.ashbyhq.com/confluent/47920ccd-db54-4ed4-a865-70857e865fff",
       "posted": "2026-07-21T17:30:38.012+00:00",
-      "ageDays": 38,
+      "ageDays": 39,
       "remote": "yes",
       "isNew": false
     },
@@ -1252,7 +1263,7 @@
       "location": "Remote - USA",
       "url": "https://www.coinbase.com/careers/positions/8051871?gh_jid=8051871",
       "posted": "2026-07-21T14:04:21-04:00",
-      "ageDays": 38,
+      "ageDays": 39,
       "remote": "yes",
       "isNew": false
     },
@@ -1263,7 +1274,7 @@
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7800317003",
       "posted": "2026-07-20T13:51:39-04:00",
-      "ageDays": 39,
+      "ageDays": 40,
       "remote": "yes",
       "isNew": false
     },
@@ -1274,7 +1285,7 @@
       "location": "Remote - US",
       "url": "https://job-boards.greenhouse.io/twilio/jobs/8056276",
       "posted": "2026-07-17T15:17:32-04:00",
-      "ageDays": 42,
+      "ageDays": 43,
       "remote": "yes",
       "isNew": false
     },
@@ -1285,7 +1296,7 @@
       "location": "Remote - US",
       "url": "https://job-boards.greenhouse.io/twilio/jobs/8067270",
       "posted": "2026-07-17T13:46:15-04:00",
-      "ageDays": 42,
+      "ageDays": 43,
       "remote": "yes",
       "isNew": false
     },
@@ -1296,7 +1307,7 @@
       "location": "Remote",
       "url": "https://job-boards.greenhouse.io/wikimedia/jobs/8060307",
       "posted": "2026-07-15T14:41:58-04:00",
-      "ageDays": 44,
+      "ageDays": 45,
       "remote": "maybe",
       "isNew": false
     },
@@ -1307,7 +1318,7 @@
       "location": "Remote",
       "url": "https://job-boards.greenhouse.io/wikimedia/jobs/8060261",
       "posted": "2026-07-15T14:41:55-04:00",
-      "ageDays": 44,
+      "ageDays": 45,
       "remote": "maybe",
       "isNew": false
     },
@@ -1318,7 +1329,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/07153f7c-7e8b-4283-a879-cb07a224e083",
       "posted": "2026-07-15T14:28:42.801+00:00",
-      "ageDays": 44,
+      "ageDays": 45,
       "remote": "maybe",
       "isNew": false
     },
@@ -1329,7 +1340,7 @@
       "location": "Remote - US",
       "url": "https://www.samsara.com/company/careers/roles/8036387?gh_jid=8036387",
       "posted": "2026-07-15T13:43:34-04:00",
-      "ageDays": 44,
+      "ageDays": 45,
       "remote": "yes",
       "isNew": false
     },
@@ -1340,18 +1351,7 @@
       "location": "San Francisco, CA, New York, NY, Portland, OR, or Remote within Canada or United States",
       "url": "https://job-boards.greenhouse.io/mercury/jobs/6116808004",
       "posted": "2026-07-15T13:17:41-04:00",
-      "ageDays": 44,
-      "remote": "yes",
-      "isNew": false
-    },
-    {
-      "id": "gh:temporaltechnologies:5187649007",
-      "title": "Senior Software Engineer, Open Source Server",
-      "company": "temporaltechnologies",
-      "location": "United States - Remote Opportunity",
-      "url": "https://job-boards.greenhouse.io/temporaltechnologies/jobs/5187649007",
-      "posted": "2026-07-15T11:35:36-04:00",
-      "ageDays": 44,
+      "ageDays": 45,
       "remote": "yes",
       "isNew": false
     },
@@ -1362,7 +1362,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/d1c6cb87-a44d-4d04-92a8-dc40eccd090e",
       "posted": "2026-07-13T19:27:13.459+00:00",
-      "ageDays": 46,
+      "ageDays": 47,
       "remote": "maybe",
       "isNew": false
     },
@@ -1373,7 +1373,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/fff02c39-1185-427c-bf89-70d7eaa5e3db",
       "posted": "2026-07-13T19:27:11.674+00:00",
-      "ageDays": 46,
+      "ageDays": 47,
       "remote": "maybe",
       "isNew": false
     },
@@ -1384,7 +1384,7 @@
       "location": "Remote - USA",
       "url": "https://www.coinbase.com/careers/positions/8056068?gh_jid=8056068",
       "posted": "2026-07-13T17:43:35-04:00",
-      "ageDays": 46,
+      "ageDays": 47,
       "remote": "yes",
       "isNew": false
     },
@@ -1395,7 +1395,7 @@
       "location": "Remote - United States",
       "url": "https://job-boards.greenhouse.io/reddit/jobs/8060775",
       "posted": "2026-07-13T17:21:02-04:00",
-      "ageDays": 46,
+      "ageDays": 47,
       "remote": "yes",
       "isNew": false
     },
@@ -1406,7 +1406,7 @@
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7801694003",
       "posted": "2026-07-13T16:45:14-04:00",
-      "ageDays": 46,
+      "ageDays": 47,
       "remote": "yes",
       "isNew": false
     },
@@ -1417,7 +1417,7 @@
       "location": "United States (Remote)",
       "url": "https://job-boards.greenhouse.io/grafanalabs/jobs/6114603004",
       "posted": "2026-07-13T10:46:25-04:00",
-      "ageDays": 46,
+      "ageDays": 47,
       "remote": "yes",
       "isNew": false
     },
@@ -1433,24 +1433,13 @@
       "isNew": false
     },
     {
-      "id": "gh:gusto:8035802",
-      "title": "Staff Software Engineer, Business Money",
-      "company": "gusto",
-      "location": "San Francisco, CA;New York, NY;Ontario, CAN - Remote;Toronto, Ontario, CAN - Remote;United States - Remote",
-      "url": "https://job-boards.greenhouse.io/gusto/jobs/8035802",
-      "posted": "2026-07-10T19:38:54-04:00",
-      "ageDays": 49,
-      "remote": "yes",
-      "isNew": false
-    },
-    {
       "id": "gh:affirm:7799631003",
       "title": "Senior Software Engineer, Backend (Lake Analytics Platform) ",
       "company": "affirm",
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7799631003",
       "posted": "2026-07-10T14:56:39-04:00",
-      "ageDays": 49,
+      "ageDays": 50,
       "remote": "yes",
       "isNew": false
     },
@@ -1461,7 +1450,7 @@
       "location": "Remote US",
       "url": "https://job-boards.greenhouse.io/affirm/jobs/7727320003",
       "posted": "2026-07-10T09:25:07-04:00",
-      "ageDays": 49,
+      "ageDays": 50,
       "remote": "yes",
       "isNew": false
     },
@@ -1472,7 +1461,7 @@
       "location": "Remote - San Francisco",
       "url": "https://jobs.ashbyhq.com/openai/ca54cd23-2bcc-4327-bcb6-46d81ed414a8",
       "posted": "2026-07-09T22:15:49.719+00:00",
-      "ageDays": 50,
+      "ageDays": 51,
       "remote": "maybe",
       "isNew": false
     },
@@ -1483,18 +1472,7 @@
       "location": "Remote - United States",
       "url": "https://job-boards.greenhouse.io/reddit/jobs/8049901",
       "posted": "2026-07-07T18:59:52-04:00",
-      "ageDays": 52,
-      "remote": "yes",
-      "isNew": false
-    },
-    {
-      "id": "gh:temporaltechnologies:5178158007",
-      "title": "Senior Software Engineer, Nexus SDK",
-      "company": "temporaltechnologies",
-      "location": "United States - Remote Opportunity",
-      "url": "https://job-boards.greenhouse.io/temporaltechnologies/jobs/5178158007",
-      "posted": "2026-07-07T17:30:24-04:00",
-      "ageDays": 52,
+      "ageDays": 53,
       "remote": "yes",
       "isNew": false
     },
@@ -1505,7 +1483,7 @@
       "location": "Remote, US ",
       "url": "https://careers.toasttab.com/jobs?gh_jid=8046934",
       "posted": "2026-07-07T15:51:22-04:00",
-      "ageDays": 52,
+      "ageDays": 53,
       "remote": "yes",
       "isNew": false
     },
@@ -1516,7 +1494,7 @@
       "location": "San Francisco, CA, New York, NY, Portland, OR, or Remote within Canada or United States",
       "url": "https://job-boards.greenhouse.io/mercury/jobs/6110081004",
       "posted": "2026-07-06T17:19:09-04:00",
-      "ageDays": 53,
+      "ageDays": 54,
       "remote": "yes",
       "isNew": false
     },
@@ -1527,7 +1505,7 @@
       "location": "Remote - United States",
       "url": "https://job-boards.greenhouse.io/reddit/jobs/8044767",
       "posted": "2026-07-02T18:30:16-04:00",
-      "ageDays": 57,
+      "ageDays": 58,
       "remote": "yes",
       "isNew": false
     },
@@ -1538,7 +1516,7 @@
       "location": "United States (Remote)",
       "url": "https://job-boards.greenhouse.io/grafanalabs/jobs/6108384004",
       "posted": "2026-07-02T17:49:59-04:00",
-      "ageDays": 57,
+      "ageDays": 58,
       "remote": "yes",
       "isNew": false
     },
@@ -1549,7 +1527,7 @@
       "location": "Remote, Canada; Remote, United States",
       "url": "https://job-boards.greenhouse.io/gitlab/jobs/8614945002",
       "posted": "2026-07-02T14:41:00-04:00",
-      "ageDays": 57,
+      "ageDays": 58,
       "remote": "yes",
       "isNew": false
     },
@@ -1560,7 +1538,7 @@
       "location": "Remote, US ",
       "url": "https://careers.toasttab.com/jobs?gh_jid=8038159",
       "posted": "2026-07-02T14:09:34-04:00",
-      "ageDays": 57,
+      "ageDays": 58,
       "remote": "yes",
       "isNew": false
     },
@@ -1571,7 +1549,7 @@
       "location": "San Francisco, CA, New York, NY, Portland, OR, or Remote within Canada or United States",
       "url": "https://job-boards.greenhouse.io/mercury/jobs/6101148004",
       "posted": "2026-07-01T03:00:00-04:00",
-      "ageDays": 58,
+      "ageDays": 59,
       "remote": "yes",
       "isNew": false
     },
@@ -1582,7 +1560,7 @@
       "location": "San Francisco, CA, New York, NY, Portland, OR, or Remote within Canada or United States",
       "url": "https://job-boards.greenhouse.io/mercury/jobs/6101151004",
       "posted": "2026-07-01T03:00:00-04:00",
-      "ageDays": 58,
+      "ageDays": 59,
       "remote": "yes",
       "isNew": false
     },
@@ -1593,7 +1571,7 @@
       "location": "San Francisco, CA, New York, NY, Portland, OR, or Remote within Canada or United States",
       "url": "https://job-boards.greenhouse.io/mercury/jobs/6101145004",
       "posted": "2026-07-01T03:00:00-04:00",
-      "ageDays": 58,
+      "ageDays": 59,
       "remote": "yes",
       "isNew": false
     },
@@ -1604,7 +1582,7 @@
       "location": "Remote - NAMER",
       "url": "https://jobs.ashbyhq.com/zapier/1767482d-de23-460c-80eb-6d0a3caa72ab",
       "posted": "2026-06-30T21:30:07.895+00:00",
-      "ageDays": 59,
+      "ageDays": 60,
       "remote": "maybe",
       "isNew": false
     }
