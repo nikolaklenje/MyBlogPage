@@ -527,3 +527,44 @@ describe('/api/chat timeouts (deterministic, no live requests)', () => {
     expect(CHAT_TIMEOUT).toEqual(PRODUCTION_TIMEOUT);
   });
 });
+
+describe('/api/chat browser-facing stream', () => {
+  it('strips provider metadata such as Gemini thoughtSignature but keeps the text', async () => {
+    vi.spyOn(console, 'info').mockImplementation(() => {});
+    const signature = 'EpYBCpMBAVjVB3-ENCRYPTED-SIGNATURE';
+    const providerMetadata = { google: { thoughtSignature: signature } };
+    vi.mocked(getChatModel).mockReturnValue(
+      mockModel([
+        { type: 'stream-start', warnings: [] },
+        { type: 'text-start', id: 't1', providerMetadata },
+        { type: 'text-delta', id: 't1', delta: 'Hello', providerMetadata },
+        { type: 'text-delta', id: 't1', delta: '', providerMetadata },
+        { type: 'text-end', id: 't1', providerMetadata },
+        finishPart,
+      ]),
+    );
+
+    const body = await (await postChat({ messages: [userMessage('Hi')] })).text();
+    const chunks = parseSse(body);
+
+    expect(body).not.toContain(signature);
+    expect(body).not.toContain('providerMetadata');
+    expect(body).not.toContain('thoughtSignature');
+    expect(
+      chunks
+        .filter((c) => c.type === 'text-delta')
+        .map((c) => c.delta)
+        .join(''),
+    ).toBe('Hello');
+    expect(chunks.map((c) => c.type)).toEqual([
+      'start',
+      'start-step',
+      'text-start',
+      'text-delta',
+      'text-delta',
+      'text-end',
+      'finish-step',
+      'finish',
+    ]);
+  });
+});

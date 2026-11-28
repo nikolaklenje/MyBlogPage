@@ -71,9 +71,12 @@ export default function ModelChat() {
               const text = getMessageText(m);
               const isStreamingThis =
                 status === 'streaming' && m.role === 'assistant' && m.id === lastMessage?.id;
-              const ending = m.role === 'assistant' ? chat.getReplyEnding(m.id) : undefined;
-              const note = ending ? REPLY_ENDING_NOTES[ending] : undefined;
               const isLast = m.id === lastMessage?.id;
+              // A user turn carries an ending when no reply appeared (e.g. stopped before the
+              // first token); it is only relevant while that turn is still the last message.
+              const ending =
+                m.role === 'assistant' || isLast ? chat.getReplyEnding(m.id) : undefined;
+              const note = ending ? REPLY_ENDING_NOTES[ending] : undefined;
 
               if (m.role === 'assistant' && text.length === 0 && !isStreamingThis) return null;
 
@@ -104,7 +107,11 @@ export default function ModelChat() {
                       )}
                     </div>
                     {note && (
-                      <p className="mt-1.5 flex items-center gap-2 text-[11px] text-gray-500">
+                      <p
+                        className={`mt-1.5 flex items-center gap-2 text-[11px] text-gray-500 ${
+                          m.role === 'user' ? 'justify-end' : ''
+                        }`}
+                      >
                         {note}
                         {isLast && chat.canRetry && !chat.errorMessage && (
                           <button

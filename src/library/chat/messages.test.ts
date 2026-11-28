@@ -11,8 +11,10 @@ import {
   classifyReplyEnding,
   describeChatError,
   getConversationChars,
+  getEndingTargetId,
   getMessageText,
   isRejectedRequest,
+  mergeRejectedIntoDraft,
 } from '@/library/chat/messages';
 
 const msg = (role: UIMessage['role'], text: string): UIMessage => ({
@@ -112,5 +114,39 @@ describe('describeChatError', () => {
     expect(describeChatError(new Error(leaky))).not.toContain('SECRET');
     expect(describeChatError(httpError(500, leaky))).not.toContain('SECRET');
     expect(isRejectedRequest(httpError(500))).toBe(false);
+  });
+});
+
+describe('getEndingTargetId', () => {
+  it('uses the reply itself when it is visible', () => {
+    const user = msg('user', 'Hi');
+    const reply = msg('assistant', 'Hello');
+    expect(getEndingTargetId(reply, [user, reply])).toBe(reply.id);
+  });
+
+  it('falls back to the answered user turn when the reply never appeared', () => {
+    const user = msg('user', 'Hi');
+    expect(getEndingTargetId(msg('assistant', ''), [user])).toBe(user.id);
+  });
+
+  it('returns nothing when there is no user turn to attach to (e.g. after a clear)', () => {
+    expect(getEndingTargetId(msg('assistant', ''), [])).toBeUndefined();
+  });
+});
+
+describe('mergeRejectedIntoDraft', () => {
+  it('restores the rejected message into an empty composer', () => {
+    expect(mergeRejectedIntoDraft('Long question', '')).toBe('Long question');
+    expect(mergeRejectedIntoDraft('Long question', '  ')).toBe('Long question');
+  });
+
+  it('keeps a draft typed meanwhile, with the rejected message first', () => {
+    expect(mergeRejectedIntoDraft('Long question', 'New thought')).toBe(
+      'Long question\n\nNew thought',
+    );
+  });
+
+  it('does not duplicate the rejected message if it is already in the draft', () => {
+    expect(mergeRejectedIntoDraft('Long question', 'Long question')).toBe('Long question');
   });
 });

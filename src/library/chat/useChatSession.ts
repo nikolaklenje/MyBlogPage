@@ -11,8 +11,10 @@ import {
   checkCanSend,
   classifyReplyEnding,
   describeChatError,
+  getEndingTargetId,
   getMessageText,
   isRejectedRequest,
+  mergeRejectedIntoDraft,
 } from '@/library/chat/messages';
 import type { ReplyEnding, SendCheck } from '@/library/chat/messages';
 
@@ -53,18 +55,35 @@ export function useChatSession(): ChatSession {
   // Stateless and safe to share for the component's lifetime.
   const [transport] = useState(() => new DefaultChatTransport<UIMessage>({ api: CHAT_API_PATH }));
 
+  // Synchronous duplicate-submission guard. React state (`status`) only changes after a
+  // re-render, and the SDK sets `submitted` after an internal await, so two calls from the
+  // same render would both pass a state-based check. A ref is updated immediately.
+  const inFlightRef = useRef<Promise<void> | null>(null);
+
   const { messages, status, error, sendMessage, regenerate, stop, setMessages, clearError } =
     useChat<UIMessage>({
       transport,
       throttle: STREAM_THROTTLE_MS,
-      onFinish: ({ message, isAbort, isError, finishReason }) => {
+      onFinish: ({ message, messages: current, isAbort, isError, finishReason }) => {
         if (message.role !== 'assistant') return;
+        const targetId = getEndingTargetId(message, current);
+        if (!targetId) return;
         const ending = classifyReplyEnding({ isAbort, isError, finishReason });
-        setEndings((previous) => ({ ...previous, [message.id]: ending }));
+        setEndings((previous) => ({ ...previous, [targetId]: ending }));
       },
     });
 
   const isBusy = status === 'submitted' || status === 'streaming';
+
+  /** Runs one request at a time; returns immediately if one is already in flight. */
+  const runExclusive = useCallback(async (request: () => Promise<void>) => {
+    if (inFlightRef.current) return;
+    const promise = request().finally(() => {
+      if (inFlightRef.current === promise) inFlightRef.current = null;
+    });
+    inFlightRef.current = promise;
+    await promise;
+  }, []);
 
   // A 400/413 means the server rejected the request (too long). Every later request would
   // resend the same oversized message and fail again, so take it out of the history and put
@@ -76,7 +95,7 @@ export function useChatSession(): ChatSession {
     const last = messages.at(-1);
     if (last?.role !== 'user') return;
     setMessages(messages.slice(0, -1));
-    setDraft((current) => current || getMessageText(last));
+    setDraft((current) => mergeRejectedIntoDraft(getMessageText(last), current));
   }, [error, messages, setMessages]);
 
   const sendCheck = useMemo(() => checkCanSend(messages, draft), [messages, draft]);
@@ -85,9 +104,11 @@ export function useChatSession(): ChatSession {
     // Guards duplicate submissions (Enter + click, double click) while a reply is in flight.
     if (isBusy || !sendCheck.ok) return;
     const text = draft;
-    setDraft('');
-    await sendMessage({ text });
-  }, [draft, isBusy, sendCheck, sendMessage]);
+    await runExclusive(async () => {
+      setDraft('');
+      await sendMessage({ text });
+    });
+  }, [draft, isBusy, runExclusive, sendCheck, sendMessage]);
 
   const lastMessage = messages.at(-1);
   const lastEnding = lastMessage ? endings[lastMessage.id] : undefined;
@@ -99,18 +120,25 @@ export function useChatSession(): ChatSession {
 
   const retry = useCallback(async () => {
     if (!canRetry) return;
-    clearError();
-    // Regenerates the last assistant reply, or resends the last user message if it got none.
-    // Compatible with server validation: history is sliced to end with the user turn.
-    await regenerate();
-  }, [canRetry, clearError, regenerate]);
+    await runExclusive(async () => {
+      clearError();
+      // Regenerates the last assistant reply, or resends the last user message if it got none.
+      // Compatible with server validation: history is sliced to end with the user turn.
+      await regenerate();
+    });
+  }, [canRetry, clearError, regenerate, runExclusive]);
 
   const clear = useCallback(async () => {
-    if (isBusy) await stop();
+    // Always stop — `isBusy` is React state and can lag behind a send started in the same
+    // render. One stop() covers every phase (verified in ai@7.0.181): before the request is
+    // active it aborts the SDK's pending message preparation (sendMessage then bails), and
+    // afterwards it aborts the request and waits for in-flight writes and onFinish, so no
+    // late chunk or callback can re-add messages or endings. Covered by the clear tests.
+    await stop();
     setMessages([]);
     clearError();
     setEndings({});
-  }, [clearError, isBusy, setMessages, stop]);
+  }, [clearError, setMessages, stop]);
 
   const getReplyEnding = useCallback((messageId: string) => endings[messageId], [endings]);
 

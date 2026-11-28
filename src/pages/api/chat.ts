@@ -110,7 +110,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
 
     await pipeUIMessageStreamToResponse({
       response: res,
-      stream: rewriteAbortChunks(uiStream, generation),
+      stream: sanitizeClientStream(uiStream, generation),
     });
   } catch (error) {
     logAiError('chat', error);
@@ -161,28 +161,40 @@ function isTimeout(reason: unknown): boolean {
 }
 
 /**
- * The browser's chat client ignores `abort` chunks, so a server timeout would otherwise look
- * like a normal completion — and the SDK puts its timeout message (incl. our budgets) in the
- * chunk's `reason`. Timeouts become a generic `error` chunk (useChat shows an error and keeps
- * the partial reply); other aborts are forwarded without the reason. Relies on `onAbort`
- * running before the abort chunk is emitted (verified in ai@7.0.181, covered by tests).
+ * Shapes the browser-facing stream:
+ * - Timeouts: the browser's chat client ignores `abort` chunks, so a server timeout would
+ *   otherwise look like a normal completion, and the SDK puts its timeout message (incl. our
+ *   budgets) in the chunk's `reason`. Timeouts become a generic `error` chunk (useChat shows
+ *   an error and keeps the partial reply); other aborts are forwarded without the reason.
+ *   Relies on `onAbort` running before the abort chunk is emitted (verified in ai@7.0.181).
+ * - Provider metadata (e.g. Gemini's encrypted `thoughtSignature`) is removed: the text-only
+ *   chat doesn't need it in the browser. Revisit when tool calling needs signatures preserved.
  */
-function rewriteAbortChunks(
+function sanitizeClientStream(
   stream: ReadableStream<UIMessageChunk>,
   generation: GenerationState,
 ): ReadableStream<UIMessageChunk> {
   return stream.pipeThrough(
     new TransformStream<UIMessageChunk, UIMessageChunk>({
       transform(chunk, controller) {
-        if (chunk.type !== 'abort') return controller.enqueue(chunk);
-        controller.enqueue(
-          isTimeout(generation.abortReason)
-            ? { type: 'error', errorText: CHAT_TIMEOUT_MESSAGE }
-            : { type: 'abort' },
-        );
+        if (chunk.type === 'abort') {
+          controller.enqueue(
+            isTimeout(generation.abortReason)
+              ? { type: 'error', errorText: CHAT_TIMEOUT_MESSAGE }
+              : { type: 'abort' },
+          );
+          return;
+        }
+        controller.enqueue(withoutProviderMetadata(chunk));
       },
     }),
   );
+}
+
+function withoutProviderMetadata(chunk: UIMessageChunk): UIMessageChunk {
+  if (!('providerMetadata' in chunk) || chunk.providerMetadata === undefined) return chunk;
+  const { providerMetadata: _removed, ...rest } = chunk;
+  return rest as UIMessageChunk;
 }
 
 /** Metadata only — never message content. Cost/quota tracking builds on this in Phase 3. */

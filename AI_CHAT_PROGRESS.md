@@ -8,8 +8,57 @@ Tracks progress against `AI_CHAT_ROADMAP.md`. Update at the end of each session.
 
 - **Phase:** 2 — Streaming Chat (in progress). Phase 1 was reviewed and approved.
 - **Done:** Task 2.1, the backend streaming endpoint `/api/chat` (development only), verified on its own. Reviewed in PR #60, plus follow-up fixes for outcome logging and timeout tests (Session 4).
-- **Done:** Task 2.2, frontend integration with `useChat` (Session 5), pending review.
+- **Done:** Task 2.2, frontend integration with `useChat` (Session 5). Review approved; the edge-case follow-ups are done (Session 6) and pending review before merging into `dev`.
 - **Next:** the user reviews Task 2.2 and checks it manually in the browser, then Phase 2 is closed out. **Do not start Phase 3 without an explicit go-ahead.**
+
+---
+
+## 2026-11-27 — Session 6 (Task 2.2 review follow-ups: edge cases + hook/component tests)
+
+### Hook tests first: 4 real bugs reproduced
+
+`useChatSession` and `ModelChat` tests were written against the existing code before any fix:
+
+| Concern                                  | Before the fix               | Root cause (verified in ai@7.0.181)                                                                                                             |
+| ---------------------------------------- | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1. Rapid duplicate submit                | ❌ 2 requests                | `sendMessage` sets `status: 'submitted'` only after an internal `await`, and React re-renders later still, so both calls saw `isBusy === false` |
+| 2. Stop before the first token           | ❌ no feedback, no retry     | `onFinish` reports an assistant message that was never added to `messages`, so the ending was recorded for an invisible message                 |
+| 3. Rejected-message restoration          | ❌ rejected text lost        | `current \|\| rejected` dropped it whenever a new draft existed                                                                                 |
+| 4a. Clear during active streaming        | ✅ already safe              | `stop()` awaits the response's completion promise and the job queue                                                                             |
+| 4b. Clear right after Send (same render) | ❌ cleared message came back | `clear()` only stopped `if (isBusy)`, which lagged, so `stop()` was skipped                                                                     |
+
+### Fixes (`src/library/chat/useChatSession.ts`, `messages.ts`, `ModelChat`)
+
+1. **Synchronous guard:** `inFlightRef` + `runExclusive` for `send` and `retry`. One request at a time, enforced without waiting for a re-render.
+2. **`getEndingTargetId`:** if the reply never became visible, the ending (e.g. `stopped`) is attached to the user turn it answered. `ModelChat` shows the note under that turn while it is still the last message, with Retry. Retry resends it via `regenerate()`.
+3. **`mergeRejectedIntoDraft`:** the rejected text goes back into the composer **before** any draft typed meanwhile (`rejected\n\ndraft`), without duplicating it.
+4. **`clear()` always calls `stop()`.** One call covers every phase. Before the request is active, `stop()` aborts the SDK's `pendingMessagePreparations` and `sendMessage` bails (the only `await` before that point is guarded). Afterwards it aborts the request and waits for in-flight writes and `onFinish`, so nothing can re-add messages or endings.
+
+**Simplified after mutation testing.** I first also added a stop-retry loop in `clear()`, an `isRequestPending` state, an epoch guard for late `onFinish`, and a `clearingRef`. Mutation tests plus reading the SDK showed none of them were needed: no test failed without them, and the SDK sequencing above covers each case. All four were removed rather than kept as untested complexity.
+
+**`thoughtSignature` (decision: strip):** `sanitizeClientStream` in `src/pages/api/chat.ts` (formerly `rewriteAbortChunks`) now also removes `providerMetadata` from every browser-facing chunk; 19 chunk types can carry it. Revisit when tool calling needs signatures preserved (Phase 5).
+
+### Tests added
+
+- Dev dependencies, exact pins, all at least two weeks old: `@testing-library/react@16.3.3`, `@testing-library/dom@10.4.2`, `jsdom@31.0.0`. Per-file `// @vitest-environment jsdom`.
+- `src/__tests__/chat/testUtils.ts`: real `/api/chat` handler + scripted mock model + a fetch stub that resolves the app's relative `/api/chat` URL and counts requests.
+- `useChatSession.test.tsx` (7): streaming; same-render double send → 1 request; stop before first token → `stopped` on the user turn + retry works; rejected message restored alongside a newer draft; clear mid-stream stays cleared + new conversation clean; clear before the request is active; send during clear is a no-op and keeps the draft.
+- `ModelChat.test.tsx` (5): fixed model label with no selector; double Enter → 1 request + Markdown rendered; Stop before first token → "Response stopped." + Retry → reply; rejected 400 → alert + composer has both texts + no Retry; Clear during streaming → empty state, no alert.
+- Route: provider metadata (`thoughtSignature`) stripped, text and chunk order unchanged.
+- `messages.test.ts`: `getEndingTargetId`, `mergeRejectedIntoDraft`.
+
+**Test-design lesson:** the first "stop before first token" component test was flaky. It passed alone and failed after any other test. Instrumentation showed the stop could land while the request body was still uploading, so the handler never ran and the Retry consumed the stalling script. The test now waits until the model has been called (`doStreamCalls`) before pressing Stop.
+
+### Results
+
+| Check                                               | Result                                                                                                                                                                       |
+| --------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `yarn test`                                         | **92/92 pass**, 5 consecutive runs                                                                                                                                           |
+| Mutation checks (final code)                        | Each remaining fix reverted → caught: duplicate guard (1 failure), ending target (2), draft merge (2), unconditional stop (4), metadata stripping (1)                        |
+| `tsc --noEmit` / deprecation diagnostics / Prettier | Pass / 0 / pass                                                                                                                                                              |
+| `next build`                                        | Pass                                                                                                                                                                         |
+| Client bundle scan                                  | 0 hits: key, env var name, system prompt, Google endpoint, server validation text, server log label, `@testing-library` (test-only code not bundled). Positive control found |
+| Live Gemini via dev server                          | Stream has **0** `thoughtSignature` / `providerMetadata`; text and `finish: stop` intact                                                                                     |
 
 ---
 
@@ -293,11 +342,9 @@ Measured with `MockLanguageModelV4` against installed `ai@7.0.181`:
 
 ## Next session — exact starting point
 
-**Review and close out Phase 2.**
-
-1. Manual browser check of `/chat` on `yarn dev`: send, multi-turn, Markdown and code blocks, Stop mid-reply ("Response stopped." + Retry), Clear chat, a long paste (counter + limit notice), and the error banner (e.g. stop the dev server mid-reply).
-2. Decide on `thoughtSignature` in the public stream (open item below).
-3. Then Phase 3 (security, rate limiting, cost control), **only with an explicit go-ahead**.
+1. User reviews the Session 6 follow-ups, then merges `feature/ai-chat-frontend` into `dev`.
+2. Manual browser check of `/chat` on `yarn dev`: send, multi-turn, Markdown/code, Stop (also before the first token), Retry, Clear mid-reply, a long paste, and the error banner.
+3. Close out Phase 2. Phase 3 (security, rate limiting, cost control) starts **only with an explicit go-ahead**.
 
 ### Open items / decisions deferred
 
@@ -305,7 +352,7 @@ Measured with `MockLanguageModelV4` against installed `ai@7.0.181`:
 
 - ~~**Timeout UX**~~: **resolved in Session 5.** The server rewrites timeout aborts into a generic `error` chunk; the client shows the error and keeps the partial reply.
 - **Regeneration:** implemented (Retry → `regenerate()`) and tested end to end. Compatible with the last-user-message rule. `regenerate()` slices history to just before the regenerated assistant message and sends `trigger: 'regenerate-message'` (verified in the SDK; covered by a test). `trigger: 'resume-stream'` is rejected with 400; don't enable `resume` in `useChat` until server-side stream storage exists.
-- **`thoughtSignature` in the public stream (still open; still sent, confirmed in Session 5):** decide whether to strip `providerMetadata` (Gemini's encrypted reasoning-state blob) from outgoing chunks. Today it's harmless for text-only chat, and inbound copies are already stripped by validation. Stripping saves payload and exposes less provider internals, but tool calling with thinking (Phase 5) needs signatures round-tripped, ideally from server-held history (Phase 4).
+- ~~**`thoughtSignature` in the public stream**~~: **resolved in Session 6.** It is stripped from all browser-facing chunks. Phase 5 (tool calling) must revisit preserving signatures, ideally from server-held history. Original note: decide whether to strip `providerMetadata` (Gemini's encrypted reasoning-state blob) from outgoing chunks. Today it's harmless for text-only chat, and inbound copies are already stripped by validation. Stripping saves payload and exposes less provider internals, but tool calling with thinking (Phase 5) needs signatures round-tripped, ideally from server-held history (Phase 4).
 
 **Phase 3**
 

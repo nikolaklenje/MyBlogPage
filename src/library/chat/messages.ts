@@ -84,6 +84,27 @@ export const REPLY_ENDING_NOTES: Partial<Record<ReplyEnding, string>> = {
   truncated: 'The response was cut off at the length limit.',
 };
 
+/**
+ * Which visible message a finished reply's ending belongs to. If the reply never produced a
+ * visible assistant message (e.g. stopped before the first token), the ending is attached to
+ * the user turn it answered, so the UI can still show feedback and offer a retry.
+ */
+export function getEndingTargetId(
+  reply: UIMessage,
+  messages: readonly UIMessage[],
+): string | undefined {
+  if (messages.some((message) => message.id === reply.id)) return reply.id;
+  const last = messages.at(-1);
+  return last?.role === 'user' ? last.id : undefined;
+}
+
+/** Puts a rejected message back in the composer without discarding a draft typed meanwhile. */
+export function mergeRejectedIntoDraft(rejected: string, currentDraft: string): string {
+  if (currentDraft.trim().length === 0) return rejected;
+  if (currentDraft.includes(rejected)) return currentDraft;
+  return `${rejected}\n\n${currentDraft}`;
+}
+
 /** Errors for which the rejected user message should be returned to the composer for editing. */
 export function isRejectedRequest(error: Error): boolean {
   return APICallError.isInstance(error) && (error.statusCode === 400 || error.statusCode === 413);
