@@ -7,8 +7,50 @@ Tracks progress against `AI_CHAT_ROADMAP.md`. Update at the end of each session.
 ## Current status
 
 - **Phase:** 2 — Streaming Chat (in progress). Phase 1 was reviewed and approved.
-- **Done:** Task 2.1, the backend streaming endpoint `/api/chat` (development only), verified on its own.
+- **Done:** Task 2.1, the backend streaming endpoint `/api/chat` (development only), verified on its own. Reviewed in PR #60, plus follow-up fixes for outcome logging and timeout tests (Session 4).
 - **Next task:** Task 2.2, connecting the frontend with `useChat`. It needs `@ai-sdk/react` and must wait for an explicit go-ahead.
+
+---
+
+## 2026-11-27 — Session 4 (Task 2.1 review follow-ups, PR #60)
+
+### 1. Can `onEnd` log `completed` after a failure? Yes, so it was fixed
+
+Measured with `MockLanguageModelV4` against installed `ai@7.0.181`:
+
+| Scenario                                       | `streamText` callbacks                                                    | UI stream `onEnd` outcome | Old log      | New log                  |
+| ---------------------------------------------- | ------------------------------------------------------------------------- | ------------------------- | ------------ | ------------------------ |
+| Normal                                         | `onEnd(stop)`                                                             | completed                 | completed    | **completed**            |
+| Error mid-stream                               | `onError`, `onEnd(finishReason: error)`                                   | completed                 | ❌ completed | **failed**               |
+| Error, then provider sends `finish`            | `onError`, `onEnd(finishReason: stop)`                                    | completed                 | ❌ completed | **failed**               |
+| Provider throws before streaming               | `onError` only (no `onEnd` / `onAbort`)                                   | failed                    | ❌ no record | **failed** + `errorKind` |
+| `firstChunkMs` / `chunkMs` / `totalMs` timeout | `onAbort(reason: TimeoutError)` only, no `onError`                        | aborted                   | ❌ aborted   | **timed-out**            |
+| Client disconnect                              | `onAbort(reason: AbortError)`; UI `onEnd(isCancelled)` may fire **first** | unknown / aborted         | aborted      | **aborted**              |
+
+- Fix (`src/pages/api/chat.ts`): the `streamText` callbacks only record state (first error, end event, abort reason). The UI stream's `onEnd`, which fires exactly once in every scenario, writes one completion log via `resolveOutcome`: `isCancelled` → aborted; abort with `TimeoutError` → timed-out; other abort → aborted; any error, no end event, or `finishReason: error` → failed; otherwise completed.
+- `failed` and `timed-out` are logged at warn level; `completed` and `aborted` at info. `failed` includes `errorKind` (classification only, no message).
+- `CHAT_TIMEOUT` moved from `chat.ts` to `model.ts`, next to the other server-controlled call settings, so tests can override it. Values are unchanged (60 s / 15 s / 15 s).
+
+### 2. Deterministic timeout tests (no live requests)
+
+- The tests replace `CHAT_TIMEOUT` with millisecond budgets via a hoisted mutable object. Mock providers either stall forever or stream forever, so only the configured timeout can end the request.
+- Covered: `firstChunkMs` (no data), `chunkMs` (stall mid-response), `totalMs` (endless stream). For each: HTTP 200, the model's `abortSignal` is aborted with `TimeoutError` (so the provider request stops), exactly one `timed-out` warn log, and the stream ends with an `abort` chunk.
+- Also: production budgets are unchanged; outcome tests for completed, failed (mid-stream, error then `stop`, failure before streaming) and aborted.
+- Regenerate-shaped requests are accepted, and `resume-stream` is rejected (validation tests).
+
+### Results
+
+| Check                                             | Result                                                                          |
+| ------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `yarn test`                                       | **42/42 pass** (23 validation, 19 route)                                        |
+| Flakiness                                         | 10 consecutive full runs: 40/40 each (before the 2 validation tests were added) |
+| Mutation checks                                   | "Trust `onEnd` alone" → 2 failures; "timeouts reported as aborted" → 3 failures |
+| `tsc --noEmit`, deprecation diagnostics, Prettier | Pass, 0, pass                                                                   |
+| Real Gemini e2e (two turns + a disconnect)        | `completed` ×2 with usage, `aborted` ×1                                         |
+
+### New finding
+
+- **On timeout the client receives an `abort` chunk, not an `error` chunk.** The UI would show a silently truncated reply. Task 2.2 must handle it: either show a timeout notice in the UI when the stream ends with `abort` and the user didn't press stop, or have the server replace the final `abort` with an `error` chunk when the abort reason was a timeout.
 
 ---
 
@@ -188,9 +230,24 @@ Tracks progress against `AI_CHAT_ROADMAP.md`. Update at the end of each session.
 
 ### Open items / decisions deferred
 
-- ESLint migration to flat config (repo-wide lint is currently broken; pre-existing).
-- Supabase server-side verification approach (Bearer token planned for Phase 3).
-- Vercel env var for Production (Preview stays excluded until rate limiting exists); Vercel `maxDuration` for `/api/chat` at deploy time.
+**Task 2.2 (frontend) inputs**
+
+- **Timeout UX:** a timed-out stream ends with an `abort` chunk (no error). Surface it to the user (see Session 4).
+- **Regeneration:** compatible with the last-user-message rule. `regenerate()` slices history to just before the regenerated assistant message and sends `trigger: 'regenerate-message'` (verified in the SDK; covered by a test). `trigger: 'resume-stream'` is rejected with 400; don't enable `resume` in `useChat` until server-side stream storage exists.
+- **`thoughtSignature` in the public stream:** decide whether to strip `providerMetadata` (Gemini's encrypted reasoning-state blob) from outgoing chunks. Today it's harmless for text-only chat, and inbound copies are already stripped by validation. Stripping saves payload and exposes less provider internals, but tool calling with thinking (Phase 5) needs signatures round-tripped, ideally from server-held history (Phase 4).
+
+**Phase 3**
+
+- **Token-based context budgets:** replace character limits (24k chars ≈ 6k tokens) with token budgets per tier, and decide between trimming history and rejecting. Account for the system prompt overhead (~120 input tokens per turn).
+- **Cost accounting for aborted and timed-out generations:** no usage is reported (the provider never sends a final `finish`), yet generated tokens are billed. Estimate them, e.g. from streamed text length plus input size, and flag the entries as estimates.
+- Supabase server-side verification (Bearer token planned), rate limiting, spend cap, correlation IDs in logs.
+
+**Phase 4**
+
+- **Server-controlled conversation history:** today the client sends and can fabricate the whole history, including assistant turns. Persisting conversations server-side (Supabase, with RLS) and loading history by conversation ID removes that and enables signature round-tripping.
+
+**Tooling and deployment**
+
+- **ESLint is broken (pre-existing):** ESLint 8 with the legacy `.eslintrc.json` crashes loading `eslint-config-next@16`, and `yarn lint` calls `next lint`, which Next 16 removed. Needs a migration to flat config and ESLint 9.
+- Vercel: Production env var (Preview excluded until rate limiting exists); `maxDuration` for `/api/chat` at deploy time.
 - Switch to the paid Gemini tier before public launch.
-- Phase 3: history trimming vs. rejection, aborted-stream cost estimation, system-prompt token overhead, correlation IDs in logs.
-- Uncommitted work: everything since `7ade3f8` (Phase 1 + Task 2.1). Note: `ai-smoke.ts` was staged earlier and is now deleted in the working tree.

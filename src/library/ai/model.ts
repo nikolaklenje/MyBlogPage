@@ -31,6 +31,16 @@ export const CHAT_CALL_SETTINGS = {
   maxOutputTokens: DEFAULT_MAX_OUTPUT_TOKENS,
 } as const satisfies Pick<LanguageModelCallOptions, 'reasoning' | 'maxOutputTokens'>;
 
+/**
+ * Streaming timeouts for chat calls. A timeout aborts the provider request (stopping token
+ * generation) and surfaces as an abort with a `TimeoutError` reason, not as an error.
+ */
+export const CHAT_TIMEOUT = {
+  totalMs: 60_000, // hard cap on the whole call
+  firstChunkMs: 15_000, // provider must start responding
+  chunkMs: 15_000, // and must not stall between chunks
+} as const satisfies { totalMs: number; firstChunkMs: number; chunkMs: number };
+
 const API_KEY_ENV_VAR = 'GOOGLE_GENERATIVE_AI_API_KEY';
 
 /** Thrown when server-side model configuration (e.g. the API key) is missing or invalid. */

@@ -18,9 +18,14 @@ import {
   getChatModel,
 } from '@/library/ai/model';
 
+// Mutable stand-in for CHAT_TIMEOUT so timeout tests can use millisecond budgets (no waiting
+// 15s, no live requests). The route reads the object at call time, so per-test changes apply.
+const PRODUCTION_TIMEOUT = { totalMs: 60_000, firstChunkMs: 15_000, chunkMs: 15_000 };
+const testTimeout = vi.hoisted(() => ({ totalMs: 0, firstChunkMs: 0, chunkMs: 0 }));
+
 vi.mock('@/library/ai/model', async (importOriginal) => {
   const actual = await importOriginal<typeof import('@/library/ai/model')>();
-  return { ...actual, getChatModel: vi.fn() };
+  return { ...actual, CHAT_TIMEOUT: testTimeout, getChatModel: vi.fn() };
 });
 
 type StreamPart = Parameters<typeof simulateReadableStream>[0]['chunks'][number];
@@ -61,6 +66,7 @@ let server: http.Server;
 
 beforeEach(async () => {
   vi.stubEnv('NODE_ENV', 'development');
+  Object.assign(testTimeout, PRODUCTION_TIMEOUT);
   server = http.createServer(async (req, res) => {
     const chunks: Buffer[] = [];
     for await (const chunk of req) chunks.push(chunk as Buffer);
@@ -324,5 +330,224 @@ describe('/api/chat', () => {
         ),
       { timeout: 2_000 },
     );
+  });
+});
+
+// --- Generation outcomes: completed vs failed vs timed-out vs aborted ------------------------
+
+/** A provider stream that emits `chunks` then never produces another part (a stall). */
+function stallingModel(chunks: StreamPart[], onSignal?: (signal: AbortSignal | undefined) => void) {
+  return new MockLanguageModelV4({
+    doStream: async (options) => {
+      onSignal?.(options.abortSignal);
+      return {
+        stream: new ReadableStream<never>({
+          start(controller) {
+            for (const chunk of chunks) controller.enqueue(chunk as never);
+            // never closes: simulates a provider that stops sending data
+          },
+        }),
+      };
+    },
+  });
+}
+
+/** A provider stream that keeps producing text forever, one delta every `intervalMs`. */
+function endlessModel(intervalMs: number, onSignal: (signal: AbortSignal | undefined) => void) {
+  return new MockLanguageModelV4({
+    doStream: async (options) => {
+      onSignal(options.abortSignal);
+      let timer: ReturnType<typeof setInterval> | undefined;
+      return {
+        stream: new ReadableStream<never>({
+          start(controller) {
+            controller.enqueue({ type: 'stream-start', warnings: [] } as never);
+            controller.enqueue({ type: 'text-start', id: 't1' } as never);
+            timer = setInterval(
+              () => controller.enqueue({ type: 'text-delta', id: 't1', delta: 'more ' } as never),
+              intervalMs,
+            );
+          },
+          cancel() {
+            clearInterval(timer);
+          },
+        }),
+      };
+    },
+  });
+}
+
+function completionLogs(...spies: Array<{ mock: { calls: unknown[][] } }>) {
+  return spies
+    .flatMap((spy) => spy.mock.calls)
+    .filter(([label]) => label === '[chat] completion')
+    .map(([, entry]) => entry as Record<string, unknown>);
+}
+
+function spyOnLogs() {
+  return {
+    info: vi.spyOn(console, 'info').mockImplementation(() => {}),
+    warn: vi.spyOn(console, 'warn').mockImplementation(() => {}),
+    error: vi.spyOn(console, 'error').mockImplementation(() => {}),
+  };
+}
+
+describe('/api/chat generation outcomes', () => {
+  it('logs exactly one "completed" entry, with usage, for a normal stream', async () => {
+    const logs = spyOnLogs();
+    vi.mocked(getChatModel).mockReturnValue(mockModel(textParts(['Hello'])));
+
+    await (await postChat({ messages: [userMessage('Hi')] })).text();
+
+    const entries = completionLogs(logs.info, logs.warn);
+    expect(entries).toHaveLength(1);
+    expect(entries[0]).toMatchObject({
+      outcome: 'completed',
+      finishReason: 'stop',
+      outputTokens: 7,
+    });
+    expect(logs.info).toHaveBeenCalledWith('[chat] completion', expect.anything());
+  });
+
+  it('logs "failed", not "completed", when the stream errors mid-response', async () => {
+    const logs = spyOnLogs();
+    vi.mocked(getChatModel).mockReturnValue(
+      mockModel([
+        { type: 'stream-start', warnings: [] },
+        { type: 'text-start', id: 't1' },
+        { type: 'text-delta', id: 't1', delta: 'Partial' },
+        { type: 'error', error: new Error(SECRET) },
+      ]),
+    );
+
+    await (await postChat({ messages: [userMessage('Hi')] })).text();
+
+    const entries = completionLogs(logs.info, logs.warn);
+    expect(entries).toEqual([
+      expect.objectContaining({ outcome: 'failed', errorKind: 'unexpected' }),
+    ]);
+    expect(logs.warn).toHaveBeenCalledWith('[chat] completion', expect.anything());
+    expect(logged(logs.warn)).not.toContain(SECRET);
+  });
+
+  it('logs "failed" even when the provider sends finishReason "stop" after an error', async () => {
+    const logs = spyOnLogs();
+    vi.mocked(getChatModel).mockReturnValue(
+      mockModel([
+        { type: 'stream-start', warnings: [] },
+        { type: 'text-start', id: 't1' },
+        { type: 'text-delta', id: 't1', delta: 'Partial' },
+        { type: 'error', error: new Error('transient') },
+        { type: 'text-end', id: 't1' },
+        finishPart,
+      ]),
+    );
+
+    await (await postChat({ messages: [userMessage('Hi')] })).text();
+
+    expect(completionLogs(logs.info, logs.warn)).toEqual([
+      expect.objectContaining({ outcome: 'failed', finishReason: 'stop' }),
+    ]);
+  });
+
+  it('logs "failed" with the error kind when the provider fails before streaming', async () => {
+    const logs = spyOnLogs();
+    vi.mocked(getChatModel).mockReturnValue(
+      new MockLanguageModelV4({
+        doStream: async () => {
+          throw new APICallError({
+            message: SECRET,
+            url: 'https://provider.example/v1',
+            requestBodyValues: {},
+            statusCode: 503,
+            isRetryable: false,
+          });
+        },
+      }),
+    );
+
+    await (await postChat({ messages: [userMessage('Hi')] })).text();
+
+    expect(completionLogs(logs.info, logs.warn)).toEqual([
+      expect.objectContaining({ outcome: 'failed', errorKind: 'provider' }),
+    ]);
+  });
+
+  it('logs "aborted" (not "timed-out") when the client disconnects', async () => {
+    const logs = spyOnLogs();
+    let modelSignal: AbortSignal | undefined;
+    vi.mocked(getChatModel).mockReturnValue(
+      stallingModel(textParts(['Hello']).slice(0, 3), (signal) => (modelSignal = signal)),
+    );
+
+    const controller = new AbortController();
+    const res = await postChat({ messages: [userMessage('Hi')] }, { signal: controller.signal });
+    const reader = res.body!.getReader();
+    await reader.read();
+    controller.abort();
+    await reader.cancel().catch(() => {});
+
+    await vi.waitFor(() => expect(completionLogs(logs.info, logs.warn)).toHaveLength(1));
+    expect(completionLogs(logs.info, logs.warn)[0]).toMatchObject({ outcome: 'aborted' });
+    await vi.waitFor(() => expect(modelSignal?.aborted).toBe(true));
+  });
+});
+
+describe('/api/chat timeouts (deterministic, no live requests)', () => {
+  /**
+   * Each case stalls (or streams forever) so only the configured timeout can end the request.
+   * Budgets are milliseconds; the other timeouts stay large so the intended one is what fires.
+   */
+  it.each([
+    {
+      name: 'firstChunkMs: provider never starts responding',
+      timeout: { totalMs: 10_000, firstChunkMs: 50, chunkMs: 10_000 },
+      model: (onSignal: (s: AbortSignal | undefined) => void) => stallingModel([], onSignal),
+      expectPartialText: false,
+    },
+    {
+      name: 'chunkMs: provider stalls mid-response',
+      timeout: { totalMs: 10_000, firstChunkMs: 10_000, chunkMs: 50 },
+      model: (onSignal: (s: AbortSignal | undefined) => void) =>
+        stallingModel(textParts(['Partial']).slice(0, 3), onSignal),
+      expectPartialText: true,
+    },
+    {
+      name: 'totalMs: provider keeps streaming past the overall budget',
+      timeout: { totalMs: 150, firstChunkMs: 10_000, chunkMs: 10_000 },
+      model: (onSignal: (s: AbortSignal | undefined) => void) => endlessModel(10, onSignal),
+      expectPartialText: true,
+    },
+  ])('$name', async ({ timeout, model, expectPartialText }) => {
+    const logs = spyOnLogs();
+    Object.assign(testTimeout, timeout);
+    let modelSignal: AbortSignal | undefined;
+    vi.mocked(getChatModel).mockReturnValue(model((signal) => (modelSignal = signal)));
+
+    const res = await postChat({ messages: [userMessage('Hi')] });
+    expect(res.status).toBe(200); // headers were sent before the timeout fired
+    const chunks = parseSse(await res.text()); // resolves only because the timeout ends the stream
+
+    // The provider request itself is aborted, so it stops generating (and billing) tokens.
+    expect(modelSignal?.aborted).toBe(true);
+    expect((modelSignal?.reason as Error | undefined)?.name).toBe('TimeoutError');
+
+    // Distinguishable from failures and from client disconnects.
+    const entries = completionLogs(logs.info, logs.warn);
+    expect(entries).toEqual([expect.objectContaining({ outcome: 'timed-out' })]);
+    expect(logs.warn).toHaveBeenCalledWith('[chat] completion', expect.anything());
+
+    // Current client-facing behaviour: the SDK ends the stream with an `abort` chunk (not an
+    // `error` chunk). Task 2.2 must surface this to the user — see AI_CHAT_PROGRESS.md.
+    expect(chunks.at(-1)).toMatchObject({ type: 'abort' });
+    expect(chunks.some((chunk) => chunk.type === 'error')).toBe(false);
+    expect(chunks.some((chunk) => chunk.type === 'text-delta')).toBe(expectPartialText);
+  });
+
+  it('uses the production timeout budgets by default', async () => {
+    vi.spyOn(console, 'info').mockImplementation(() => {});
+    const { CHAT_TIMEOUT } =
+      await vi.importActual<typeof import('@/library/ai/model')>('@/library/ai/model');
+    expect(CHAT_TIMEOUT).toEqual(PRODUCTION_TIMEOUT);
   });
 });

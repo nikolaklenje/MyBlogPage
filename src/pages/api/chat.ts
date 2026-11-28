@@ -13,8 +13,8 @@ import {
   streamText,
   toUIMessageStream,
 } from 'ai';
-import type { LanguageModel, LanguageModelUsage } from 'ai';
-import { CHAT_CALL_SETTINGS, getChatModel } from '@/library/ai/model';
+import type { CallWarning, FinishReason, LanguageModel, LanguageModelUsage } from 'ai';
+import { CHAT_CALL_SETTINGS, CHAT_TIMEOUT, getChatModel } from '@/library/ai/model';
 import { CHAT_INSTRUCTIONS } from '@/library/ai/prompts';
 import { parseChatRequest } from '@/library/ai/validation';
 import { classifyAiError, logAiError } from '@/library/ai/errors';
@@ -28,12 +28,6 @@ export const config = {
 
 /** Sent to the client when the stream fails after headers are sent. Never provider details. */
 export const CHAT_STREAM_ERROR_MESSAGE = 'The assistant could not complete the response.';
-
-const CHAT_TIMEOUT = {
-  totalMs: 60_000, // hard cap on the whole call
-  firstChunkMs: 15_000, // provider must start responding
-  chunkMs: 15_000, // and must not stall between chunks
-} as const;
 
 type ErrorResponse = { error: string };
 
@@ -68,7 +62,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
     if (!res.writableFinished) abortController.abort();
   });
 
-  const startedAt = Date.now();
+  // The streamText callbacks record what happened; the UI stream's onEnd (which fires exactly
+  // once per request) writes the single completion log from this state.
+  const generation: GenerationState = { startedAt: Date.now(), hasError: false, aborted: false };
 
   try {
     const result = streamText({
@@ -81,17 +77,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       abortSignal: abortController.signal,
       // Must be overridden: the SDK default is `console.error(error)`, which would log the
       // raw provider error including the full conversation.
-      onError: ({ error }) => logAiError('chat', error),
-      onEnd: ({ finishReason, usage, warnings }) =>
-        logCompletion({ outcome: 'completed', finishReason, usage, startedAt, warnings }),
-      onAbort: ({ steps }) =>
-        logCompletion({
-          outcome: 'aborted',
-          finishReason: undefined,
-          usage: steps.at(-1)?.usage,
-          startedAt,
-          warnings: undefined,
-        }),
+      onError: ({ error }) => {
+        if (!generation.hasError) generation.error = error;
+        generation.hasError = true;
+        logAiError('chat', error);
+      },
+      onEnd: ({ finishReason, usage, warnings }) => {
+        generation.end = { finishReason, usage, warnings };
+      },
+      // Fires for client disconnects (AbortError) and for timeouts (TimeoutError).
+      onAbort: ({ reason }) => {
+        generation.aborted = true;
+        generation.abortReason = reason;
+      },
     });
 
     const uiStream = toUIMessageStream({
@@ -100,6 +98,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       sendSources: false,
       // Errors are logged by `streamText`'s onError above; this only shapes the client message.
       onError: () => CHAT_STREAM_ERROR_MESSAGE,
+      onEnd: ({ isCancelled }) => logCompletion(generation, isCancelled === true),
     });
 
     await pipeUIMessageStreamToResponse({ response: res, stream: uiStream });
@@ -121,23 +120,51 @@ function sendErrorResponse(res: NextApiResponse<ErrorResponse>, error: unknown) 
   return res.status(500).json({ error: 'Internal server error' });
 }
 
-type CompletionLog = {
-  outcome: 'completed' | 'aborted';
-  finishReason: string | undefined;
-  usage: LanguageModelUsage | undefined;
+export type GenerationOutcome = 'completed' | 'failed' | 'timed-out' | 'aborted';
+
+type GenerationState = {
   startedAt: number;
-  warnings: ReadonlyArray<{ type: string }> | undefined;
+  hasError: boolean;
+  error?: unknown;
+  aborted: boolean;
+  abortReason?: unknown;
+  end?: { finishReason: FinishReason; usage: LanguageModelUsage; warnings?: CallWarning[] };
 };
 
+/**
+ * Why each signal is needed (verified against ai@7.0.181):
+ * - `onEnd` also fires after a mid-stream error, with finishReason 'error' — or even 'stop' if
+ *   the provider keeps streaming afterwards — so finishReason alone cannot mean "completed".
+ * - When the provider fails before streaming, neither `onEnd` nor `onAbort` fires.
+ * - Timeouts and disconnects both arrive via `onAbort`; only the reason's name differs.
+ * - On a client disconnect the UI stream ends (isCancelled) before `onAbort` may have run.
+ */
+function resolveOutcome(state: GenerationState, isCancelled: boolean): GenerationOutcome {
+  if (isCancelled) return 'aborted';
+  if (state.aborted) {
+    return state.abortReason instanceof Error && state.abortReason.name === 'TimeoutError'
+      ? 'timed-out'
+      : 'aborted';
+  }
+  if (state.hasError || !state.end || state.end.finishReason === 'error') return 'failed';
+  return 'completed';
+}
+
 /** Metadata only — never message content. Cost/quota tracking builds on this in Phase 3. */
-function logCompletion({ outcome, finishReason, usage, startedAt, warnings }: CompletionLog) {
-  console.info('[chat] completion', {
+function logCompletion(state: GenerationState, isCancelled: boolean) {
+  const outcome = resolveOutcome(state, isCancelled);
+  const { end } = state;
+  const write = outcome === 'failed' || outcome === 'timed-out' ? console.warn : console.info;
+
+  write('[chat] completion', {
     outcome,
-    finishReason,
-    durationMs: Date.now() - startedAt,
-    inputTokens: usage?.inputTokens,
-    outputTokens: usage?.outputTokens, // includes reasoning tokens
-    reasoningTokens: usage?.outputTokenDetails.reasoningTokens,
-    warnings: warnings?.map((warning) => warning.type),
+    ...(outcome === 'failed' && state.hasError && { errorKind: classifyAiError(state.error) }),
+    finishReason: end?.finishReason,
+    durationMs: Date.now() - state.startedAt,
+    // Absent for aborted/timed-out streams: the provider never sent final usage (Phase 3 item).
+    inputTokens: end?.usage.inputTokens,
+    outputTokens: end?.usage.outputTokens, // includes reasoning tokens
+    reasoningTokens: end?.usage.outputTokenDetails.reasoningTokens,
+    warnings: end?.warnings?.map((warning) => warning.type),
   });
 }

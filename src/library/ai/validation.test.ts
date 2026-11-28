@@ -115,6 +115,23 @@ describe('parseChatRequest', () => {
     expectInvalid(input);
   });
 
+  // useChat's regenerate() slices history to just before the regenerated assistant message,
+  // so the request still ends with the user turn (verified in ai@7.0.181 AbstractChat).
+  it('accepts a regenerate request shaped like useChat sends it', () => {
+    const result = parseChatRequest(
+      body([user('First'), assistant('Answer'), user('Second')], {
+        trigger: 'regenerate-message',
+        messageId: 'a-being-regenerated',
+      }),
+    );
+    expect(result.success).toBe(true);
+  });
+
+  // 'resume-stream' needs server-side stream storage (not built); reject until then.
+  it('rejects the resume-stream trigger', () => {
+    expectInvalid(body([user('Hi')], { trigger: 'resume-stream' }));
+  });
+
   it('requires the last message to be a non-blank user message', () => {
     expectInvalid(body([user('Hi'), assistant('Hello')]));
     expectInvalid(body([user('   ')]));
