@@ -11,15 +11,19 @@
     "lint:fix": "next lint --fix",
     "format": "prettier --write .",
     "check-format": "prettier --check .",
+    "test": "vitest run",
+    "test:watch": "vitest",
     "prepare": "husky"
   },
   "dependencies": {
+    "@ai-sdk/google": "^4.0.125",
     "@emailjs/browser": "^4.4.1",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.43.5",
     "@types/node": "25.2.3",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
+    "ai": "^7.0.181",
     "animate.css": "^4.1.1",
     "autoprefixer": "^10.4.24",
     "dotenv": "^17.3.0",
@@ -32,7 +36,8 @@
     "react-markdown": "^10.1.0",
     "react-syntax-highlighter": "^16.1.0",
     "tailwindcss": "^4.1.18",
-    "typescript": "5.9.3"
+    "typescript": "5.9.3",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.18",
@@ -43,7 +48,9 @@
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1",
-    "prettier-plugin-tailwindcss": "^0.7.2"
+    "prettier-plugin-tailwindcss": "^0.7.2",
+    "vite": "8.3.8",
+    "vitest": "5.1.0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
