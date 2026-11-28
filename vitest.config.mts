@@ -9,7 +9,7 @@ export default defineConfig({
   test: {
     environment: 'node',
     // Tests must never live under src/pages: every file there becomes a Next.js route.
-    include: ['src/**/*.test.ts'],
+    include: ['src/**/*.test.{ts,tsx}'],
     exclude: ['src/pages/**', 'node_modules/**'],
     restoreMocks: true,
     unstubEnvs: true,

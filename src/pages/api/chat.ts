@@ -13,11 +13,18 @@ import {
   streamText,
   toUIMessageStream,
 } from 'ai';
-import type { CallWarning, FinishReason, LanguageModel, LanguageModelUsage } from 'ai';
+import type {
+  CallWarning,
+  FinishReason,
+  LanguageModel,
+  LanguageModelUsage,
+  UIMessageChunk,
+} from 'ai';
 import { CHAT_CALL_SETTINGS, CHAT_TIMEOUT, getChatModel } from '@/library/ai/model';
 import { CHAT_INSTRUCTIONS } from '@/library/ai/prompts';
 import { parseChatRequest } from '@/library/ai/validation';
 import { classifyAiError, logAiError } from '@/library/ai/errors';
+import { CHAT_STREAM_ERROR_MESSAGE, CHAT_TIMEOUT_MESSAGE } from '@/library/ai/chatContract';
 
 export const config = {
   api: {
@@ -26,8 +33,8 @@ export const config = {
   },
 };
 
-/** Sent to the client when the stream fails after headers are sent. Never provider details. */
-export const CHAT_STREAM_ERROR_MESSAGE = 'The assistant could not complete the response.';
+// Re-exported so existing tests keep importing it from the route.
+export { CHAT_STREAM_ERROR_MESSAGE };
 
 type ErrorResponse = { error: string };
 
@@ -101,7 +108,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       onEnd: ({ isCancelled }) => logCompletion(generation, isCancelled === true),
     });
 
-    await pipeUIMessageStreamToResponse({ response: res, stream: uiStream });
+    await pipeUIMessageStreamToResponse({
+      response: res,
+      stream: rewriteAbortChunks(uiStream, generation),
+    });
   } catch (error) {
     logAiError('chat', error);
     // Once streaming has started, the status is already sent; just close the connection.
@@ -141,13 +151,38 @@ type GenerationState = {
  */
 function resolveOutcome(state: GenerationState, isCancelled: boolean): GenerationOutcome {
   if (isCancelled) return 'aborted';
-  if (state.aborted) {
-    return state.abortReason instanceof Error && state.abortReason.name === 'TimeoutError'
-      ? 'timed-out'
-      : 'aborted';
-  }
+  if (state.aborted) return isTimeout(state.abortReason) ? 'timed-out' : 'aborted';
   if (state.hasError || !state.end || state.end.finishReason === 'error') return 'failed';
   return 'completed';
+}
+
+function isTimeout(reason: unknown): boolean {
+  return reason instanceof Error && reason.name === 'TimeoutError';
+}
+
+/**
+ * The browser's chat client ignores `abort` chunks, so a server timeout would otherwise look
+ * like a normal completion — and the SDK puts its timeout message (incl. our budgets) in the
+ * chunk's `reason`. Timeouts become a generic `error` chunk (useChat shows an error and keeps
+ * the partial reply); other aborts are forwarded without the reason. Relies on `onAbort`
+ * running before the abort chunk is emitted (verified in ai@7.0.181, covered by tests).
+ */
+function rewriteAbortChunks(
+  stream: ReadableStream<UIMessageChunk>,
+  generation: GenerationState,
+): ReadableStream<UIMessageChunk> {
+  return stream.pipeThrough(
+    new TransformStream<UIMessageChunk, UIMessageChunk>({
+      transform(chunk, controller) {
+        if (chunk.type !== 'abort') return controller.enqueue(chunk);
+        controller.enqueue(
+          isTimeout(generation.abortReason)
+            ? { type: 'error', errorText: CHAT_TIMEOUT_MESSAGE }
+            : { type: 'abort' },
+        );
+      },
+    }),
+  );
 }
 
 /** Metadata only — never message content. Cost/quota tracking builds on this in Phase 3. */

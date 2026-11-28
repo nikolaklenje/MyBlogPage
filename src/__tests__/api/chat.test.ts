@@ -4,13 +4,13 @@
  *
  * Lives outside src/pages because every file under src/pages becomes a Next.js route.
  */
-import http from 'node:http';
-import type { AddressInfo } from 'node:net';
 import { APICallError, simulateReadableStream } from 'ai';
 import { MockLanguageModelV4 } from 'ai/test';
-import type { NextApiRequest, NextApiResponse } from 'next';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
+import { startApiServer } from '@/__tests__/helpers/apiServer';
+import type { TestApiServer } from '@/__tests__/helpers/apiServer';
 import handler, { CHAT_STREAM_ERROR_MESSAGE } from '@/pages/api/chat';
+import { CHAT_TIMEOUT_MESSAGE } from '@/library/ai/chatContract';
 import { CHAT_INSTRUCTIONS } from '@/library/ai/prompts';
 import {
   DEFAULT_MAX_OUTPUT_TOKENS,
@@ -59,45 +59,20 @@ function mockModel(chunks: StreamPart[], chunkDelayInMs: number | null = null) {
   });
 }
 
-// --- Minimal Next.js API adapter over node:http (adds req.body, res.status, res.json) -------
+// --- Real handler on a local HTTP server (see helpers/apiServer.ts) ---------------------------
 
 let baseUrl = '';
-let server: http.Server;
+let server: TestApiServer;
 
 beforeEach(async () => {
   vi.stubEnv('NODE_ENV', 'development');
   Object.assign(testTimeout, PRODUCTION_TIMEOUT);
-  server = http.createServer(async (req, res) => {
-    const chunks: Buffer[] = [];
-    for await (const chunk of req) chunks.push(chunk as Buffer);
-    const raw = Buffer.concat(chunks).toString('utf8');
-    let body: unknown = raw;
-    try {
-      body = raw ? JSON.parse(raw) : undefined;
-    } catch {
-      /* leave as string, like Next does for non-JSON bodies */
-    }
-    const apiReq = Object.assign(req, { body, query: {}, cookies: {} }) as NextApiRequest;
-    const apiRes = Object.assign(res, {
-      status(code: number) {
-        res.statusCode = code;
-        return apiRes;
-      },
-      json(data: unknown) {
-        res.setHeader('content-type', 'application/json');
-        res.end(JSON.stringify(data));
-        return apiRes;
-      },
-    }) as unknown as NextApiResponse;
-    await handler(apiReq, apiRes);
-  });
-  await new Promise<void>((resolve) => server.listen(0, '127.0.0.1', resolve));
-  baseUrl = `http://127.0.0.1:${(server.address() as AddressInfo).port}`;
+  server = await startApiServer(handler);
+  baseUrl = server.baseUrl;
 });
 
 afterEach(async () => {
-  server.closeAllConnections();
-  await new Promise<void>((resolve) => server.close(() => resolve()));
+  await server.close();
 });
 
 const userMessage = (text: string) => ({
@@ -537,10 +512,11 @@ describe('/api/chat timeouts (deterministic, no live requests)', () => {
     expect(entries).toEqual([expect.objectContaining({ outcome: 'timed-out' })]);
     expect(logs.warn).toHaveBeenCalledWith('[chat] completion', expect.anything());
 
-    // Current client-facing behaviour: the SDK ends the stream with an `abort` chunk (not an
-    // `error` chunk). Task 2.2 must surface this to the user — see AI_CHAT_PROGRESS.md.
-    expect(chunks.at(-1)).toMatchObject({ type: 'abort' });
-    expect(chunks.some((chunk) => chunk.type === 'error')).toBe(false);
+    // The browser's chat client ignores `abort` chunks, so the route rewrites a timeout abort
+    // into a generic `error` chunk — and never forwards the SDK's reason (it names our budgets).
+    expect(chunks.at(-1)).toEqual({ type: 'error', errorText: CHAT_TIMEOUT_MESSAGE });
+    expect(chunks.some((chunk) => chunk.type === 'abort')).toBe(false);
+    expect(JSON.stringify(chunks)).not.toMatch(/TimeoutError|timeout of \d+ms/i);
     expect(chunks.some((chunk) => chunk.type === 'text-delta')).toBe(expectPartialText);
   });
 

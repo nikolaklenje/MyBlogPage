@@ -6,7 +6,7 @@ export default function ChatPage() {
     <>
       <SEO
         title="AI Chat - Nicode"
-        description="Chat with leading AI models in one place."
+        description="Chat with Nicode AI, powered by Gemini 3.5 Flash-Lite."
         url="https://www.nicode.ai/chat"
       />
       <ModelChat />

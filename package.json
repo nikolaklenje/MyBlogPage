@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "@ai-sdk/google": "^4.0.125",
+    "@ai-sdk/react": "4.0.186",
     "@emailjs/browser": "^4.4.1",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.43.5",

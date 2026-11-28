@@ -1,18 +1,9 @@
 import { z } from 'zod';
 import type { UIMessage } from 'ai';
+import { CHAT_LIMITS } from '@/library/ai/chatContract';
 
-/**
- * Initial request limits (to be tuned in Phase 3 alongside token-based cost controls).
- * ~4 characters per token, so maxTotalChars ≈ 6k input tokens per request.
- */
-export const CHAT_LIMITS = {
-  maxMessages: 40,
-  maxUserMessageChars: 4_000,
-  maxAssistantMessageChars: 8_000,
-  maxTotalChars: 24_000,
-  maxPartsPerMessage: 20,
-  maxIdLength: 128,
-} as const;
+// Re-exported for existing server-side imports; the browser imports from chatContract directly.
+export { CHAT_LIMITS };
 
 const idSchema = z.string().min(1).max(CHAT_LIMITS.maxIdLength);
 
